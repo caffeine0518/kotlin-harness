@@ -1,0 +1,52 @@
+---
+severity: error
+applies_to: "**/*.kt"
+source: https://developer.android.com/kotlin/coroutines/coroutines-best-practices#exceptions
+---
+
+# `viewModelScope`·`lifecycleScope` 로 시작한 코루틴에서 발생할 수 있는 예외는 코루틴 본문에서 처리한다
+
+## 이유
+
+코루틴에서 처리되지 않은 예외가 발생하면 앱이 크래시할 수 있다. Android 공식 문서는 예외가 발생할 가능성이 있으면 `viewModelScope`·`lifecycleScope` 로 생성한 코루틴의 본문에서 예외를 잡으라고 한다. 네트워크·디스크 I/O 는 사용자 환경에 따라 실패하므로, 처리하지 않으면 로그인 실패 같은 일반적인 오류가 앱 크래시로 이어진다.
+
+## 위반
+
+`viewModelScope.launch { }`·`lifecycleScope.launch { }` 본문에서 네트워크·파일·DB 작업처럼 실패할 수 있는 함수를 호출하는데, `try`/`catch`·`runCatching`·`CoroutineExceptionHandler` 중 어느 것도 없다.
+
+```kotlin
+class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel() {
+    fun login(username: String, token: String) {
+        viewModelScope.launch {
+            loginRepository.login(username, token)  // IOException 이 발생하면 앱이 크래시한다
+            _uiState.value = LoginUiState.LoggedIn
+        }
+    }
+}
+```
+
+## 수정
+
+`Exception`·`Throwable` 대신 `IOException` 처럼 구체적인 예외 타입을 잡는다.
+
+```kotlin
+class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel() {
+    fun login(username: String, token: String) {
+        viewModelScope.launch {
+            try {
+                loginRepository.login(username, token)
+                _uiState.value = LoginUiState.LoggedIn
+            } catch (exception: IOException) {
+                _uiState.value = LoginUiState.Error
+            }
+        }
+    }
+}
+```
+
+## 허용
+
+- 호출하는 함수가 예외를 내부에서 처리하고 `Result`·sealed 타입으로 실패를 반환하는 경우 (같은 파일에서 판정할 수 있을 때)
+- `launch` 에 `CoroutineExceptionHandler` 를 지정한 경우, Flow 에 `.catch { }` 를 적용하고 `launchIn`·`collect` 하는 경우
+- 코루틴 본문이 상태 갱신·`delay`·`emit` 처럼 예외가 발생하지 않는 작업만 하는 경우
+- `catch (e: Exception)` 으로 잡았지만 `CancellationException` 을 다시 전파하지 않는 코드는 이 룰이 아니라 `common/coroutines/rethrow-cancellation-exception` 이 보고한다.
