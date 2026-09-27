@@ -95,6 +95,16 @@ claude --plugin-dir <이 리포 경로>
 
 `onWrite` 훅으로 확인한 결과는 `.claude/kotlin-harness/reports/<YYYYMMDD>-onwrite.md` 에 확인할 때마다 한 행씩 기록한다. 위반이 없어도 기록한다.
 
+## 이슈 등록
+
+오탐, 누락, 잘못된 수정, 스킬 동작 오류가 있으면 아래 명령으로 이 리포에 이슈를 등록한다.
+
+```
+/kotlin-harness:issue <문제 설명>
+```
+
+최근 리포트와 대화 내용으로 초안을 작성해 보여 주고, 확인하면 `gh issue create` 로 등록한다. 재현 코드는 프로젝트 코드를 그대로 옮기지 않고, 이름과 값을 일반적인 것으로 바꾼 최소 코드로 작성한다. `gh` 를 쓸 수 없으면 초안과 이슈 작성 주소를 출력한다.
+
 ## 룰 추가
 
 `rules/common/` (모든 platform) 또는 `rules/<platform>/` 에 카테고리 디렉터리를 만들고 룰마다 마크다운 파일 하나를 추가한다. `rules/` 기준 상대 경로가 룰 ID 다 (예: `rules/common/null-safety/safe-cast.md` → `common/null-safety/safe-cast`).
