@@ -20,7 +20,7 @@ argument-hint: "[file <path> | diff | branch [base] | pr [number] | project]"
 
 - git 리포에 `.kt`·`.kts` 파일이 하나도 없으면 코틀린 프로젝트가 아니라고 알리고 중단한다.
 - `platform` 을 지정했는데 `${CLAUDE_PLUGIN_ROOT}/rules/<platform>/` 이 없으면 지원하지 않는 platform 이라고 알리고 중단한다.
-- `excludeCategories` 에 `${CLAUDE_PLUGIN_ROOT}/rules/common/` 과 `rules/<platform>/` 어디에도 없는 카테고리 이름이 있으면 그 이름을 알리고 중단한다.
+- `excludeCategories` 의 값은 카테고리 경로다 (예: `ui` 는 `ui/` 전체, `ui/view` 는 `ui/view/` 만). `${CLAUDE_PLUGIN_ROOT}/rules/common/<경로>` 와 `rules/<platform>/<경로>` 가 모두 디렉터리가 아닌 값이 있으면 그 이름을 알리고 중단한다.
 
 ## 2. 시작 상태 기록
 

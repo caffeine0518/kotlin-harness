@@ -48,6 +48,17 @@ with tempfile.TemporaryDirectory() as d:
     ctx = json.loads(run(p, "A.kt").stdout)["hookSpecificOutput"]["additionalContext"]
     assert "other-rule.md" in ctx and "sample-rule.md" not in ctx
 
+    # 하위 경로: "ui/view" 는 ui/view/ 만, "ui" 는 ui/ 전체를 제외
+    for sub_dir in ("view", "compose"):
+        (p / "rules" / "android" / "ui" / sub_dir).mkdir(parents=True)
+        (p / "rules" / "android" / "ui" / sub_dir / f"{sub_dir}-rule.md").write_text("---\n---\n")
+    write_cfg(p, {"platform": "android", "excludeCategories": ["ui/view"], "review": {"onWrite": True}})
+    ctx = json.loads(run(p, "A.kt").stdout)["hookSpecificOutput"]["additionalContext"]
+    assert "compose-rule.md" in ctx and "view-rule.md" not in ctx
+    write_cfg(p, {"platform": "android", "excludeCategories": ["ui"], "review": {"onWrite": True}})
+    ctx = json.loads(run(p, "A.kt").stdout)["hookSpecificOutput"]["additionalContext"]
+    assert "compose-rule.md" not in ctx and "view-rule.md" not in ctx and "sample-rule.md" in ctx
+
     # 없는 카테고리 이름은 exit 1
     write_cfg(p, {"platform": "android", "excludeCategories": ["nope"], "review": {"onWrite": True}})
     assert run(p, "A.kt").returncode == 1

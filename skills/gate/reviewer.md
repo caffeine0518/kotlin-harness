@@ -22,7 +22,7 @@
 - `<플러그인 경로>/rules/common/**/*.md`
 - `<플러그인 경로>/rules/<platform>/**/*.md` (platform 이 없으면 로드하지 않는다)
 
-`excludeCategories` 에 적힌 카테고리 디렉터리(예: `rules/common/scope-functions/`)의 룰은 로드하지 않는다.
+`excludeCategories` 에 적힌 카테고리 경로 아래의 룰은 로드하지 않는다. `common/` 과 `<platform>/` 양쪽에 적용한다 (예: `scope-functions` → `rules/common/scope-functions/`, `ui/view` → `rules/android/ui/view/`).
 
 룰 ID 는 `rules/` 기준 상대 경로(확장자 제외)다 (예: `common/null-safety/safe-cast`). frontmatter 의 `applies_to` glob 에 해당하는 파일에만 적용하고, `## 허용` 섹션에 해당하는 코드는 위반으로 보고하지 않는다.
 

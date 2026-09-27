@@ -51,13 +51,17 @@ def main() -> int:
 
     # ponytail: applies_to 로 파일별 필터링하지 않고 common + platform 룰 전체를 전달한다. 룰이 많아지면 여기서 glob 필터링을 추가한다.
     dirs = [rules_root / "common"] + ([rules_root / platform] if platform else [])
-    excluded = set(cfg.get("excludeCategories", []))
-    unknown = excluded - {c.name for d in dirs if d.is_dir() for c in d.iterdir() if c.is_dir()}
+    # 카테고리는 하위 경로로도 지정할 수 있다 (예: "ui" 는 ui/ 전체, "ui/view" 는 ui/view/ 만)
+    excluded = {c.strip("/") for c in cfg.get("excludeCategories", [])}
+    unknown = {c for c in excluded if not any((d / c).is_dir() for d in dirs)}
     if unknown:
         print(f"kotlin-harness: 없는 카테고리 {sorted(unknown)} (excludeCategories)", file=sys.stderr)
         return 1
 
-    rules = [r for d in dirs for r in sorted(d.rglob("*.md")) if r.relative_to(d).parts[0] not in excluded]
+    rules = [
+        r for d in dirs for r in sorted(d.rglob("*.md"))
+        if not any(r.relative_to(d).as_posix().startswith(c + "/") for c in excluded)
+    ]
     if not rules:
         return 0
 

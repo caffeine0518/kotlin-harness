@@ -55,7 +55,7 @@ claude --plugin-dir <이 리포 경로>
 | 키 | 설명 |
 |---|---|
 | `platform` | 기본값은 자동 판정(`android` 또는 platform 없음). platform 이 없으면 common 룰만 적용한다 |
-| `excludeCategories` | 적용하지 않을 카테고리 목록 (선택). `rules/common/` 과 `rules/<platform>/` 에 같은 이름의 카테고리가 있으면 둘 다 제외한다. 없는 이름을 적으면 오류가 발생한다. 새로 추가된 카테고리는 자동으로 적용된다 |
+| `excludeCategories` | 적용하지 않을 카테고리 경로 목록 (선택). `ui` 는 `ui/` 아래 전체, `ui/view` 는 `ui/view/` 만 제외한다. `rules/common/` 과 `rules/<platform>/` 에 같은 경로가 있으면 둘 다 제외한다. 없는 이름을 적으면 오류가 발생한다. 새로 추가된 카테고리는 자동으로 적용된다 |
 | `review.autoFix` | 기본값 `true`. `/kotlin-harness:gate` 가 위반을 수정하고 커밋한다. `false` 이면 수정하지 않는다. 두 경우 모두 리포트와 검수는 실행한다 |
 | `review.onWrite` | 기본값 `false`. `true` 이면 Claude 가 `.kt`/`.kts` 를 수정할 때마다 룰 확인을 요청한다. 모든 프로젝트에서 훅이 실행되지 않도록 설정 파일로만 활성화할 수 있다 |
 
