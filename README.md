@@ -38,6 +38,12 @@
 | 전체 프로젝트 | `/kotlin-harness:review project` |
 | 파일 하나 | `/kotlin-harness:review file <경로>` |
 
+## 리뷰 리포트
+
+`/kotlin-harness:review` 를 실행하면 결과를 `.claude/kotlin-harness/reports/<일시>-<범위>.md` 에 작성한다. 리포트에는 룰별 집계, 위반마다 위치·코드·근거 문서·수정 제안, `## 허용` 에 해당해 제외한 코드가 포함된다. 리포트를 커밋하지 않으려면 프로젝트의 `.gitignore` 에 `.claude/kotlin-harness/reports/` 를 추가한다.
+
+`onWrite` 훅은 리포트를 작성하지 않는다.
+
 ## 룰 추가
 
 `rules/common/` (모든 platform) 또는 `rules/<platform>/` 에 카테고리 디렉터리를 만들고 룰마다 마크다운 파일 하나를 추가한다. `rules/` 기준 상대 경로가 룰 ID 다 (예: `rules/common/null-safety/safe-cast.md` → `common/null-safety/safe-cast`).

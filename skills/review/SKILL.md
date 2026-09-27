@@ -38,14 +38,65 @@ context: fork
 
 룰 ID 는 `rules/` 기준 상대 경로(확장자 제외)다 (예: `common/null-safety/safe-cast`). frontmatter 의 `applies_to` glob 에 해당하는 파일에만 적용하고, `## 허용` 섹션에 해당하는 코드는 위반으로 보고하지 않는다.
 
-## 4. 결과 보고
+## 4. 리포트 작성
 
-파일을 수정하지 않는다. 위반을 severity(`error` → `warning`) 순으로 정렬해 아래 형식으로 보고한다.
+소스 파일은 수정하지 않는다. 리뷰 결과를 프로젝트 루트의 `.claude/kotlin-harness/reports/<YYYYMMDD-HHMMSS>-<범위>.md` 에 아래 형식으로 작성한다 (예: `20260927-153000-branch.md`). 위반이 없어도 리포트를 작성한다.
+
+````markdown
+# kotlin-harness 리뷰 리포트
+
+- 일시: 2026-09-27 15:30
+- 범위: branch (base `main`, `a1b2c3d..e4f5g6h`)
+- platform: android
+- 제외한 카테고리: scope-functions (없으면 `없음`)
+- 대상 파일: 12개 / 적용한 룰: 34개
+- 결과: error 2건, warning 5건
+
+## 룰별 집계
+
+| 룰 ID | severity | 건수 |
+|---|---|---|
+| common/coroutines/global-scope | error | 2 |
+| common/null-safety/not-null-assertion | warning | 3 |
+
+## 위반 목록
+
+### 1. [error] common/coroutines/global-scope
+
+- 위치: `app/src/main/.../SyncManager.kt:42`
+- 규칙: 룰 파일의 `#` 제목
+- 근거: 룰의 `source` URL
+
+```kotlin
+// 위반한 코드. 앞뒤 2줄 정도를 포함한다
+```
+
+- 위반 내용: 이 코드가 룰을 위반하는 이유 한두 줄
+- 수정 제안:
+
+```kotlin
+// 수정한 코드
+```
+
+## 허용으로 제외한 코드
+
+| 위치 | 룰 ID | 해당한 허용 조건 |
+|---|---|---|
+| `.../Foo.kt:10` | common/null-safety/not-null-assertion | 근거를 주석으로 적은 `!!` |
+````
+
+- 위반 목록은 severity(`error` → `warning`), 같은 severity 안에서는 파일 경로·줄 번호 순으로 정렬한다.
+- 룰에 해당하는 코드였지만 `## 허용` 에 해당해 보고하지 않은 코드는 `허용으로 제외한 코드` 에 기록한다. 없으면 이 섹션을 생략한다.
+
+## 5. 결과 출력
+
+리포트 경로와 요약만 출력한다.
 
 ```
-[error] app/src/main/.../Foo.kt:42  common/null-safety/safe-cast
-  위반 내용 한 줄
-  수정 제안 한 줄
+리포트: .claude/kotlin-harness/reports/20260927-153000-branch.md
+error 2건, warning 5건 (파일 12개, 룰 34개)
+[error] app/src/main/.../SyncManager.kt:42  common/coroutines/global-scope
+...
 ```
 
-위반이 없으면 `위반 없음 (룰 N개, 파일 M개)` 만 출력한다.
+위반 목록은 한 줄씩만 출력하고, 코드와 수정 제안은 리포트에만 적는다.
