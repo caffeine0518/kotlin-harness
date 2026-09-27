@@ -25,7 +25,7 @@
 |---|---|
 | `platform` | `rules/` 아래 platform 디렉터리 이름. 현재 `android` |
 | `excludeCategories` | 적용하지 않을 카테고리 목록 (선택). `rules/common/` 과 `rules/<platform>/` 에 같은 이름의 카테고리가 있으면 둘 다 제외한다. 없는 이름을 적으면 오류가 발생한다. 새로 추가된 카테고리는 자동으로 적용된다 |
-| `review.autoFix` | 기본값 `true`. `/kotlin-harness:review` 가 위반을 수정하고 커밋한다. `false` 이면 수정하지 않는다. 두 경우 모두 리포트와 검수는 실행한다 |
+| `review.autoFix` | 기본값 `true`. `/kotlin-harness:rule-check` 가 위반을 수정하고 커밋한다. `false` 이면 수정하지 않는다. 두 경우 모두 리포트와 검수는 실행한다 |
 | `review.onWrite` | `true` 이면 Claude 가 `.kt`/`.kts` 를 수정할 때마다 룰 확인을 요청한다 |
 
 ## 리뷰 시점
@@ -33,15 +33,15 @@
 | 시점 | 방법 |
 |---|---|
 | Claude 가 코드를 쓸 때마다 | `review.onWrite: true` — `.kt`/`.kts` 수정 직후 룰 확인·수정을 Claude 에 요청 |
-| 커밋되지 않은 변경 | `/kotlin-harness:review diff` |
-| 브랜치 | `/kotlin-harness:review branch [base]` |
-| PR | `/kotlin-harness:review pr [번호]` |
-| 전체 프로젝트 | `/kotlin-harness:review project` |
-| 파일 하나 | `/kotlin-harness:review file <경로>` |
+| 커밋되지 않은 변경 | `/kotlin-harness:rule-check diff` |
+| 브랜치 | `/kotlin-harness:rule-check branch [base]` |
+| PR | `/kotlin-harness:rule-check pr [번호]` |
+| 전체 프로젝트 | `/kotlin-harness:rule-check project` |
+| 파일 하나 | `/kotlin-harness:rule-check file <경로>` |
 
 ## 위반 수정과 리포트
 
-`/kotlin-harness:review` 는 기본적으로 위반을 수정하고 커밋한다.
+`/kotlin-harness:rule-check` 는 기본적으로 위반을 수정하고 커밋한다.
 
 - 수정 방법이 하나로 정해지는 위반만 수정한다. 기본값을 쓸지 예외를 발생시킬지처럼 판단이 필요한 위반은 리포트에만 남긴다.
 - 같은 이유로 수정한 변경을 커밋 하나로 묶고, 커밋 메시지는 룰을 모르는 사람도 알 수 있게 평문으로 적는다. 룰 ID 는 커밋 메시지에 적지 않는다.

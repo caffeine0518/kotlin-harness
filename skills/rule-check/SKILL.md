@@ -1,5 +1,5 @@
 ---
-name: review
+name: rule-check
 description: kotlin-harness 룰로 코틀린 코드를 리뷰하고, 위반을 수정해 커밋한다. 범위는 file <경로> | diff | branch [base] | pr [번호] | project 중 하나.
 argument-hint: "[file <path> | diff | branch [base] | pr [number] | project]"
 ---
@@ -24,11 +24,11 @@ argument-hint: "[file <path> | diff | branch [base] | pr [number] | project]"
 
 ## 3. 리뷰
 
-general-purpose 에이전트를 실행한다. 프롬프트에 `${CLAUDE_PLUGIN_ROOT}/skills/review/reviewer.md` 를 읽고 따르라고 적고, 범위와 인자, 플러그인 경로 `${CLAUDE_PLUGIN_ROOT}`, 1단계의 설정, 2단계의 값을 전달한다.
+general-purpose 에이전트를 실행한다. 프롬프트에 `${CLAUDE_PLUGIN_ROOT}/skills/rule-check/reviewer.md` 를 읽고 따르라고 적고, 범위와 인자, 플러그인 경로 `${CLAUDE_PLUGIN_ROOT}`, 1단계의 설정, 2단계의 값을 전달한다.
 
 ## 4. 검수
 
-리뷰 에이전트가 끝나면 새 general-purpose 에이전트를 실행한다. 프롬프트에 `${CLAUDE_PLUGIN_ROOT}/skills/review/verifier.md` 를 읽고 따르라고 적고, 3단계와 같은 값과 검수 회차를 전달한다. 리뷰 에이전트의 반환 내용은 전달하지 않는다. 검수는 리포트·코드·git 이력만 근거로 해야 한다.
+리뷰 에이전트가 끝나면 새 general-purpose 에이전트를 실행한다. 프롬프트에 `${CLAUDE_PLUGIN_ROOT}/skills/rule-check/verifier.md` 를 읽고 따르라고 적고, 3단계와 같은 값과 검수 회차를 전달한다. 리뷰 에이전트의 반환 내용은 전달하지 않는다. 검수는 리포트·코드·git 이력만 근거로 해야 한다.
 
 ## 5. 검수 결과 반영
 
