@@ -1,6 +1,11 @@
 {
   "name": "kotlin-harness",
-  "owner": { "name": "joe" },
+  "owner": {
+    "name": "joe"
+  },
+  "metadata": {
+    "description": "룰 기반 코틀린 프로젝트 리뷰 하네스"
+  },
   "plugins": [
     {
       "name": "kotlin-harness",

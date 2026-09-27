@@ -4,9 +4,29 @@
 
 ## 설치
 
+`python3` 가 PATH 에 있어야 한다. 코드를 쓸 때마다 룰을 확인하는 훅(`onWrite`)이 Python 으로 실행된다. 없으면 훅은 오류 없이 건너뛰고, `/kotlin-harness:gate` 는 그대로 동작한다.
+
+### Claude Code
+
 ```
-/plugin marketplace add <이 리포 경로 또는 git URL>
+/plugin marketplace add caffeine0518/kotlin-harness
 /plugin install kotlin-harness@kotlin-harness
+```
+
+private 리포이므로 리포 접근 권한이 있고, git 에 GitHub 인증이 되어 있어야 한다.
+
+업데이트:
+
+```
+/plugin marketplace update kotlin-harness
+```
+
+### 플러그인 개발
+
+설치하지 않고 로컬 경로를 직접 불러온다. 플러그인을 수정한 뒤 세션을 다시 시작하면 반영된다.
+
+```
+claude --plugin-dir <이 리포 경로>
 ```
 
 ## 프로젝트 설정
