@@ -57,6 +57,7 @@ source: https://...      # 근거 문서. common 룰은 공식 문서만 허용
 | coroutines | `cancel-custom-scope`, `cooperative-cancellation`, `global-scope`, `rethrow-cancellation-exception`, `run-blocking-in-suspend`, `shared-mutable-state` |
 | types | `closed-state-as-sealed`, `data-class-body-property`, `enum-lookup-or-null`, `value-class-over-typealias`, `when-else-on-sealed` |
 | scope-functions | `context-object-reference`, `let-elvis-null-result`, `nested-lambda-implicit-it`, `nested-scope-functions`, `scope-function-return-value` |
+| collections | `combined-transformation`, `empty-collection-element`, `filter-then-terminal`, `remove-while-iterating`, `sequence-for-multi-step-chain`, `sorted-by-descending` |
 
 새 platform(ktor·kmp 등)은 `rules/<platform>/` 디렉터리를 만들고 설정의 `platform` 값을 그 이름으로 지정한다.
 
