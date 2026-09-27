@@ -17,6 +17,7 @@ argument-hint: "[file <path> | diff | branch [base] | pr [number] | project]"
 | `platform` | 자동 판정. 루트와 모듈 한 단계의 `build.gradle`·`build.gradle.kts` 에 `com.android.application`·`com.android.library`·`android.application`·`android.library` 가 있으면 `android`, 없으면 platform 없음(common 룰만 적용) |
 | `excludeCategories` | 없음 |
 | `review.autoFix` | `true` |
+| `review.redCommit` | `false` |
 
 - git 리포에 `.kt`·`.kts` 파일이 하나도 없으면 코틀린 프로젝트가 아니라고 알리고 중단한다.
 - `platform` 을 지정했는데 `${CLAUDE_PLUGIN_ROOT}/rules/<platform>/` 이 없으면 지원하지 않는 platform 이라고 알리고 중단한다.
@@ -31,7 +32,7 @@ argument-hint: "[file <path> | diff | branch [base] | pr [number] | project]"
 
 ## 3. 리뷰
 
-general-purpose 에이전트를 실행한다. 프롬프트에 `${CLAUDE_PLUGIN_ROOT}/skills/gate/reviewer.md` 를 읽고 따르라고 적고, 범위와 인자, 플러그인 경로 `${CLAUDE_PLUGIN_ROOT}`, 1단계의 설정, 2단계의 값을 전달한다.
+general-purpose 에이전트를 실행한다. 프롬프트에 `${CLAUDE_PLUGIN_ROOT}/skills/gate/reviewer.md` 를 읽고 따르라고 적고, 범위와 인자, 플러그인 경로 `${CLAUDE_PLUGIN_ROOT}`, 1단계의 설정(`redCommit` 포함), 2단계의 값을 전달한다.
 
 ## 4. 검수
 
