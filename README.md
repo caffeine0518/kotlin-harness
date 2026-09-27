@@ -15,11 +15,19 @@
 
 private 리포이므로 리포 접근 권한이 있고, git 에 GitHub 인증이 되어 있어야 한다.
 
-업데이트:
+### 업데이트
 
 ```
-/plugin marketplace update kotlin-harness
+/kotlin-harness:update
 ```
+
+최신 버전으로 업데이트하고 변경 내역([CHANGELOG.md](CHANGELOG.md))을 보여 준다. 적용하려면 Claude Code 를 다시 시작한다.
+
+자동으로 받으려면 `/plugin` → Marketplaces → kotlin-harness → **Enable auto-update** 를 선택한다. 서드파티 marketplace 는 기본값이 꺼져 있다. private 리포라 백그라운드 업데이트에는 git 에 저장된 인증 정보가 필요하다. HTTPS 는 `gh auth login` 후 `gh auth setup-git`, SSH 는 `ssh-agent` 에 키를 등록한다.
+
+### 릴리스 (플러그인 관리자)
+
+`.claude-plugin/plugin.json` 의 `version` 을 올리고 `CHANGELOG.md` 에 섹션을 추가한 뒤 푸시한다. `version` 이 바뀌지 않으면 사용자에게 업데이트가 전달되지 않는다.
 
 ### 플러그인 개발
 
