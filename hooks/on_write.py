@@ -30,7 +30,7 @@ def main() -> int:
         return 1
 
     # ponytail: applies_to 로 파일별 필터링하지 않고 common + platform 룰 전체를 전달한다. 룰이 많아지면 여기서 glob 필터링을 추가한다.
-    rules = sorted((rules_root / "common").glob("*.md")) + sorted((rules_root / platform).glob("*.md"))
+    rules = sorted((rules_root / "common").rglob("*.md")) + sorted((rules_root / platform).rglob("*.md"))
     if not rules:
         return 0
 

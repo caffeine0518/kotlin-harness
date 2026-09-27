@@ -30,20 +30,28 @@
 
 ## 룰 추가
 
-`rules/common/` (모든 platform) 또는 `rules/<platform>/` 에 마크다운 파일 하나를 추가한다. 파일명이 룰 ID 다.
+`rules/common/` (모든 platform) 또는 `rules/<platform>/` 에 카테고리 디렉터리를 만들고 룰마다 마크다운 파일 하나를 추가한다. `rules/` 기준 상대 경로가 룰 ID 다 (예: `rules/common/null-safety/safe-cast.md` → `common/null-safety/safe-cast`).
 
 ```markdown
 ---
-severity: error          # error | warning
+severity: error          # error: 버그·누수로 이어짐 | warning: 그 외
 applies_to: "**/*.kt"    # 적용 대상 glob
+source: https://...      # 근거 문서. common 룰은 공식 문서만 허용
 ---
 
 # 규칙 한 줄
 
 ## 이유
-## 위반
-## 수정
+## 위반     # don't
+## 수정     # do
+## 허용     # 위반으로 보지 않는 경우 (선택)
 ```
+
+린터(ktlint·detekt)가 검사하는 네이밍·포맷팅 항목은 룰로 추가하지 않는다.
+
+| 카테고리 | 룰 |
+|---|---|
+| null-safety | `not-null-assertion`, `platform-type-explicit`, `nullable-boolean-condition`, `safe-cast`, `filter-not-null` |
 
 새 platform(ktor·kmp 등)은 `rules/<platform>/` 디렉터리를 만들고 설정의 `platform` 값을 그 이름으로 지정한다.
 

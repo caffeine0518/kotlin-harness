@@ -24,8 +24,8 @@ def write_cfg(project: Path, cfg: dict) -> None:
 with tempfile.TemporaryDirectory() as d:
     p = Path(d)
     (p / "rules" / "common").mkdir(parents=True)
-    (p / "rules" / "android").mkdir()
-    (p / "rules" / "android" / "sample-rule.md").write_text("---\nseverity: error\n---\n")
+    (p / "rules" / "android" / "category").mkdir(parents=True)
+    (p / "rules" / "android" / "category" / "sample-rule.md").write_text("---\nseverity: error\n---\n")
 
     # 설정 파일이 없으면 출력 없음
     assert run(p, "A.kt").stdout == ""
@@ -34,7 +34,7 @@ with tempfile.TemporaryDirectory() as d:
     write_cfg(p, {"platform": "android", "review": {"onWrite": False}})
     assert run(p, "A.kt").stdout == ""
 
-    # onWrite 활성화: .kt 는 룰 목록 포함, 그 외 파일은 무시
+    # onWrite 활성화: .kt 는 카테고리 하위 룰까지 목록에 포함, 그 외 파일은 무시
     write_cfg(p, {"platform": "android", "review": {"onWrite": True}})
     out = json.loads(run(p, "FooViewModel.kt").stdout)
     assert "sample-rule.md" in out["hookSpecificOutput"]["additionalContext"]

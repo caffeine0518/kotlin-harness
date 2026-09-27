@@ -31,17 +31,17 @@ context: fork
 
 ## 3. 룰 로드
 
-- `${CLAUDE_PLUGIN_ROOT}/rules/common/*.md`
-- `${CLAUDE_PLUGIN_ROOT}/rules/<platform>/*.md`
+- `${CLAUDE_PLUGIN_ROOT}/rules/common/**/*.md`
+- `${CLAUDE_PLUGIN_ROOT}/rules/<platform>/**/*.md`
 
-룰 ID 는 파일명(확장자 제외)이다. frontmatter 의 `applies_to` glob 에 해당하는 파일에만 적용한다.
+룰 ID 는 `rules/` 기준 상대 경로(확장자 제외)다 (예: `common/null-safety/safe-cast`). frontmatter 의 `applies_to` glob 에 해당하는 파일에만 적용하고, `## 허용` 섹션에 해당하는 코드는 위반으로 보고하지 않는다.
 
 ## 4. 결과 보고
 
 파일을 수정하지 않는다. 위반을 severity(`error` → `warning`) 순으로 정렬해 아래 형식으로 보고한다.
 
 ```
-[error] app/src/main/.../Foo.kt:42  android/<룰 ID>
+[error] app/src/main/.../Foo.kt:42  common/null-safety/safe-cast
   위반 내용 한 줄
   수정 제안 한 줄
 ```
