@@ -30,3 +30,4 @@ val empty = emptyList<String>()
 
 - 생성 뒤 같은 스코프에서 요소를 추가·삭제·수정하는 경우. 구성 과정만 가변이면 `buildList`·`buildMap` 도 쓸 수 있다.
 - 변수나 프로퍼티의 선언 타입이 가변 타입이고, 그 타입이 필요한 API 에 전달하는 경우
+- 선언한 파일 밖에서 요소를 변경할 수 있는 `public`·`internal`·`protected` 프로퍼티. 변경 여부를 리뷰 대상 파일만으로 판정할 수 없다. 클래스 안에서 변경하는 경우는 `common/immutability/expose-read-only-view` 로 보고한다.
