@@ -40,6 +40,17 @@ with tempfile.TemporaryDirectory() as d:
     assert "sample-rule.md" in out["hookSpecificOutput"]["additionalContext"]
     assert run(p, "README.md").stdout == ""
 
+    # excludeCategories: 제외한 카테고리의 룰은 목록에서 제외
+    (p / "rules" / "common" / "other").mkdir()
+    (p / "rules" / "common" / "other" / "other-rule.md").write_text("---\nseverity: warning\n---\n")
+    write_cfg(p, {"platform": "android", "excludeCategories": ["category"], "review": {"onWrite": True}})
+    ctx = json.loads(run(p, "A.kt").stdout)["hookSpecificOutput"]["additionalContext"]
+    assert "other-rule.md" in ctx and "sample-rule.md" not in ctx
+
+    # 없는 카테고리 이름은 exit 1
+    write_cfg(p, {"platform": "android", "excludeCategories": ["nope"], "review": {"onWrite": True}})
+    assert run(p, "A.kt").returncode == 1
+
     # 지원하지 않는 platform 은 exit 1
     write_cfg(p, {"platform": "nope", "review": {"onWrite": True}})
     assert run(p, "A.kt").returncode == 1

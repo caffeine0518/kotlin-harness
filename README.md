@@ -14,8 +14,18 @@
 프로젝트에 `.claude/kotlin-harness.json` 을 생성한다. 이 파일이 없으면 자동 리뷰는 동작하지 않는다.
 
 ```json
-{ "platform": "android", "review": { "onWrite": true } }
+{
+  "platform": "android",
+  "excludeCategories": ["scope-functions"],
+  "review": { "onWrite": true }
+}
 ```
+
+| 키 | 설명 |
+|---|---|
+| `platform` | `rules/` 아래 platform 디렉터리 이름. 현재 `android` |
+| `excludeCategories` | 적용하지 않을 카테고리 목록 (선택). `rules/common/` 과 `rules/<platform>/` 에 같은 이름의 카테고리가 있으면 둘 다 제외한다. 없는 이름을 적으면 오류가 발생한다. 새로 추가된 카테고리는 자동으로 적용된다 |
+| `review.onWrite` | `true` 이면 Claude 가 `.kt`/`.kts` 를 수정할 때마다 룰 확인을 요청한다 |
 
 ## 리뷰 시점
 

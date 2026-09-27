@@ -11,7 +11,7 @@ context: fork
 
 ## 1. 설정 확인
 
-프로젝트 루트의 `.claude/kotlin-harness.json` 에서 `platform` 을 읽는다. 파일이 없으면 아래 예시로 생성하라고 안내하고 중단한다.
+프로젝트 루트의 `.claude/kotlin-harness.json` 에서 `platform` 과 `excludeCategories`(선택)를 읽는다. 파일이 없으면 아래 예시로 생성하라고 안내하고 중단한다.
 
 ```json
 { "platform": "android", "review": { "onWrite": false } }
@@ -33,6 +33,8 @@ context: fork
 
 - `${CLAUDE_PLUGIN_ROOT}/rules/common/**/*.md`
 - `${CLAUDE_PLUGIN_ROOT}/rules/<platform>/**/*.md`
+
+`excludeCategories` 에 적힌 카테고리 디렉터리(예: `rules/common/scope-functions/`)의 룰은 로드하지 않는다. 두 디렉터리 어디에도 없는 카테고리 이름이 있으면 그 이름을 알리고 중단한다.
 
 룰 ID 는 `rules/` 기준 상대 경로(확장자 제외)다 (예: `common/null-safety/safe-cast`). frontmatter 의 `applies_to` glob 에 해당하는 파일에만 적용하고, `## 허용` 섹션에 해당하는 코드는 위반으로 보고하지 않는다.
 
