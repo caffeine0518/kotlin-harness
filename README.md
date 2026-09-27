@@ -118,13 +118,14 @@ source: https://...      # 근거 문서. common 룰은 공식 문서만 허용
 
 | 카테고리 | 룰 |
 |---|---|
-| null-safety | `not-null-assertion`, `platform-type-explicit`, `nullable-boolean-condition`, `safe-cast`, `filter-not-null` |
-| immutability | `data-class-mutable-collection`, `expose-read-only-view`, `prefer-val`, `read-only-collection-factory`, `read-only-collection-type` |
-| exceptions | `catch-order`, `error-function`, `exception-object-declaration`, `nothing-return-type`, `precondition-functions`, `try-expression`, `use-for-closeable` |
-| coroutines | `cancel-custom-scope`, `cooperative-cancellation`, `global-scope`, `rethrow-cancellation-exception`, `run-blocking-in-suspend`, `shared-mutable-state` |
-| types | `closed-state-as-sealed`, `data-class-body-property`, `enum-lookup-or-null`, `value-class-over-typealias`, `when-else-on-sealed` |
-| scope-functions | `context-object-reference`, `let-elvis-null-result`, `nested-lambda-implicit-it`, `nested-scope-functions`, `scope-function-return-value` |
-| collections | `combined-transformation`, `empty-collection-element`, `filter-then-terminal`, `remove-while-iterating`, `sequence-for-multi-step-chain`, `sorted-by-descending` |
+| common/null-safety | `not-null-assertion`, `platform-type-explicit`, `nullable-boolean-condition`, `safe-cast`, `filter-not-null` |
+| common/immutability | `data-class-mutable-collection`, `expose-read-only-view`, `prefer-val`, `read-only-collection-factory`, `read-only-collection-type` |
+| common/exceptions | `catch-order`, `error-function`, `exception-object-declaration`, `nothing-return-type`, `precondition-functions`, `try-expression`, `use-for-closeable` |
+| common/coroutines | `cancel-custom-scope`, `cooperative-cancellation`, `global-scope`, `rethrow-cancellation-exception`, `run-blocking-in-suspend`, `shared-mutable-state` |
+| common/types | `closed-state-as-sealed`, `data-class-body-property`, `enum-lookup-or-null`, `value-class-over-typealias`, `when-else-on-sealed` |
+| common/scope-functions | `context-object-reference`, `let-elvis-null-result`, `nested-lambda-implicit-it`, `nested-scope-functions`, `scope-function-return-value` |
+| common/collections | `combined-transformation`, `empty-collection-element`, `filter-then-terminal`, `remove-while-iterating`, `sequence-for-multi-step-chain`, `sorted-by-descending` |
+| android/ui/view | `collect-with-lifecycle`, `fragment-binding-cleanup`, `fragment-view-reference`, `launch-when-deprecated`, `lifecycle-callback-collection` |
 
 새 platform(ktor·kmp 등)은 `rules/<platform>/` 디렉터리를 만들고 설정의 `platform` 값을 그 이름으로 지정한다.
 
