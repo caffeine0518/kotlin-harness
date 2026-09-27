@@ -11,7 +11,7 @@
 |---|---|---|
 | `file <경로>` | — | 파일 전체 |
 | `diff` | `git diff HEAD` + `git ls-files --others --exclude-standard` | 커밋되지 않은 변경 줄 |
-| `branch [base]` | `git diff $(git merge-base <base> HEAD)` (base 기본값 `main`) | 브랜치에서 변경된 줄 |
+| `branch [base]` | `git diff $(git merge-base <base> HEAD)` (base 기본값은 `git symbolic-ref --short refs/remotes/origin/HEAD` 의 브랜치, 없으면 `main`) | 브랜치에서 변경된 줄 |
 | `pr [번호]` | `gh pr diff [번호]` (번호가 없으면 현재 브랜치의 PR) | PR 에서 변경된 줄 |
 | `project` | `git ls-files '*.kt' '*.kts'` | 파일 전체 |
 
@@ -20,9 +20,10 @@
 ## 2. 룰 로드
 
 - `<플러그인 경로>/rules/common/**/*.md`
-- `<플러그인 경로>/rules/<platform>/**/*.md`
+- `<플러그인 경로>/rules/<platform>/**/*.md` (platform 이 없으면 로드하지 않는다)
 
-`excludeCategories` 에 적힌 카테고리 디렉터리(예: `rules/common/scope-functions/`)의 룰은 로드하지 않는다. 
+`excludeCategories` 에 적힌 카테고리 디렉터리(예: `rules/common/scope-functions/`)의 룰은 로드하지 않는다.
+
 룰 ID 는 `rules/` 기준 상대 경로(확장자 제외)다 (예: `common/null-safety/safe-cast`). frontmatter 의 `applies_to` glob 에 해당하는 파일에만 적용하고, `## 허용` 섹션에 해당하는 코드는 위반으로 보고하지 않는다.
 
 ## 3. 위반 수정과 커밋
@@ -74,7 +75,7 @@ fix: common/null-safety/not-null-assertion 위반 수정 (Sample.kt:3, 6)
 - 일시: 2026-09-27 15:30
 - 범위: branch (base `main`, `a1b2c3d..e4f5g6h`)
 - 시작 커밋: `e4f5g6h` / 작업 중인 파일: 없음
-- platform: android
+- platform: android (자동 판정) / 설정 파일: 없음
 - 제외한 카테고리: scope-functions (없으면 `없음`)
 - 대상 파일: 12개 / 적용한 룰: 34개
 - 결과: error 2건, warning 5건

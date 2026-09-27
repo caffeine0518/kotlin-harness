@@ -10,17 +10,24 @@ argument-hint: "[file <path> | diff | branch [base] | pr [number] | project]"
 
 ## 1. 설정 확인
 
-프로젝트 루트의 `.claude/kotlin-harness.json` 에서 `platform`, `excludeCategories`(선택), `review.autoFix`(선택, 기본값 `true`)를 읽는다. 파일이 없으면 아래 예시로 생성하라고 안내하고 중단한다. `excludeCategories` 에 `${CLAUDE_PLUGIN_ROOT}/rules/common/` 과 `rules/<platform>/` 어디에도 없는 카테고리 이름이 있으면 그 이름을 알리고 중단한다.
+프로젝트 루트의 `.claude/kotlin-harness.json` 을 읽는다. 파일이 없거나 키가 없으면 아래 기본값을 쓴다. 설정 파일을 만들지 않는다.
 
-```json
-{ "platform": "android", "review": { "onWrite": false } }
-```
+| 키 | 기본값 |
+|---|---|
+| `platform` | 자동 판정. 루트와 모듈 한 단계의 `build.gradle`·`build.gradle.kts` 에 `com.android.application`·`com.android.library`·`android.application`·`android.library` 가 있으면 `android`, 없으면 platform 없음(common 룰만 적용) |
+| `excludeCategories` | 없음 |
+| `review.autoFix` | `true` |
+
+- git 리포에 `.kt`·`.kts` 파일이 하나도 없으면 코틀린 프로젝트가 아니라고 알리고 중단한다.
+- `platform` 을 지정했는데 `${CLAUDE_PLUGIN_ROOT}/rules/<platform>/` 이 없으면 지원하지 않는 platform 이라고 알리고 중단한다.
+- `excludeCategories` 에 `${CLAUDE_PLUGIN_ROOT}/rules/common/` 과 `rules/<platform>/` 어디에도 없는 카테고리 이름이 있으면 그 이름을 알리고 중단한다.
 
 ## 2. 시작 상태 기록
 
 - 시작 커밋: `git rev-parse HEAD` (git 리포가 아니면 `없음`)
 - 작업 중인 파일: `git status --porcelain` 에 나온 `.kt`·`.kts` 파일
 - 리포트 경로: `.claude/kotlin-harness/reports/<YYYYMMDD-HHMMSS>-<범위>.md` (프로젝트 루트 기준, `date +%Y%m%d-%H%M%S`)
+- `.claude/kotlin-harness/.gitignore` 가 없으면 내용 `*` 로 만든다. 리포트가 git 에 나타나지 않게 하기 위해서다.
 
 ## 3. 리뷰
 

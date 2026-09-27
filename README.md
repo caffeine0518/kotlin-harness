@@ -29,9 +29,20 @@ private 리포이므로 리포 접근 권한이 있고, git 에 GitHub 인증이
 claude --plugin-dir <이 리포 경로>
 ```
 
-## 프로젝트 설정
+## 사용
 
-프로젝트에 `.claude/kotlin-harness.json` 을 생성한다. 이 파일이 없으면 자동 리뷰는 동작하지 않는다.
+설치 후 코틀린 프로젝트에서 바로 실행한다. 설정 파일은 필요 없다.
+
+```
+/kotlin-harness:gate branch
+```
+
+- platform 은 `build.gradle`·`build.gradle.kts` 의 Android Gradle 플러그인으로 자동 판정한다.
+- 리포트 디렉터리(`.claude/kotlin-harness/`)에 `.gitignore` 를 자동으로 만들어, 리포트가 git 에 나타나지 않는다.
+
+## 프로젝트 설정 (선택)
+
+기본값을 바꿀 때만 `.claude/kotlin-harness.json` 을 만든다.
 
 ```json
 {
@@ -43,10 +54,10 @@ claude --plugin-dir <이 리포 경로>
 
 | 키 | 설명 |
 |---|---|
-| `platform` | `rules/` 아래 platform 디렉터리 이름. 현재 `android` |
+| `platform` | 기본값은 자동 판정(`android` 또는 platform 없음). platform 이 없으면 common 룰만 적용한다 |
 | `excludeCategories` | 적용하지 않을 카테고리 목록 (선택). `rules/common/` 과 `rules/<platform>/` 에 같은 이름의 카테고리가 있으면 둘 다 제외한다. 없는 이름을 적으면 오류가 발생한다. 새로 추가된 카테고리는 자동으로 적용된다 |
 | `review.autoFix` | 기본값 `true`. `/kotlin-harness:gate` 가 위반을 수정하고 커밋한다. `false` 이면 수정하지 않는다. 두 경우 모두 리포트와 검수는 실행한다 |
-| `review.onWrite` | `true` 이면 Claude 가 `.kt`/`.kts` 를 수정할 때마다 룰 확인을 요청한다 |
+| `review.onWrite` | 기본값 `false`. `true` 이면 Claude 가 `.kt`/`.kts` 를 수정할 때마다 룰 확인을 요청한다. 모든 프로젝트에서 훅이 실행되지 않도록 설정 파일로만 활성화할 수 있다 |
 
 ## 리뷰 시점
 
@@ -80,7 +91,7 @@ claude --plugin-dir <이 리포 경로>
 
 검수에서 문제가 나오면 새 에이전트가 문제를 반영한 뒤 한 번 더 검수한다. 2회차에도 남은 문제는 리포트의 `검수 결과` 섹션에 기록하고 사용자에게 알린다.
 
-리뷰 결과는 `.claude/kotlin-harness/reports/<일시>-<범위>.md` 에 작성한다. 리포트에는 룰별 집계, 위반마다 위치·코드·근거 문서·수정 제안·처리 결과(커밋 해시 또는 수정하지 않은 이유), `## 허용` 에 해당해 제외한 코드가 포함된다. 리포트를 커밋하지 않으려면 프로젝트의 `.gitignore` 에 `.claude/kotlin-harness/reports/` 를 추가한다.
+리뷰 결과는 `.claude/kotlin-harness/reports/<일시>-<범위>.md` 에 작성한다. 리포트에는 룰별 집계, 위반마다 위치·코드·근거 문서·수정 제안·처리 결과(커밋 해시 또는 수정하지 않은 이유), `## 허용` 에 해당해 제외한 코드가 포함된다.
 
 `onWrite` 훅으로 확인한 결과는 `.claude/kotlin-harness/reports/<YYYYMMDD>-onwrite.md` 에 확인할 때마다 한 행씩 기록한다. 위반이 없어도 기록한다.
 

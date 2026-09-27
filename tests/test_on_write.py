@@ -52,6 +52,18 @@ with tempfile.TemporaryDirectory() as d:
     write_cfg(p, {"platform": "android", "excludeCategories": ["nope"], "review": {"onWrite": True}})
     assert run(p, "A.kt").returncode == 1
 
+    # platform 생략: Android Gradle 플러그인이 있으면 android 룰 포함, 없으면 common 룰만
+    write_cfg(p, {"review": {"onWrite": True}})
+    ctx = json.loads(run(p, "A.kt").stdout)["hookSpecificOutput"]["additionalContext"]
+    assert "other-rule.md" in ctx and "sample-rule.md" not in ctx
+    (p / "app").mkdir()
+    (p / "app" / "build.gradle.kts").write_text('plugins { alias(libs.plugins.android.application) }')
+    ctx = json.loads(run(p, "A.kt").stdout)["hookSpecificOutput"]["additionalContext"]
+    assert "sample-rule.md" in ctx
+
+    # 리포트 디렉터리에 .gitignore 생성
+    assert (p / ".claude" / "kotlin-harness" / ".gitignore").read_text() == "*\n"
+
     # 지원하지 않는 platform 은 exit 1
     write_cfg(p, {"platform": "nope", "review": {"onWrite": True}})
     assert run(p, "A.kt").returncode == 1
