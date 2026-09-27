@@ -127,6 +127,7 @@ source: https://...      # 근거 문서. common 룰은 공식 문서만 허용
 | common/collections | `combined-transformation`, `empty-collection-element`, `filter-then-terminal`, `remove-while-iterating`, `sequence-for-multi-step-chain`, `sorted-by-descending` |
 | android/ui/view | `collect-with-lifecycle`, `fragment-binding-cleanup`, `fragment-view-reference`, `launch-when-deprecated`, `lifecycle-callback-collection` |
 | android/coroutines | `catch-exceptions-in-ui-scope`, `inject-dispatchers`, `inject-test-dispatchers`, `main-safe-suspend-function` |
+| android/ui/viewmodel | `android-view-model`, `event-as-ui-state`, `expose-mutable-state`, `lifecycle-reference`, `single-ui-state`, `suspend-function-exposure` |
 
 새 platform(ktor·kmp 등)은 `rules/<platform>/` 디렉터리를 만들고 설정의 `platform` 값을 그 이름으로 지정한다.
 
