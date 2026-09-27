@@ -25,6 +25,7 @@
 |---|---|
 | `platform` | `rules/` 아래 platform 디렉터리 이름. 현재 `android` |
 | `excludeCategories` | 적용하지 않을 카테고리 목록 (선택). `rules/common/` 과 `rules/<platform>/` 에 같은 이름의 카테고리가 있으면 둘 다 제외한다. 없는 이름을 적으면 오류가 발생한다. 새로 추가된 카테고리는 자동으로 적용된다 |
+| `review.autoFix` | 기본값 `true`. `/kotlin-harness:review` 가 위반을 수정하고 커밋한다. `false` 이면 리포트만 작성한다 |
 | `review.onWrite` | `true` 이면 Claude 가 `.kt`/`.kts` 를 수정할 때마다 룰 확인을 요청한다 |
 
 ## 리뷰 시점
@@ -38,9 +39,16 @@
 | 전체 프로젝트 | `/kotlin-harness:review project` |
 | 파일 하나 | `/kotlin-harness:review file <경로>` |
 
-## 리뷰 리포트
+## 위반 수정과 리포트
 
-`/kotlin-harness:review` 를 실행하면 결과를 `.claude/kotlin-harness/reports/<일시>-<범위>.md` 에 작성한다. 리포트에는 룰별 집계, 위반마다 위치·코드·근거 문서·수정 제안, `## 허용` 에 해당해 제외한 코드가 포함된다. 리포트를 커밋하지 않으려면 프로젝트의 `.gitignore` 에 `.claude/kotlin-harness/reports/` 를 추가한다.
+`/kotlin-harness:review` 는 기본적으로 위반을 수정하고 커밋한다.
+
+- 수정 방법이 하나로 정해지는 위반만 수정한다. 기본값을 쓸지 예외를 발생시킬지처럼 판단이 필요한 위반은 리포트에만 남긴다.
+- 같은 이유로 수정한 변경을 커밋 하나로 묶고, 커밋 메시지는 룰을 모르는 사람도 알 수 있게 평문으로 적는다. 룰 ID 는 커밋 메시지에 적지 않는다.
+- 리뷰를 시작할 때 커밋되지 않은 변경이 있던 파일은 수정만 하고 커밋하지 않는다. 작업 중인 변경이 함께 커밋되지 않게 하기 위해서다. 따라서 `diff` 범위에서는 대부분 커밋되지 않는다.
+- 푸시하지 않는다.
+
+리뷰 결과는 `.claude/kotlin-harness/reports/<일시>-<범위>.md` 에 작성한다. 리포트에는 룰별 집계, 위반마다 위치·코드·근거 문서·수정 제안·처리 결과(커밋 해시 또는 수정하지 않은 이유), `## 허용` 에 해당해 제외한 코드가 포함된다. 리포트를 커밋하지 않으려면 프로젝트의 `.gitignore` 에 `.claude/kotlin-harness/reports/` 를 추가한다.
 
 `onWrite` 훅은 리포트를 작성하지 않는다.
 
