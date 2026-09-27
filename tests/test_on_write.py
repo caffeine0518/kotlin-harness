@@ -38,6 +38,7 @@ with tempfile.TemporaryDirectory() as d:
     write_cfg(p, {"platform": "android", "review": {"onWrite": True}})
     out = json.loads(run(p, "FooViewModel.kt").stdout)
     assert "sample-rule.md" in out["hookSpecificOutput"]["additionalContext"]
+    assert "-onwrite.md" in out["hookSpecificOutput"]["additionalContext"]
     assert run(p, "README.md").stdout == ""
 
     # excludeCategories: 제외한 카테고리의 룰은 목록에서 제외
