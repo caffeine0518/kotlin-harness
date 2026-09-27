@@ -130,6 +130,7 @@ source: https://...      # 근거 문서. common 룰은 공식 문서만 허용
 | android/ui/viewmodel | `android-view-model`, `event-as-ui-state`, `expose-mutable-state`, `lifecycle-reference`, `single-ui-state`, `suspend-function-exposure` |
 | android/security | `deep-link-parameter-validation`, `hardcoded-secret`, `log-sensitive-data`, `sensitive-data-in-implicit-intent`, `sql-injection`, `store-user-password` |
 | android/data | `caller-bound-work-in-coroutine-scope`, `expose-suspend-and-flow`, `no-data-source-in-ui`, `separate-data-source-models` |
+| android/ui/compose | `backwards-write`, `collect-as-state-with-lifecycle`, `defer-state-read`, `effect-captured-value`, `empty-on-dispose`, `lazy-item-key`, `lifecycle-effect`, `remember-expensive-calculation`, `unnecessary-derived-state-of`, `viewmodel-parameter` |
 
 새 platform(ktor·kmp 등)은 `rules/<platform>/` 디렉터리를 만들고 설정의 `platform` 값을 그 이름으로 지정한다.
 
