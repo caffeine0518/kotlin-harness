@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.11.0
+- 룰 13개 추가
+  - `android/ui/compose`: `modifier` 파라미터(누락·기본값·위치, 적용 위치와 횟수, 여러 개), 컴포저블 이름, `remember` 접두사, UI 를 그리면서 값을 반환, 마지막 파라미터의 `@Composable` 이 아닌 람다, 컴포지션에서 코루틴 시작, 키 없는 `derivedStateOf` 에서 `State` 가 아닌 값 읽기
+  - `android/domain` (새 카테고리): use case 이름, use case 의 가변 상태
+  - `android/data`: 리포지토리·데이터 소스 이름, 노출하는 모델의 `var` 프로퍼티
+
 ## 0.10.0
 - 룰 10개 추가
   - `common/flow` (새 카테고리): `flow { }` 에서 다른 컨텍스트로 `emit`, 컬렉터 예외 무시, `collect { }` 람다 예외를 `catch` 로 처리, `onCompletion` 으로 실패 복구, 터미널 연산자 누락
