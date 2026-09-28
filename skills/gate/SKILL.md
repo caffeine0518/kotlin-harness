@@ -16,12 +16,16 @@ argument-hint: "[file <path> | diff | branch [base] | pr [number] | project]"
 |---|---|
 | `platform` | 자동 판정. 루트와 모듈 한 단계의 `build.gradle`·`build.gradle.kts` 에 `com.android.application`·`com.android.library`·`android.application`·`android.library` 가 있으면 `android`, 없으면 platform 없음(common 룰만 적용) |
 | `excludeCategories` | 없음 |
+| `excludeRules` | 없음 |
+| `projectRules` | 없음 |
 | `review.autoFix` | `true` |
 | `review.redCommit` | `true` |
 
 - git 리포에 `.kt`·`.kts` 파일이 하나도 없으면 코틀린 프로젝트가 아니라고 알리고 중단한다.
 - `platform` 을 지정했는데 `${CLAUDE_PLUGIN_ROOT}/rules/<platform>/` 이 없으면 지원하지 않는 platform 이라고 알리고 중단한다.
 - `excludeCategories` 의 값은 카테고리 경로다 (예: `ui` 는 `ui/` 전체, `ui/view` 는 `ui/view/` 만). `${CLAUDE_PLUGIN_ROOT}/rules/common/<경로>` 와 `rules/<platform>/<경로>` 가 모두 디렉터리가 아닌 값이 있으면 그 이름을 알리고 중단한다.
+- `excludeRules` 의 값은 플러그인 룰 ID 다 (예: `common/naming/meaningless-name`). `${CLAUDE_PLUGIN_ROOT}/rules/<룰 ID>.md` 가 없는 값이 있으면 그 이름을 알리고 중단한다.
+- `projectRules` 의 값은 프로젝트 루트 기준 디렉터리·파일 경로다 (예: `.claude/rules/kotlin`). 존재하지 않는 경로가 있으면 그 경로를 알리고 중단한다.
 
 ## 2. 시작 상태 기록
 

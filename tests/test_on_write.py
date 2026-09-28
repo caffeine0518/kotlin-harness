@@ -72,6 +72,26 @@ with tempfile.TemporaryDirectory() as d:
     ctx = json.loads(run(p, "A.kt").stdout)["hookSpecificOutput"]["additionalContext"]
     assert "sample-rule.md" in ctx
 
+    # excludeRules: 룰 ID 로 룰 하나만 제외, 없는 룰 ID 는 exit 1
+    write_cfg(p, {"excludeRules": ["android/category/sample-rule"], "review": {"onWrite": True}})
+    ctx = json.loads(run(p, "A.kt").stdout)["hookSpecificOutput"]["additionalContext"]
+    assert "sample-rule.md" not in ctx and "other-rule.md" in ctx
+    write_cfg(p, {"excludeRules": ["android/category/nope"], "review": {"onWrite": True}})
+    assert run(p, "A.kt").returncode == 1
+
+    # projectRules: 디렉터리는 하위 .md 전체, 파일은 그 파일만 포함, 없는 경로는 exit 1
+    (p / ".claude" / "rules" / "kotlin").mkdir(parents=True)
+    (p / ".claude" / "rules" / "kotlin" / "naming.md").write_text("# 네이밍\n")
+    (p / ".claude" / "rules" / "_conflicts.md").write_text("# 충돌\n")
+    write_cfg(p, {"projectRules": [".claude/rules/kotlin"], "review": {"onWrite": True}})
+    ctx = json.loads(run(p, "A.kt").stdout)["hookSpecificOutput"]["additionalContext"]
+    assert "naming.md" in ctx and "_conflicts.md" not in ctx and "프로젝트 룰" in ctx
+    write_cfg(p, {"projectRules": [".claude/rules/_conflicts.md"], "review": {"onWrite": True}})
+    ctx = json.loads(run(p, "A.kt").stdout)["hookSpecificOutput"]["additionalContext"]
+    assert "_conflicts.md" in ctx and "naming.md" not in ctx
+    write_cfg(p, {"projectRules": [".claude/rules/nope"], "review": {"onWrite": True}})
+    assert run(p, "A.kt").returncode == 1
+
     # 리포트 디렉터리에 .gitignore 생성
     assert (p / ".claude" / "kotlin-harness" / ".gitignore").read_text() == "*\n"
 

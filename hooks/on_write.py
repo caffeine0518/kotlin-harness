@@ -62,7 +62,23 @@ def main() -> int:
         r for d in dirs for r in sorted(d.rglob("*.md"))
         if not any(r.relative_to(d).as_posix().startswith(c + "/") for c in excluded)
     ]
-    if not rules:
+
+    # 룰 ID 는 rules/ 기준 상대 경로에서 .md 를 제거한 값이다 (예: common/naming/meaningless-name)
+    excluded_ids = set(cfg.get("excludeRules", []))
+    unknown = excluded_ids - {r.relative_to(rules_root).with_suffix("").as_posix() for r in rules}
+    if unknown:
+        print(f"kotlin-harness: 없는 룰 {sorted(unknown)} (excludeRules)", file=sys.stderr)
+        return 1
+    rules = [r for r in rules if r.relative_to(rules_root).with_suffix("").as_posix() not in excluded_ids]
+
+    project_paths = [project / p for p in cfg.get("projectRules", [])]
+    missing = [str(p) for p in project_paths if not p.exists()]
+    if missing:
+        print(f"kotlin-harness: 없는 경로 {missing} (projectRules)", file=sys.stderr)
+        return 1
+    project_rules = [r for p in project_paths for r in (sorted(p.rglob("*.md")) if p.is_dir() else [p])]
+
+    if not rules and not project_rules:
         return 0
 
     now = datetime.now()
@@ -71,6 +87,11 @@ def main() -> int:
     msg = (
         f"kotlin-harness: `{path}` 이 수정되었습니다. 아래 룰 파일을 읽고, 이번 변경이 룰을 위반하면 수정하세요.\n"
         + "\n".join(f"- {r}" for r in rules)
+        + (
+            "\n\n프로젝트 룰도 확인하세요. 플러그인 룰과 반대되면 프로젝트 룰을 따릅니다.\n"
+            + "\n".join(f"- {r}" for r in project_rules)
+            if project_rules else ""
+        )
         + f"\n\n확인을 마치면 위반이 없어도 `{report}` 에 결과를 기록하세요. 파일이 없으면 헤더를 먼저 작성합니다.\n"
         "| 시각 | 파일 | 룰 ID | 위반 내용 | 처리 |\n|---|---|---|---|---|\n"
         f"위반마다 한 행을 추가하고, 위반이 없으면 룰 ID 를 `-`, 처리를 `위반 없음` 으로 한 행을 추가합니다. 시각은 {now:%H:%M:%S} 입니다."

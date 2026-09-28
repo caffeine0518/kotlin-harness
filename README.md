@@ -56,6 +56,8 @@ claude --plugin-dir <이 리포 경로>
 {
   "platform": "android",
   "excludeCategories": ["scope-functions"],
+  "excludeRules": ["common/naming/meaningless-name"],
+  "projectRules": [".claude/rules/kotlin", ".claude/rules/ui"],
   "review": { "onWrite": true }
 }
 ```
@@ -64,9 +66,22 @@ claude --plugin-dir <이 리포 경로>
 |---|---|
 | `platform` | 기본값은 자동 판정(`android` 또는 platform 없음). platform 이 없으면 common 룰만 적용한다 |
 | `excludeCategories` | 적용하지 않을 카테고리 경로 목록 (선택). `ui` 는 `ui/` 아래 전체, `ui/view` 는 `ui/view/` 만 제외한다. `rules/common/` 과 `rules/<platform>/` 에 같은 경로가 있으면 둘 다 제외한다. 없는 이름을 적으면 오류가 발생한다. 새로 추가된 카테고리는 자동으로 적용된다 |
+| `excludeRules` | 적용하지 않을 플러그인 룰 ID 목록 (선택). 카테고리 전체가 아니라 룰 하나만 제외할 때 쓴다. 없는 룰 ID 를 적으면 오류가 발생한다 |
+| `projectRules` | 함께 적용할 프로젝트 룰의 디렉터리·파일 경로 목록 (선택, 프로젝트 루트 기준). 디렉터리면 하위의 `.md` 전체를 읽는다. 기본값이 없으므로 `.claude/rules` 도 지정해야 적용된다. 자세한 내용은 [프로젝트 룰](#프로젝트-룰) 참고 |
 | `review.autoFix` | 기본값 `true`. `/kotlin-harness:gate` 가 위반을 수정하고 커밋한다. `false` 이면 수정하지 않는다. 두 경우 모두 리포트와 검수는 실행한다 |
 | `review.redCommit` | 기본값 `true`. 실제 문제를 수정할 때 실패하는 테스트를 먼저 커밋하고 수정을 따로 커밋한다. 실패하는 커밋에서는 CI 가 실패하므로, 원하지 않으면 `false` 로 지정해 테스트와 수정을 커밋 하나로 묶는다 |
 | `review.onWrite` | 기본값 `false`. `true` 이면 Claude 가 `.kt`/`.kts` 를 수정할 때마다 룰 확인을 요청한다. 모든 프로젝트에서 훅이 실행되지 않도록 설정 파일로만 활성화할 수 있다 |
+
+## 프로젝트 룰
+
+플러그인 룰로 일반화하지 않은 팀 규칙은 `projectRules` 로 지정해 함께 적용한다. 리포트·영향 판정·수정·검수를 플러그인 룰과 같은 방식으로 처리한다.
+
+- 형식은 자유다. `## ` 헤딩 하나를 룰 하나로 보고, 헤딩이 없으면 파일 전체가 룰 하나다. 룰 ID 는 `project/<경로>#<헤딩 번호 또는 헤딩>` 이다 (예: `project/kotlin/naming/naming#4`).
+- 적용 대상은 frontmatter `paths`(Claude Code 규칙 파일 형식)·`applies_to`, 또는 본문에 적힌 적용 범위로 판정한다. 둘 다 없으면 모든 `.kt`·`.kts` 파일에 적용한다.
+- severity 는 frontmatter `severity` 가 없으면 `warning` 이다.
+- 플러그인 룰과 반대되면 프로젝트 룰을 따른다. 같은 코드를 같은 이유로 보고하면 한 항목으로 합친다.
+- 충돌 기록·안내 문서처럼 규칙이 아닌 파일은 룰로 보지 않지만, 경로를 지정할 때 제외하는 것이 확실하다.
+- 프로젝트 룰의 결과는 `/kotlin-harness:issue` 로 등록하지 않는다. 룰 내용이 플러그인 리포에 공개되기 때문이다.
 
 ## 리뷰 시점
 
