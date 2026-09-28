@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.12.0
+- Kotlin 코딩 관례 룰 23개 추가. 새 카테고리 7개가 기본으로 적용되므로, 원하지 않으면 `excludeCategories` 에 지정한다.
+  - `control-flow`: 단순 순회의 `forEach`, 두 갈래 `when`·세 갈래 이상 `if` 체인, 식 형태 `if`·`when`, 루프 대신 고차 함수, `..<` 범위, 가드 조건 괄호
+  - `functions`: `Boolean`·같은 타입 인수의 이름, 오버로드 대신 기본값, 함수 대신 프로퍼티, 인픽스 함수, 팩토리 함수 이름, 익스텐션 가시성
+  - `lambdas`: 라벨 반환
+  - `naming`: 변경·복사 함수 이름, `Manager`·`Wrapper`, 약어 대소문자, 백킹 프로퍼티 이름
+  - `strings`: 문자열 템플릿, 여러 줄 문자열
+  - `file-layout`: 클래스 멤버 순서, 오버로드 위치, 익스텐션만 모은 파일
+  - `comments`: `@param`·`@return` 태그
+
 ## 0.11.0
 - 룰 13개 추가
   - `android/ui/compose`: `modifier` 파라미터(누락·기본값·위치, 적용 위치와 횟수, 여러 개), 컴포저블 이름, `remember` 접두사, UI 를 그리면서 값을 반환, 마지막 파라미터의 `@Composable` 이 아닌 람다, 컴포지션에서 코루틴 시작, 키 없는 `derivedStateOf` 에서 `State` 가 아닌 값 읽기
