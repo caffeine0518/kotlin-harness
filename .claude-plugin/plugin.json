@@ -1,6 +1,6 @@
 {
   "name": "kotlin-harness",
-  "version": "0.15.0",
+  "version": "0.15.1",
   "description": "룰 기반 코틀린 프로젝트 리뷰 하네스 (android, 추후 ktor·kmp)",
   "author": {
     "name": "joe"

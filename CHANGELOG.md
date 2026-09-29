@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.15.1
+- `common/scope-functions/extract-long-receiver`: 람다가 `it`·`this` 를 한 번만 참조해도 위반으로 보고한다. `.let { println(it) }` 처럼 함수 하나에 전달하는 경우의 허용을 없애고, 메서드 참조만 허용한다. ([#3](https://github.com/caffeine0518/kotlin-harness/issues/3))
+- 검수가 위반 조건에 해당하는데 위반 목록과 `허용으로 제외한 코드` 표 어디에도 없는 코드를 `허용 기록 누락` 으로 제기하고, 허용 표의 항목이 실제로 허용 조건에 해당하는지 확인한다. ([#4](https://github.com/caffeine0518/kotlin-harness/issues/4))
+
 ## 0.15.0
 - `common/scope-functions/extract-long-receiver` 추가. 호출 체인 결과에 스코프 함수를 호출하고 람다에서 `it`·`this` 를 여러 번 쓰면, 결과를 이름 있는 지역 `val` 로 추출하도록 보고한다.
 
