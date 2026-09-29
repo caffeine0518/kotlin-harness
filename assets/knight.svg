@@ -6,10 +6,17 @@
     </filter>
   </defs>
 
-  <!-- 종이 (다크 모드에서도 선이 보이도록) -->
-  <rect x="2" y="2" width="196" height="236" rx="14" fill="#fbf7ee"/>
+  <!-- 배경 없이 그리고, 다크 모드에서는 선을 밝게 바꾼다 -->
+  <style>
+    .ink { stroke: #2f2b26; }
+    .bg { fill: #ffffff; }
+    @media (prefers-color-scheme: dark) {
+      .ink { stroke: #e6edf3; }
+      .bg { fill: #0d1117; }
+    }
+  </style>
 
-  <g filter="url(#rough)" fill="none" stroke="#2f2b26" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+  <g class="ink" filter="url(#rough)" fill="none" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
     <!-- 투구 -->
     <path d="M74 92 l0 -38 q0 -28 26 -28 q26 0 26 28 l0 38 q-26 8 -52 0 z"/>
     <path d="M82 60 l36 0 M100 60 l0 22"/>
@@ -21,7 +28,7 @@
     <path d="M100 118 l0 12"/>
     <path d="M84 132 l32 0"/>
     <path d="M94 132 l0 80 l6 10 l6 -10 l0 -80"/>
-    <ellipse cx="100" cy="122" rx="10" ry="7" fill="#fbf7ee"/>
+    <ellipse class="bg" cx="100" cy="122" rx="10" ry="7"/>
 
     <!-- 바닥 -->
     <path d="M30 222 q70 -3 140 0"/>
