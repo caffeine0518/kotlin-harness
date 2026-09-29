@@ -49,7 +49,7 @@ kotlin-harness 0.4.0 → 0.6.0 (scope: project, /path/to/project)
 ## 0.6.0
 - ...
 
-Claude Code 를 다시 시작하면 적용됩니다.
+`/reload-plugins` 를 실행하면 현재 세션에 적용됩니다.
 ```
 
 마지막에 자동 업데이트 안내를 출력한다.
