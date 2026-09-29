@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.18.0
+- `onWrite` 훅(`review.onWrite`)을 삭제했다. 이제 `python3` 가 필요하지 않다. 룰 확인은 `/kotlin-harness:gate` 로 실행한다.
+
 ## 0.17.0
 - gate 실행 순서를 바꿨다. ([#6](https://github.com/caffeine0518/kotlin-harness/issues/6))
   - 판정: 룰 그룹 3개를 에이전트 3개가 병렬로 대조해 위반 후보만 반환한다 (새 지침 `detector.md`).

@@ -4,8 +4,6 @@
 
 ## 설치
 
-`python3` 가 PATH 에 있어야 한다. 코드를 쓸 때마다 룰을 확인하는 훅(`onWrite`)이 Python 으로 실행된다. 없으면 훅은 오류 없이 건너뛰고, `/kotlin-harness:gate` 는 그대로 동작한다.
-
 ### Claude Code
 
 ```
@@ -57,8 +55,7 @@ claude --plugin-dir <이 리포 경로>
   "platform": "android",
   "excludeCategories": ["scope-functions"],
   "excludeRules": ["common/naming/meaningless-name"],
-  "projectRules": [".claude/rules/kotlin", ".claude/rules/ui"],
-  "review": { "onWrite": true }
+  "projectRules": [".claude/rules/kotlin", ".claude/rules/ui"]
 }
 ```
 
@@ -70,7 +67,6 @@ claude --plugin-dir <이 리포 경로>
 | `projectRules` | 함께 적용할 프로젝트 룰의 디렉터리·파일 경로 목록 (선택, 프로젝트 루트 기준). 디렉터리면 하위의 `.md` 전체를 읽는다. 기본값이 없으므로 `.claude/rules` 도 지정해야 적용된다. 자세한 내용은 [프로젝트 룰](#프로젝트-룰) 참고 |
 | `review.autoFix` | 기본값 `true`. `/kotlin-harness:gate` 가 위반을 수정하고 커밋한다. `false` 이면 수정하지 않는다. 두 경우 모두 리포트와 검수는 실행한다 |
 | `review.redCommit` | 기본값 `true`. 실제 문제를 수정할 때 실패하는 테스트를 먼저 커밋하고 수정을 따로 커밋한다. 실패하는 커밋에서는 CI 가 실패하므로, 원하지 않으면 `false` 로 지정해 테스트와 수정을 커밋 하나로 묶는다 |
-| `review.onWrite` | 기본값 `false`. `true` 이면 Claude 가 `.kt`/`.kts` 를 수정할 때마다 룰 확인을 요청한다. 모든 프로젝트에서 훅이 실행되지 않도록 설정 파일로만 활성화할 수 있다 |
 
 ## 프로젝트 룰
 
@@ -87,7 +83,6 @@ claude --plugin-dir <이 리포 경로>
 
 | 시점 | 방법 |
 |---|---|
-| Claude 가 코드를 쓸 때마다 | `review.onWrite: true` — `.kt`/`.kts` 수정 직후 룰 확인·수정을 Claude 에 요청 |
 | 커밋되지 않은 변경 | `/kotlin-harness:gate diff` |
 | 브랜치 | `/kotlin-harness:gate branch [base]` |
 | PR | `/kotlin-harness:gate pr [번호]` |
@@ -122,8 +117,6 @@ gate 는 아래 순서로 실행된다.
 재검수는 직전 회차에서 바뀐 줄과 반영한 항목만 확인한다. 사유를 적고 수정하지 않은 항목은 사유가 사실과 다를 때만 다시 제기한다.
 
 리뷰 결과는 `.claude/kotlin-harness/reports/<일시>-<범위>.md` 에 작성한다. 리포트에는 룰별 집계, 위반마다 위치·코드·근거 문서·수정 제안·처리 결과(커밋 해시 또는 수정하지 않은 이유), `## 허용` 에 해당해 제외한 코드가 포함된다.
-
-`onWrite` 훅으로 확인한 결과는 `.claude/kotlin-harness/reports/<YYYYMMDD>-onwrite.md` 에 확인할 때마다 한 행씩 기록한다. 위반이 없어도 기록한다.
 
 ## 이슈 등록
 
@@ -173,9 +166,3 @@ source: https://...      # 근거 문서. common 룰은 공식 문서만 허용
 | android/ui/compose | `backwards-write`, `collect-as-state-with-lifecycle`, `defer-state-read`, `effect-captured-value`, `empty-on-dispose`, `lazy-item-key`, `lifecycle-effect`, `remember-expensive-calculation`, `unnecessary-derived-state-of`, `viewmodel-parameter` |
 
 새 platform(ktor·kmp 등)은 `rules/<platform>/` 디렉터리를 만들고 설정의 `platform` 값을 그 이름으로 지정한다.
-
-## 테스트
-
-```
-python3 tests/test_on_write.py
-```
