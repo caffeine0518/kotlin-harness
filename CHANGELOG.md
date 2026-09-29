@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.16.0
+- 검수를 병렬로 실행한다. 누락 대조는 룰을 카테고리 단위로 룰 수가 비슷한 그룹 3개로 나눠 에이전트마다 하나씩 맡기고, 나머지 검수 항목은 에이전트 하나가 동시에 확인한다. 검수 결과는 gate 가 합쳐 리포트에 한 번 기록한다. 룰이 30개 미만이면 나누지 않는다. ([#5](https://github.com/caffeine0518/kotlin-harness/issues/5))
+
 ## 0.15.1
 - `common/scope-functions/extract-long-receiver`: 람다가 `it`·`this` 를 한 번만 참조해도 위반으로 보고한다. `.let { println(it) }` 처럼 함수 하나에 전달하는 경우의 허용을 없애고, 메서드 참조만 허용한다. ([#3](https://github.com/caffeine0518/kotlin-harness/issues/3))
 - 검수가 위반 조건에 해당하는데 위반 목록과 `허용으로 제외한 코드` 표 어디에도 없는 코드를 `허용 기록 누락` 으로 제기하고, 허용 표의 항목이 실제로 허용 조건에 해당하는지 확인한다. ([#4](https://github.com/caffeine0518/kotlin-harness/issues/4))
