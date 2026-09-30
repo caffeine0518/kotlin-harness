@@ -176,7 +176,7 @@ source: https://...      # 근거 문서. common 룰은 공식 문서만 허용
 | common/flow | `catch-before-collector`, `emit-in-other-context`, `missing-terminal-operator`, `on-completion-not-handler`, `rethrow-collector-exception` |
 | common/functions | `default-parameter-over-overload`, `extension-visibility`, `factory-function-name`, `infix-function`, `named-arguments`, `property-over-function` |
 | common/immutability | `data-class-mutable-collection`, `expose-read-only-view`, `prefer-val`, `read-only-collection-factory`, `read-only-collection-type` |
-| common/lambdas | `labeled-return` |
+| common/lambdas | `labeled-return`, `lambda-outside-parentheses` |
 | common/naming | `acronym-case`, `backing-property-name`, `meaningless-name`, `mutating-function-name` |
 | common/null-safety | `filter-not-null`, `not-null-assertion`, `nullable-boolean-condition`, `platform-type-explicit`, `safe-cast` |
 | common/scope-functions | `context-object-reference`, `extract-long-receiver`, `let-elvis-null-result`, `nested-lambda-implicit-it`, `nested-scope-functions`, `scope-function-return-value` |
@@ -184,9 +184,9 @@ source: https://...      # 근거 문서. common 룰은 공식 문서만 허용
 | common/types | `closed-state-as-sealed`, `data-class-body-property`, `enum-lookup-or-null`, `value-class-over-typealias`, `when-else-on-sealed` |
 | android/coroutines | `catch-exceptions-in-ui-scope`, `inject-dispatchers`, `inject-test-dispatchers`, `main-safe-suspend-function` |
 | android/data | `caller-bound-work-in-coroutine-scope`, `expose-suspend-and-flow`, `immutable-exposed-model`, `no-data-source-in-ui`, `repository-naming`, `separate-data-source-models` |
-| android/domain | `use-case-mutable-state`, `use-case-naming` |
+| android/domain | `use-case-mutable-state`, `use-case-naming`, `use-case-scope`, `use-case-single-function` |
 | android/security | `deep-link-parameter-validation`, `hardcoded-secret`, `log-sensitive-data`, `sensitive-data-in-implicit-intent`, `sql-injection`, `store-user-password` |
-| android/test | `space-in-instrumented-test-name` |
+| android/test | `background-scope-collection`, `reset-main-dispatcher`, `space-in-instrumented-test-name`, `state-flow-value-assertion` |
 | android/ui/compose | `backwards-write`, `collect-as-state-with-lifecycle`, `composable-naming`, `defer-state-read`, `derived-state-of-captured-value`, `effect-captured-value`, `emit-or-return`, `empty-on-dispose`, `launch-in-composition`, `lazy-item-key`, `lifecycle-effect`, `modifier-applied-once`, `modifier-parameter`, `remember-expensive-calculation`, `remember-prefix`, `single-modifier-parameter`, `trailing-composable-lambda`, `unnecessary-derived-state-of`, `viewmodel-parameter` |
 | android/ui/strings | `hardcoded-ui-text`, `plurals` |
 | android/ui/view | `collect-with-lifecycle`, `fragment-binding-cleanup`, `fragment-view-reference`, `launch-when-deprecated`, `lifecycle-callback-collection` |

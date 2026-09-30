@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.19.0
+- 룰 6개 추가. 모두 기존 카테고리에 추가했으므로 `excludeCategories` 설정은 그대로 적용된다.
+  - `android/test`: `Dispatchers.setMain` 뒤 `resetMain` 복원 누락, 완료되지 않는 Flow 를 `backgroundScope` 밖에서 수집, `StateFlow` 를 수집한 값 목록으로 검증
+  - `common/lambdas`: 마지막 인수인 람다를 괄호 안에 전달
+  - `android/domain`: use case 에 공개 함수가 여러 개, use case 를 싱글턴 스코프로 제공
+- README 의 룰 표를 `rules/` 디렉터리의 실제 카테고리·룰과 일치하도록 수정했다.
+
 ## 0.18.0
 - `onWrite` 훅(`review.onWrite`)을 삭제했다. 이제 `python3` 가 필요하지 않다. 룰 확인은 `/kotlin-harness:gate` 로 실행한다.
 
