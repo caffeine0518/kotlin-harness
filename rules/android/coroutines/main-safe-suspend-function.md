@@ -57,7 +57,7 @@ class NoteViewModel(private val noteRepository: NoteRepository) : ViewModel() {
 
 ## 허용
 
-- 이미 main-safe 한 suspend 함수만 호출하는 경우 (Retrofit·Room 의 suspend 함수, 다른 main-safe suspend 함수)
+- 이미 main-safe 한 suspend 함수만 호출하는 경우 (Retrofit·Room 의 suspend 함수, 다른 main-safe suspend 함수). 이 경우 IO·Default 디스패처로 전환했다면 `android/coroutines/unnecessary-dispatcher-switch` 가 보고한다.
 - 블로킹 호출이 `withContext(Dispatchers.IO)`·`withContext(주입받은 디스패처)` 블록이나 `Dispatchers.IO`·`Dispatchers.Default` 를 지정한 `launch`·`async` 블록 안에 있는 경우 (`Dispatchers.*` 를 하드코딩했다면 `android/coroutines/inject-dispatchers` 가 보고한다)
 - 리스트 생성·매핑처럼 블로킹이 없는 가벼운 작업만 하는 suspend 함수
 - 테스트 코드

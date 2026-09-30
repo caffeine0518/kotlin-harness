@@ -19,9 +19,9 @@ class NewsRepository {
     suspend fun loadNews() = withContext(Dispatchers.Default) { /* ... */ }
 }
 
-class SyncViewModel : ViewModel() {
-    fun sync() {
-        viewModelScope.launch(Dispatchers.IO) { /* ... */ }
+class LogWriter(private val scope: CoroutineScope, private val file: File) {
+    fun write(line: String) {
+        scope.launch(Dispatchers.IO) { file.appendText(line) }
     }
 }
 ```
@@ -37,11 +37,13 @@ class NewsRepository(
     suspend fun loadNews() = withContext(defaultDispatcher) { /* ... */ }
 }
 
-class SyncViewModel(
+class LogWriter(
+    private val scope: CoroutineScope,
+    private val file: File,
     private val ioDispatcher: CoroutineDispatcher,
-) : ViewModel() {
-    fun sync() {
-        viewModelScope.launch(ioDispatcher) { /* ... */ }
+) {
+    fun write(line: String) {
+        scope.launch(ioDispatcher) { file.appendText(line) }
     }
 }
 ```
@@ -54,3 +56,4 @@ class SyncViewModel(
 - 테스트 코드 (테스트의 디스패처는 `android/coroutines/inject-test-dispatchers` 가 보고한다)
 - `Dispatchers.Main`·`Dispatchers.Main.immediate`. 테스트에서 `Dispatchers.setMain` 으로 교체할 수 있다.
 - 디스패처를 지정하지 않은 `viewModelScope.launch { }`·`lifecycleScope.launch { }`
+- 주입받은 디스패처로 불필요하게 전환하는 경우. main-safe 함수만 호출하면서 IO·Default 디스패처로 전환하는 코드는 `android/coroutines/unnecessary-dispatcher-switch` 가 보고한다.
