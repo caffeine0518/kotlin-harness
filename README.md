@@ -184,9 +184,10 @@ source: https://...      # 근거 문서. common 룰은 공식 문서만 허용
 | common/types | `closed-state-as-sealed`, `data-class-body-property`, `enum-lookup-or-null`, `value-class-over-typealias`, `when-else-on-sealed` |
 | android/coroutines | `catch-exceptions-in-ui-scope`, `inject-dispatchers`, `inject-test-dispatchers`, `main-safe-suspend-function` |
 | android/data | `caller-bound-work-in-coroutine-scope`, `expose-suspend-and-flow`, `immutable-exposed-model`, `no-data-source-in-ui`, `repository-naming`, `separate-data-source-models` |
+| android/di | `constructor-injection` |
 | android/domain | `use-case-mutable-state`, `use-case-naming`, `use-case-scope`, `use-case-single-function` |
 | android/security | `deep-link-parameter-validation`, `hardcoded-secret`, `log-sensitive-data`, `sensitive-data-in-implicit-intent`, `sql-injection`, `store-user-password` |
-| android/test | `background-scope-collection`, `reset-main-dispatcher`, `space-in-instrumented-test-name`, `state-flow-value-assertion` |
+| android/test | `background-scope-collection`, `fake-over-mock`, `reset-main-dispatcher`, `space-in-instrumented-test-name`, `state-flow-value-assertion` |
 | android/ui/compose | `backwards-write`, `collect-as-state-with-lifecycle`, `composable-naming`, `defer-state-read`, `derived-state-of-captured-value`, `effect-captured-value`, `emit-or-return`, `empty-on-dispose`, `launch-in-composition`, `lazy-item-key`, `lifecycle-effect`, `modifier-applied-once`, `modifier-parameter`, `remember-expensive-calculation`, `remember-prefix`, `single-modifier-parameter`, `trailing-composable-lambda`, `unnecessary-derived-state-of`, `viewmodel-parameter` |
 | android/ui/strings | `hardcoded-ui-text`, `plurals` |
 | android/ui/view | `collect-with-lifecycle`, `fragment-binding-cleanup`, `fragment-view-reference`, `launch-when-deprecated`, `lifecycle-callback-collection` |
