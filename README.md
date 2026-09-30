@@ -167,18 +167,29 @@ source: https://...      # 근거 문서. common 룰은 공식 문서만 허용
 
 | 카테고리 | 룰 |
 |---|---|
-| common/null-safety | `not-null-assertion`, `platform-type-explicit`, `nullable-boolean-condition`, `safe-cast`, `filter-not-null` |
-| common/immutability | `data-class-mutable-collection`, `expose-read-only-view`, `prefer-val`, `read-only-collection-factory`, `read-only-collection-type` |
-| common/exceptions | `catch-order`, `error-function`, `exception-object-declaration`, `nothing-return-type`, `precondition-functions`, `try-expression`, `use-for-closeable` |
-| common/coroutines | `cancel-custom-scope`, `cooperative-cancellation`, `global-scope`, `rethrow-cancellation-exception`, `run-blocking-in-suspend`, `shared-mutable-state` |
-| common/types | `closed-state-as-sealed`, `data-class-body-property`, `enum-lookup-or-null`, `value-class-over-typealias`, `when-else-on-sealed` |
-| common/scope-functions | `context-object-reference`, `let-elvis-null-result`, `nested-lambda-implicit-it`, `nested-scope-functions`, `scope-function-return-value` |
 | common/collections | `combined-transformation`, `empty-collection-element`, `filter-then-terminal`, `remove-while-iterating`, `sequence-for-multi-step-chain`, `sorted-by-descending` |
-| android/ui/view | `collect-with-lifecycle`, `fragment-binding-cleanup`, `fragment-view-reference`, `launch-when-deprecated`, `lifecycle-callback-collection` |
+| common/comments | `banner-comment`, `comment-instead-of-name`, `commented-out-code`, `history-comment`, `param-return-tags`, `redundant-comment`, `redundant-kdoc` |
+| common/control-flow | `expression-form-condition`, `for-over-foreach`, `guard-condition-parentheses`, `higher-order-function-over-loop`, `if-versus-when`, `open-ended-range` |
+| common/coroutines | `cancel-custom-scope`, `cooperative-cancellation`, `exception-handler-on-child`, `global-scope`, `rethrow-cancellation-exception`, `run-blocking-in-suspend`, `shared-mutable-state`, `try-catch-around-launch` |
+| common/exceptions | `catch-order`, `error-function`, `exception-object-declaration`, `nothing-return-type`, `precondition-functions`, `try-expression`, `use-for-closeable` |
+| common/file-layout | `class-layout`, `extension-file`, `overload-layout` |
+| common/flow | `catch-before-collector`, `emit-in-other-context`, `missing-terminal-operator`, `on-completion-not-handler`, `rethrow-collector-exception` |
+| common/functions | `default-parameter-over-overload`, `extension-visibility`, `factory-function-name`, `infix-function`, `named-arguments`, `property-over-function` |
+| common/immutability | `data-class-mutable-collection`, `expose-read-only-view`, `prefer-val`, `read-only-collection-factory`, `read-only-collection-type` |
+| common/lambdas | `labeled-return` |
+| common/naming | `acronym-case`, `backing-property-name`, `meaningless-name`, `mutating-function-name` |
+| common/null-safety | `filter-not-null`, `not-null-assertion`, `nullable-boolean-condition`, `platform-type-explicit`, `safe-cast` |
+| common/scope-functions | `context-object-reference`, `extract-long-receiver`, `let-elvis-null-result`, `nested-lambda-implicit-it`, `nested-scope-functions`, `scope-function-return-value` |
+| common/strings | `multiline-string`, `string-template-over-concatenation` |
+| common/types | `closed-state-as-sealed`, `data-class-body-property`, `enum-lookup-or-null`, `value-class-over-typealias`, `when-else-on-sealed` |
 | android/coroutines | `catch-exceptions-in-ui-scope`, `inject-dispatchers`, `inject-test-dispatchers`, `main-safe-suspend-function` |
-| android/ui/viewmodel | `android-view-model`, `event-as-ui-state`, `expose-mutable-state`, `lifecycle-reference`, `single-ui-state`, `suspend-function-exposure` |
+| android/data | `caller-bound-work-in-coroutine-scope`, `expose-suspend-and-flow`, `immutable-exposed-model`, `no-data-source-in-ui`, `repository-naming`, `separate-data-source-models` |
+| android/domain | `use-case-mutable-state`, `use-case-naming` |
 | android/security | `deep-link-parameter-validation`, `hardcoded-secret`, `log-sensitive-data`, `sensitive-data-in-implicit-intent`, `sql-injection`, `store-user-password` |
-| android/data | `caller-bound-work-in-coroutine-scope`, `expose-suspend-and-flow`, `no-data-source-in-ui`, `separate-data-source-models` |
-| android/ui/compose | `backwards-write`, `collect-as-state-with-lifecycle`, `defer-state-read`, `effect-captured-value`, `empty-on-dispose`, `lazy-item-key`, `lifecycle-effect`, `remember-expensive-calculation`, `unnecessary-derived-state-of`, `viewmodel-parameter` |
+| android/test | `space-in-instrumented-test-name` |
+| android/ui/compose | `backwards-write`, `collect-as-state-with-lifecycle`, `composable-naming`, `defer-state-read`, `derived-state-of-captured-value`, `effect-captured-value`, `emit-or-return`, `empty-on-dispose`, `launch-in-composition`, `lazy-item-key`, `lifecycle-effect`, `modifier-applied-once`, `modifier-parameter`, `remember-expensive-calculation`, `remember-prefix`, `single-modifier-parameter`, `trailing-composable-lambda`, `unnecessary-derived-state-of`, `viewmodel-parameter` |
+| android/ui/strings | `hardcoded-ui-text`, `plurals` |
+| android/ui/view | `collect-with-lifecycle`, `fragment-binding-cleanup`, `fragment-view-reference`, `launch-when-deprecated`, `lifecycle-callback-collection` |
+| android/ui/viewmodel | `android-view-model`, `event-as-ui-state`, `expose-mutable-state`, `lifecycle-reference`, `single-ui-state`, `suspend-function-exposure` |
 
 새 platform(ktor·kmp 등)은 `rules/<platform>/` 디렉터리를 만들고 설정의 `platform` 값을 그 이름으로 지정한다.
