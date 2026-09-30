@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.22.0
+- `common/types/closed-state-as-sealed` 가 Boolean·널러블 필드 여러 개의 조합으로 상태를 표현하는 코드도 판정한다. 같은 객체의 필드 두 개 이상을 조건으로 서로 배타적인 상태를 반환하거나 분기하는 `when`·`if` 가 대상이며, 서로 독립적인 필드는 허용한다.
+
 ## 0.21.0
 - 룰 2개 추가. 모두 기존 카테고리에 추가했으므로 `excludeCategories` 설정은 그대로 적용된다.
   - `android/coroutines`: main-safe suspend 함수만 호출하면서 IO·Default 디스패처로 전환하는 경우 ([#8](https://github.com/caffeine0518/kotlin-harness/issues/8))
