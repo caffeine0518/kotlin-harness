@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.21.0
+- 룰 2개 추가. 모두 기존 카테고리에 추가했으므로 `excludeCategories` 설정은 그대로 적용된다.
+  - `android/coroutines`: main-safe suspend 함수만 호출하면서 IO·Default 디스패처로 전환하는 경우 ([#8](https://github.com/caffeine0518/kotlin-harness/issues/8))
+  - `android/ui/viewmodel`: ViewModel·상태 홀더의 `init` 블록·생성자에서 비동기 작업을 시작하는 경우. 함수로 추출해 `init` 에서 호출하는 경우도 포함한다. ([#7](https://github.com/caffeine0518/kotlin-harness/issues/7))
+- `android/coroutines/inject-dispatchers` 의 예제를 새 룰에 해당하지 않도록 블로킹 파일 I/O 예제로 교체했다.
+
 ## 0.20.0
 - 룰 2개 추가. 새 카테고리 `android/di` 는 기본으로 적용되므로, 원하지 않으면 `excludeCategories` 에 지정한다.
   - `android/di`: ViewModel·Repository·DataSource·use case 가 의존성을 직접 생성하는 경우
