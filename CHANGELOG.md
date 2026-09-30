@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.20.0
+- 룰 2개 추가. 새 카테고리 `android/di` 는 기본으로 적용되므로, 원하지 않으면 `excludeCategories` 에 지정한다.
+  - `android/di`: ViewModel·Repository·DataSource·use case 가 의존성을 직접 생성하는 경우
+  - `android/test`: Fake 구현이 있는 타입을 mock·stub·spy 로 만드는 경우
+
 ## 0.19.0
 - 룰 6개 추가. 모두 기존 카테고리에 추가했으므로 `excludeCategories` 설정은 그대로 적용된다.
   - `android/test`: `Dispatchers.setMain` 뒤 `resetMain` 복원 누락, 완료되지 않는 Flow 를 `backgroundScope` 밖에서 수집, `StateFlow` 를 수집한 값 목록으로 검증
