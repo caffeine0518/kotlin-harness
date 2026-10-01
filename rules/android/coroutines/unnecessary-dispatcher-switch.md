@@ -1,5 +1,5 @@
 ---
-severity: warning
+severity: info
 applies_to: "**/*.kt"
 source: https://developer.android.com/kotlin/coroutines/coroutines-best-practices#main-safe
 ---

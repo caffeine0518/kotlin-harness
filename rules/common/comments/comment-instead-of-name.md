@@ -1,5 +1,5 @@
 ---
-severity: warning
+severity: info
 applies_to: "**/*.kt"
 source: https://testing.googleblog.com/2017/07/code-health-to-comment-or-not-to-comment.html
 ---

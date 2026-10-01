@@ -1,5 +1,5 @@
 ---
-severity: warning
+severity: info
 applies_to: "**/*.kt"
 source: https://www.oreilly.com/library/view/clean-code-a/9780136083238/
 ---

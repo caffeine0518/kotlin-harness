@@ -1,5 +1,5 @@
 ---
-severity: warning
+severity: error
 applies_to: "**/*.kt"
 source: https://kotlinlang.org/api/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines/run-blocking.html
 ---

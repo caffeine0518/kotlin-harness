@@ -16,6 +16,7 @@ argument-hint: "[file <path> | diff | branch [base] | pr [number] | project]"
 |---|---|
 | `platform` | 자동 판정. 루트와 모듈 한 단계의 `build.gradle`·`build.gradle.kts` 에 `com.android.application`·`com.android.library`·`android.application`·`android.library` 가 있으면 `android`, 없으면 platform 없음(common 룰만 적용) |
 | `excludeCategories` | 없음 |
+| `minSeverity` | `warning` |
 | `excludeRules` | 없음 |
 | `projectRules` | 없음 |
 | `review.autoFix` | `true` |
@@ -24,6 +25,7 @@ argument-hint: "[file <path> | diff | branch [base] | pr [number] | project]"
 - git 리포에 `.kt`·`.kts` 파일이 하나도 없으면 코틀린 프로젝트가 아니라고 알리고 중단한다.
 - `platform` 을 지정했는데 `${CLAUDE_PLUGIN_ROOT}/rules/<platform>/` 이 없으면 지원하지 않는 platform 이라고 알리고 중단한다.
 - `excludeCategories` 의 값은 카테고리 경로다 (예: `ui` 는 `ui/` 전체, `ui/view` 는 `ui/view/` 만). `${CLAUDE_PLUGIN_ROOT}/rules/common/<경로>` 와 `rules/<platform>/<경로>` 가 모두 디렉터리가 아닌 값이 있으면 그 이름을 알리고 중단한다.
+- `minSeverity` 의 값은 `error`·`warning`·`info` 중 하나다. 다른 값이면 그 값을 알리고 중단한다.
 - `excludeRules` 의 값은 플러그인 룰 ID 다 (예: `common/naming/meaningless-name`). `${CLAUDE_PLUGIN_ROOT}/rules/<룰 ID>.md` 가 없는 값이 있으면 그 이름을 알리고 중단한다.
 - `projectRules` 의 값은 프로젝트 루트 기준 디렉터리·파일 경로다 (예: `.claude/rules/kotlin`). 존재하지 않는 경로가 있으면 그 경로를 알리고 중단한다.
 
@@ -38,7 +40,7 @@ argument-hint: "[file <path> | diff | branch [base] | pr [number] | project]"
 
 룰 그룹마다 판정 에이전트를 병렬로 실행해 위반 후보를 모은다.
 
-1. 적용할 룰 파일을 모은다. `rules/common`·`rules/<platform>` 에서 `excludeCategories`·`excludeRules` 를 제외한 룰 파일과 `projectRules` 의 파일이다.
+1. 적용할 룰 파일을 모은다. `rules/common`·`rules/<platform>` 에서 `excludeCategories`·`excludeRules` 를 제외한 룰 파일과 `projectRules` 의 파일이다. 그중 frontmatter `severity`(없으면 `warning`)가 `minSeverity` 보다 낮은 파일은 제외한다. 순서는 `error` > `warning` > `info` 다.
 2. 룰 파일을 카테고리 디렉터리 단위로 묶어, 룰 수가 비슷한 그룹 3개로 나눈다. 카테고리 하나를 여러 그룹으로 나누지 않는다. 프로젝트 룰은 파일마다 `## ` 헤딩 수를 룰 수로 센다. 룰이 30개 미만이면 나누지 않고 그룹 1개로 둔다.
 3. 한 메시지에서 그룹마다 general-purpose 에이전트를 하나씩 실행한다. 프롬프트에 `${CLAUDE_PLUGIN_ROOT}/skills/gate/detector.md` 를 읽고 따르라고 적고, 범위와 인자, 플러그인 경로, 1단계의 설정, 시작 커밋, 그 그룹의 룰 파일 목록을 전달한다.
 4. 반환된 후보를 합친다. 같은 위치·같은 룰 ID 의 후보는 하나로 합친다.
@@ -70,7 +72,7 @@ general-purpose 에이전트 하나를 실행한다. 프롬프트에 `${CLAUDE_P
 
 ```
 리포트: .claude/kotlin-harness/reports/20260927-153000-branch.md
-error 2건, warning 5건 (파일 12개, 룰 34개) / 5건 수정, 2건 수정하지 않음
+error 2건, warning 5건, info 0건 (파일 12개, 룰 34개) / 5건 수정, 2건 수정하지 않음
 [error] app/src/main/.../SyncManager.kt:42  common/coroutines/global-scope  수정함
 ...
 커밋:

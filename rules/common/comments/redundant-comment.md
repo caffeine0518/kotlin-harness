@@ -1,5 +1,5 @@
 ---
-severity: warning
+severity: info
 applies_to: "**/*.kt"
 source: https://google.github.io/eng-practices/review/reviewer/looking-for.html#comments
 ---

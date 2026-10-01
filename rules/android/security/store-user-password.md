@@ -1,5 +1,5 @@
 ---
-severity: warning
+severity: error
 applies_to: "**/*.kt"
 source: https://developer.android.com/privacy-and-security/security-tips#credential-exposure
 ---

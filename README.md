@@ -70,6 +70,7 @@ claude --plugin-dir <이 리포 경로>
 {
   "platform": "android",
   "excludeCategories": ["scope-functions"],
+  "minSeverity": "warning",
   "excludeRules": ["common/naming/meaningless-name"],
   "projectRules": [".claude/rules/kotlin", ".claude/rules/ui"]
 }
@@ -79,6 +80,7 @@ claude --plugin-dir <이 리포 경로>
 |---|---|
 | `platform` | 기본값은 자동 판정(`android` 또는 platform 없음). platform 이 없으면 common 룰만 적용한다 |
 | `excludeCategories` | 적용하지 않을 카테고리 경로 목록 (선택). `ui` 는 `ui/` 아래 전체, `ui/view` 는 `ui/view/` 만 제외한다. `rules/common/` 과 `rules/<platform>/` 에 같은 경로가 있으면 둘 다 제외한다. 없는 이름을 적으면 오류가 발생한다. 새로 추가된 카테고리는 자동으로 적용된다 |
+| `minSeverity` | 기본값 `warning`. 이 레벨 이상의 룰만 적용한다. `error` 는 버그·누수·보안 룰만, `warning` 은 설계 룰까지, `info` 는 표기 관례 룰까지 모두 적용한다. 프로젝트 룰에도 적용한다 |
 | `excludeRules` | 적용하지 않을 플러그인 룰 ID 목록 (선택). 카테고리 전체가 아니라 룰 하나만 제외할 때 쓴다. 없는 룰 ID 를 적으면 오류가 발생한다 |
 | `projectRules` | 함께 적용할 프로젝트 룰의 디렉터리·파일 경로 목록 (선택, 프로젝트 루트 기준). 디렉터리면 하위의 `.md` 전체를 읽는다. 기본값이 없으므로 `.claude/rules` 도 지정해야 적용된다. 자세한 내용은 [프로젝트 룰](#프로젝트-룰) 참고 |
 | `review.autoFix` | 기본값 `true`. `/kotlin-harness:gate` 가 위반을 수정하고 커밋한다. `false` 이면 수정하지 않는다. 두 경우 모두 리포트와 검수는 실행한다 |
@@ -150,7 +152,7 @@ gate 는 아래 순서로 실행된다.
 
 ```markdown
 ---
-severity: error          # error: 버그·누수로 이어짐 | warning: 그 외
+severity: error          # error: 버그·누수·보안 | warning: 구조·API·생명주기·성능 | info: 동작·구조와 무관한 표기 관례
 applies_to: "**/*.kt"    # 적용 대상 glob
 source: https://...      # 근거 문서. common 룰은 공식 문서만 허용
 ---

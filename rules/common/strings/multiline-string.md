@@ -1,5 +1,5 @@
 ---
-severity: warning
+severity: info
 applies_to: "**/*.kt"
 source: https://kotlinlang.org/docs/coding-conventions.html#strings
 ---

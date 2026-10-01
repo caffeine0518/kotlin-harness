@@ -2,7 +2,7 @@
 
 gate 의 수정 단계(4단계)와 반영 단계(6단계)에서 실행한 에이전트가 따르는 지침이다. 1~2단계는 판정 에이전트(`detector.md`)와 검수 에이전트(`verifier.md`)도 참조한다. 입력으로 아래 값을 받는다.
 
-- 범위와 인자, 플러그인 경로, 설정(`platform`·`excludeCategories`·`excludeRules`·`projectRules`·`autoFix`·`redCommit`)
+- 범위와 인자, 플러그인 경로, 설정(`platform`·`excludeCategories`·`excludeRules`·`minSeverity`·`projectRules`·`autoFix`·`redCommit`)
 - 리포트 경로, 시작 커밋(리뷰 시작 시점의 `HEAD`), 작업 중인 파일(리뷰 시작 시점에 커밋되지 않은 변경이 있던 파일)
 - 수정 단계: 판정 에이전트들이 반환한 후보 목록, 판정하지 못한 룰
 - 반영 단계: 검수가 반환한 문제 목록, 회차 번호
@@ -26,7 +26,7 @@ gate 의 수정 단계(4단계)와 반영 단계(6단계)에서 실행한 에이
 
 `excludeCategories` 에 적힌 카테고리 경로 아래의 룰은 로드하지 않는다. `common/` 과 `<platform>/` 양쪽에 적용한다 (예: `scope-functions` → `rules/common/scope-functions/`, `ui/view` → `rules/android/ui/view/`).
 
-룰 ID 는 `rules/` 기준 상대 경로(확장자 제외)다 (예: `common/null-safety/safe-cast`). frontmatter 의 `applies_to` glob 에 해당하는 파일에만 적용하고, `## 허용` 섹션에 해당하는 코드는 위반으로 보고하지 않는다. `excludeRules` 에 적힌 룰 ID 는 로드하지 않는다.
+룰 ID 는 `rules/` 기준 상대 경로(확장자 제외)다 (예: `common/null-safety/safe-cast`). frontmatter 의 `applies_to` glob 에 해당하는 파일에만 적용하고, `## 허용` 섹션에 해당하는 코드는 위반으로 보고하지 않는다. `excludeRules` 에 적힌 룰 ID 와, frontmatter `severity` 가 `minSeverity` 보다 낮은 룰(`error` > `warning` > `info`)은 로드하지 않는다.
 
 ### 프로젝트 룰
 
@@ -35,7 +35,7 @@ gate 의 수정 단계(4단계)와 반영 단계(6단계)에서 실행한 에이
 - 파일에 `## ` 헤딩이 있으면 헤딩 하나를 룰 하나로 본다. 없으면 파일 전체가 룰 하나다.
 - 룰 ID: `project/<projectRules 경로 기준 상대 경로, 확장자 제외>#<헤딩 번호 또는 헤딩>` (예: `project/kotlin/naming/naming#4`). 헤딩이 없으면 `#` 뒤를 생략한다.
 - 적용 대상: frontmatter `paths`(Claude Code 규칙 파일 형식) 또는 `applies_to` 가 있으면 그 glob, 없으면 본문에 적힌 적용 범위(`적용:` 줄 등), 둘 다 없으면 모든 `.kt`·`.kts` 파일이다.
-- severity: frontmatter `severity` 가 있으면 그 값, 없으면 `warning` 이다.
+- severity: frontmatter `severity` 가 있으면 그 값, 없으면 `warning` 이다. `minSeverity` 보다 낮은 파일은 로드하지 않는다.
 - 허용: 본문에 예외·제외로 적힌 조건이다.
 - 근거: 본문에 출처 링크가 있으면 그 URL, 없으면 `프로젝트 룰` 이다.
 - 규칙을 서술하지 않는 파일(충돌 기록, 목차, 안내 문서)과 헤딩(개요, 배경)은 룰로 보지 않는다.
@@ -149,7 +149,7 @@ LaunchedEffect 가 시작될 때 캡처한 onAccountClick 과 오류 문구를 �
 - platform: android (자동 판정) / 설정 파일: 없음
 - 제외한 카테고리: scope-functions (없으면 `없음`)
 - 대상 파일: 12개 / 적용한 룰: 34개
-- 결과: error 2건, warning 5건
+- 결과: error 2건, warning 5건, info 0건
 - 수정: 5건 수정 (커밋 3개), 2건 수정하지 않음
 - 영향: 실제 문제 2건, 방어용 4건, 판정 불가 1건
 - 테스트: red→green 1건, 테스트 불가 1건, 재현되지 않음 0건
@@ -192,8 +192,8 @@ LaunchedEffect 가 시작될 때 캡처한 onAccountClick 과 오류 문구를 �
 ````
 
 - 코드 하나가 룰 여러 개에 해당하면 룰마다 한 항목씩 보고한다. 한 번의 수정으로 모두 해소돼도 항목을 합치지 않는다. 룰의 `## 허용` 에 다른 룰로 보고한다고 적힌 경우만 그 룰로 보고한다. 예외는 2단계의 플러그인 룰과 프로젝트 룰이 같은 이유로 보고하는 경우다.
-- 요약에 `제외한 룰`(`excludeRules`, 없으면 `없음`), `프로젝트 룰`(`projectRules` 경로와 룰 수, 없으면 `없음`), `판정하지 못한 룰`(없으면 생략)을 `제외한 카테고리` 다음 줄에 적는다. `적용한 룰` 에는 프로젝트 룰 수도 포함한다.
-- 위반 목록은 severity(`error` → `warning`), 같은 severity 안에서는 파일 경로·줄 번호 순으로 정렬한다.
+- 요약에 `minSeverity`(예: `warning 이상`), `제외한 룰`(`excludeRules`, 없으면 `없음`), `프로젝트 룰`(`projectRules` 경로와 룰 수, 없으면 `없음`), `판정하지 못한 룰`(없으면 생략)을 `제외한 카테고리` 다음 줄에 적는다. `적용한 룰` 에는 프로젝트 룰 수도 포함한다.
+- 위반 목록은 severity(`error` → `warning` → `info`), 같은 severity 안에서는 파일 경로·줄 번호 순으로 정렬한다.
 - 룰에 해당하는 코드였지만 `## 허용` 에 해당해 보고하지 않은 코드는 `허용으로 제외한 코드` 에 기록한다. 없으면 이 섹션을 생략한다.
 
 ## 5. 검수 결과 반영

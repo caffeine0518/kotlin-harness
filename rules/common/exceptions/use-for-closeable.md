@@ -1,5 +1,5 @@
 ---
-severity: warning
+severity: error
 applies_to: "**/*.kt"
 source: https://kotlinlang.org/docs/exceptions.html#the-finally-block
 ---
