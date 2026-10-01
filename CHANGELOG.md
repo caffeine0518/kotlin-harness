@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.24.0
+- severity 에 `info` 를 추가하고, 설정 `minSeverity`(기본값 `warning`)보다 낮은 룰은 판정하지 않는다. 기본 설정에서는 info 룰을 적용하지 않으므로, 이전처럼 모든 룰을 적용하려면 `"minSeverity": "info"` 를 지정한다.
+- 표기 관례 룰 55개를 `warning` 에서 `info` 로 변경했다. `common` 의 `comments`·`control-flow`·`file-layout`·`functions`·`lambdas`·`naming`·`scope-functions`·`strings` 전체와, 다른 카테고리의 일부 룰(`android` 8개, `collections` 3개, `exceptions` 4개, `immutability` 3개, `null-safety` 2개)이다.
+- 룰 3개를 `warning` 에서 `error` 로 변경했다: `android/security/store-user-password`, `common/exceptions/use-for-closeable`, `common/coroutines/run-blocking-in-suspend`.
+
 ## 0.23.0
 - 룰 1개 추가. 기존 카테고리에 추가했으므로 `excludeCategories` 설정은 그대로 적용된다.
   - `common/scope-functions`: 리시버가 지역 `val`·파라미터인 `?.let { } ?: ...` 로 값을 고르는 경우. `if (x == null) a else f(x)` 로 작성한다.
