@@ -179,7 +179,7 @@ source: https://...      # 근거 문서. common 룰은 공식 문서만 허용
 | common/lambdas | `labeled-return`, `lambda-outside-parentheses` |
 | common/naming | `acronym-case`, `backing-property-name`, `meaningless-name`, `mutating-function-name` |
 | common/null-safety | `filter-not-null`, `not-null-assertion`, `nullable-boolean-condition`, `platform-type-explicit`, `safe-cast` |
-| common/scope-functions | `context-object-reference`, `extract-long-receiver`, `let-elvis-null-result`, `nested-lambda-implicit-it`, `nested-scope-functions`, `scope-function-return-value` |
+| common/scope-functions | `context-object-reference`, `extract-long-receiver`, `if-else-over-let-elvis`, `let-elvis-null-result`, `nested-lambda-implicit-it`, `nested-scope-functions`, `scope-function-return-value` |
 | common/strings | `multiline-string`, `string-template-over-concatenation` |
 | common/types | `closed-state-as-sealed`, `data-class-body-property`, `enum-lookup-or-null`, `value-class-over-typealias`, `when-else-on-sealed` |
 | android/coroutines | `catch-exceptions-in-ui-scope`, `inject-dispatchers`, `inject-test-dispatchers`, `main-safe-suspend-function`, `unnecessary-dispatcher-switch` |

@@ -39,5 +39,5 @@ if (user != null) {
 
 ## 허용
 
-- `let` 블록의 마지막 식이 논널 타입인 경우 (`user?.let { it.name } ?: "guest"` 에서 `name` 이 `String`)
+- `let` 블록의 마지막 식이 논널 타입인 경우 (`user?.let { it.name } ?: "guest"` 에서 `name` 이 `String`). 리시버가 지역 `val`·파라미터이면 `common/scope-functions/if-else-over-let-elvis` 가 보고한다.
 - 변환 결과가 `null` 일 때도 기본값을 쓰는 것이 의도인 값 변환 (`value?.let { parse(it) } ?: default`). 블록에 부수 효과가 없으면 위반이 아니다.
