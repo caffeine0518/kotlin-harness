@@ -27,12 +27,29 @@ if (user.nickname != null) {
 
 ## 수정
 
-```kotlin
-val name = map["name"] ?: throw IllegalStateException("name is missing")
-val length = user.nickname?.length ?: 0
+`null` 이 무엇을 뜻하는지에 따라 고른다.
 
+1. `null` 이 정상적인 경우(값이 없을 수 있다)면, 그때 할 일을 코드로 적는다. 기본값을 쓰거나, 값이 있을 때만 실행하거나, 함수를 끝낸다. 공식 문서는 엘비스 연산자 오른쪽에 `return` 을 쓰는 예를 든다.
+
+```kotlin
+val length = user.nickname?.length ?: 0
 user.nickname?.let { show(it) }
-// 또는 로컬 val 로 받아 스마트 캐스트를 적용한다
+val parent = node.parent ?: return
+```
+
+2. `null` 이면 버그(초기화 순서 오류, 잘못된 인자, 있어야 할 키 누락)라면, 무엇이 없는지 메시지와 함께 실패한다. `!!` 는 메시지 없는 NPE 만 남기지만, 아래 함수는 원인을 메시지와 예외 타입으로 남긴다. 상태는 `checkNotNull`(`IllegalStateException`), 인자는 `requireNotNull`(`IllegalArgumentException`) 로 검증하고, 맵에 반드시 있어야 하는 키는 `getValue`(`NoSuchElementException`, 메시지에 키 포함) 로 조회한다. 이 예외는 호출하는 쪽에서 잡아 처리할 대상이 아니라 버그를 드러내기 위한 것이다.
+
+```kotlin
+val config = checkNotNull(cachedConfig) { "init() 을 호출하기 전에 사용했다" }
+val id = requireNotNull(args.id) { "id 인자가 필요하다" }
+val name = map.getValue("name")
+```
+
+`null` 의 의미를 코드에서 판정할 수 없으면 2를 쓴다. `null` 일 때 실패하는 것은 `!!` 와 같고, 예외 타입이 NPE 에서 바뀌고 원인이 메시지로 남는 것만 다르다.
+
+3. 널 체크 뒤의 `!!` 는 값을 로컬 `val` 로 받아 스마트 캐스트를 적용한다.
+
+```kotlin
 val nickname = user.nickname
 if (nickname != null) show(nickname)
 ```
