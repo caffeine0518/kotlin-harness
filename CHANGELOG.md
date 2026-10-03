@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.26.0
+- `common/exceptions/catch-order` 가 예외를 분기하는 `when` 의 `is` 분기 순서도 판정한다. `runCatching { }.onFailure { }`·예외 변환 함수에서 상위 타입의 분기가 하위 타입보다 앞에 있으면 보고한다. 같은 예외 계층을 여러 곳에서 분기하면 경계에서 sealed 타입으로 변환하는 방법을 수정에 선택지로 추가했다.
+- `common/coroutines/cancel-custom-scope` 의 수정을 suspend 함수, 소유자 스코프 주입, 직접 생성 후 취소의 3단계로 나눴다. 기존 예시는 주입받은 스코프를 `close()` 에서 취소해 소유자의 스코프 전체를 취소했으므로 예시를 분리했다.
+- `common/coroutines/cooperative-cancellation` 에 블로킹 I/O 를 `runInterruptible` 로 감싸는 수정과 `flow { }` 선택지를 추가했다. 취소를 확인하는 kotlinx.coroutines 함수를 호출하는 suspend 함수를 루프에서 호출하는 경우도 허용한다.
+- `common/control-flow/guard-condition-parentheses` 에 긴 가드 조건을 이름 있는 프로퍼티·함수로 추출하는 수정을 추가했다.
+- `common/coroutines/shared-mutable-state` 에서 `@Volatile` 이 읽기-수정-쓰기 연산에 효과가 없는 이유를 예시와 함께 설명했다.
+
 ## 0.25.0
 - `common/collections/sequence-for-multi-step-chain` 이 중간 연산이 1개여도 끝의 연산과 함수 하나로 합칠 수 없으면 판정한다 (`map { }.first { }`·`filter { }.take(n)` 등). `filter { }.first()` 처럼 합칠 수 있는 체인은 지금처럼 허용하고 `filter-then-terminal` 룰로 수정한다.
 - `common/collections/sorted-by-descending` 에 `sortedBy { }.reversed()` 와 `sortedByDescending { }` 은 정렬 키가 같은 요소의 순서가 다르다는 설명과, `thenBy { }` 로 두 번째 정렬 기준을 지정하는 방법을 추가했다. 키가 같은 요소의 순서가 원본의 역순이어야 하는 경우는 허용한다.
