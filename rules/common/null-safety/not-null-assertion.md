@@ -29,22 +29,21 @@ if (user.nickname != null) {
 
 `null` 의 의미에 따라 고른다.
 
-- 정상적인 경우(값이 없을 수 있다): 기본값, `?.let`, 조기 반환
+- 정상적인 경우(값이 없을 수 있다): 기본값, 로컬 `val` 로 받아 `if` 로 분기, 조기 반환
 - 버그인 경우: 상태는 `checkNotNull`, 인자는 `requireNotNull`, 필수 키는 `getValue` 로 원인을 남기고 실패한다. 이 예외는 잡아서 처리하지 않는다.
-- 판정할 수 없으면 버그인 경우로 고친다. `!!` 처럼 실패하되 원인이 남는다.
+- 판정할 수 없으면 수정하지 않는다. 처리 결과에 `수정하지 않음: null 이 정상적인 경우인지 버그인지 판정할 수 없음` 을 적고, `수정 제안` 에 두 경우의 수정안과 확인할 내용(값을 채우는 위치, 널러블로 선언한 이유)을 적는다.
 - 널 체크 뒤의 `!!`: 로컬 `val` 로 받아 스마트 캐스트를 적용한다.
 
 ```kotlin
 val length = user.nickname?.length ?: 0
-user.nickname?.let { show(it) }
 val parent = node.parent ?: return
+
+val nickname = user.nickname
+if (nickname != null) show(nickname)
 
 val config = checkNotNull(cachedConfig) { "init() 전에 사용했다" }
 val id = requireNotNull(args.id) { "id 인자가 필요하다" }
 val name = map.getValue("name")
-
-val nickname = user.nickname
-if (nickname != null) show(nickname)
 ```
 
 ## 허용
