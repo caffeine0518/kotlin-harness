@@ -19,7 +19,7 @@ try {
     processWithdrawal(amount, funds)
 } catch (e: WithdrawalException) {
     showGenericError()
-} catch (e: InsufficientFundsException) {  // InsufficientFundsException : WithdrawalException — 실행되지 않는다
+} catch (e: InsufficientFundsException) {  // WithdrawalException 의 하위 타입이라 위 catch 가 먼저 처리한다. 실행되지 않는다
     showInsufficientFunds()
 }
 
@@ -27,7 +27,7 @@ try {
     file.readText()
 } catch (e: Exception) {
     log(e)
-} catch (e: IOException) {  // 실행되지 않는다
+} catch (e: IOException) {  // Exception 의 하위 타입이라 위 catch 가 먼저 처리한다. 실행되지 않는다
     retry()
 }
 
@@ -35,7 +35,7 @@ runCatching { processWithdrawal(amount, funds) }
     .onFailure { e ->
         when (e) {
             is WithdrawalException -> showGenericError()
-            is InsufficientFundsException -> showInsufficientFunds()  // 실행되지 않는다
+            is InsufficientFundsException -> showInsufficientFunds()  // WithdrawalException 의 하위 타입이라 위 분기가 먼저 해당한다. 실행되지 않는다
         }
     }
 ```
@@ -58,6 +58,20 @@ runCatching { processWithdrawal(amount, funds) }
             is WithdrawalException -> showGenericError()
         }
     }
+```
+
+같은 예외 계층을 여러 곳에서 분기하면, 데이터를 가져오는 계층의 경계에서 sealed 타입으로 한 번 변환해 이후의 분기가 순서와 무관하게 할 수 있다. sealed 의 하위 타입끼리는 상속 관계가 없어 순서가 결과에 영향을 주지 않고, `else` 없이 작성하면 처리하지 않은 타입이 컴파일 오류가 된다.
+
+```kotlin
+sealed interface WithdrawalError {
+    data object InsufficientFunds : WithdrawalError
+    data class Unknown(val cause: Throwable) : WithdrawalError
+}
+
+fun Throwable.toWithdrawalError(): WithdrawalError = when (this) {
+    is InsufficientFundsException -> WithdrawalError.InsufficientFunds
+    else -> WithdrawalError.Unknown(this)
+}
 ```
 
 ## 허용
