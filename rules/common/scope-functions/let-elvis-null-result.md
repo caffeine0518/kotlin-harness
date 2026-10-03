@@ -4,11 +4,13 @@ applies_to: "**/*.kt"
 source: https://kotlinlang.org/docs/idioms.html#map-nullable-value-if-not-null
 ---
 
-# `?.let { } ?: ...` 을 if-else 로 쓸 때 `let` 블록이 `null` 을 반환할 수 있으면 `if` 로 분기한다
+# `?.let { } ?: ...` 을 if-else 대신 쓸 때, `let` 블록이 `null` 을 반환할 수 있으면 `if`-`else` 로 작성한다
 
 ## 이유
 
-`value?.let { ... } ?: fallback` 에서 엘비스 연산자 오른쪽은 `value` 가 `null` 일 때뿐 아니라 `let` 블록의 마지막 식이 `null` 일 때도 실행된다. 공식 문서는 이 관용구에 대해 "value 또는 변환 결과가 `null` 이면 defaultValue 를 반환한다"고 적는다. `let` 블록이 부수 효과를 실행한 뒤 널러블 값을 반환하면 `let` 블록과 엘비스 오른쪽이 모두 실행된다.
+`value?.let { ... } ?: fallback` 의 엘비스 오른쪽은 `value` 가 `null` 일 때만이 아니라, `let` 블록의 마지막 식이 `null` 일 때도 실행된다. 공식 문서도 이 관용구를 "value 또는 변환 결과가 `null` 이면 defaultValue 를 반환한다"고 설명한다.
+
+그래서 `let` 블록이 부수 효과를 실행한 뒤 널러블 값을 반환하면, `let` 블록과 엘비스 오른쪽이 둘 다 실행된다. `if`-`else` 로 쓰면 두 분기 중 하나만 실행된다.
 
 ## 위반
 
