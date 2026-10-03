@@ -28,10 +28,20 @@ val type = Type.entries.first { it.code == json.getInt("type") }
 
 ## 수정
 
+enum 의 companion object 에 `null` 을 반환하는 조회 함수를 두고, 호출하는 쪽은 그 함수를 호출한다.
+
 ```kotlin
-val status = Status.entries.find { it.name == response.status } ?: Status.UNKNOWN
-val color = Color.entries.getOrNull(prefs.getInt("color", 0)) ?: Color.RED
-val type = Type.entries.firstOrNull { it.code == json.getInt("type") }
+enum class Type(val code: Int) {
+    TEXT(1), IMAGE(2);
+
+    companion object {
+        fun fromCode(code: Int): Type? = entries.find { it.code == code }
+    }
+}
+
+val status = Status.fromName(response.status) ?: Status.UNKNOWN
+val color = Color.fromPosition(prefs.getInt("color", 0)) ?: Color.RED
+val type = Type.fromCode(json.getInt("type"))
 ```
 
 ## 허용
