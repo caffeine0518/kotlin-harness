@@ -26,18 +26,32 @@ class Poller {
 
 ## 수정
 
-수명이 호출 범위 안에 있으면 `coroutineScope { }`·`supervisorScope { }` 를 쓴다. 객체의 수명을 따라야 하면 프로퍼티로 보관하고 `close()` 등 수명 종료 지점에서 `cancel()` 을 호출한다.
+작업의 수명에 따라 아래 순서로 고른다.
+
+1. 수명이 호출 범위 안에 있으면 스코프를 만들지 않고 `suspend` 함수로 작성해 `withContext`·`coroutineScope { }`·`supervisorScope { }` 를 쓴다.
+2. 객체의 수명을 따라야 하면 소유자의 스코프(`viewModelScope` 등)를 주입받는다. 소유자가 취소되면 함께 취소되므로 직접 취소하지 않는다. 그 객체의 작업만 멈춰야 하면 스코프가 아니라 `launch` 가 반환한 `Job` 을 취소한다.
+3. 주입받을 스코프가 없을 때만 직접 생성하고, `close()` 등 수명 종료 지점에서 `cancel()` 을 호출한다.
 
 ```kotlin
+// 1
 suspend fun upload(file: File) = withContext(Dispatchers.IO) { api.upload(file) }
 
-class Poller(
-    private val scope: CoroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Default),
-) : AutoCloseable {
+// 2
+class Poller(private val scope: CoroutineScope) {
+    private var job: Job? = null
+    fun start() { job = scope.launch { while (isActive) { poll(); delay(1_000) } } }
+    fun stop() { job?.cancel() }
+}
+
+// 3
+class Poller : AutoCloseable {
+    private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
     fun start() = scope.launch { while (isActive) { poll(); delay(1_000) } }
     override fun close() = scope.cancel()
 }
 ```
+
+3의 `AutoCloseable` 은 `close()` 하나를 가진 표준 인터페이스다. 구현하면 `use { }` 로 `close()` 를 빠뜨리지 않게 할 수 있고, AndroidX `ViewModel` 에 전달하면 ViewModel 이 정리될 때 `close()` 를 호출한다.
 
 ## 허용
 
