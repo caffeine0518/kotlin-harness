@@ -23,8 +23,10 @@ data class Person(val name: String) {
 
 val a = Person("John").apply { age = 10 }
 val b = Person("John").apply { age = 20 }
-a == b          // true
-a.copy().age    // 0
+
+a == b          // true: age 가 달라도 같다고 판정한다
+a.toString()    // "Person(name=John)": age 가 나타나지 않는다
+a.copy().age    // 0: age 가 복사되지 않고 초기값을 갖는다
 ```
 
 ## 수정
