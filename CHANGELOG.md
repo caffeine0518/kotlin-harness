@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.25.0
+- `common/collections/sequence-for-multi-step-chain` 이 중간 연산이 1개여도 끝의 연산과 함수 하나로 합칠 수 없으면 판정한다 (`map { }.first { }`·`filter { }.take(n)` 등). `filter { }.first()` 처럼 합칠 수 있는 체인은 지금처럼 허용하고 `filter-then-terminal` 룰로 수정한다.
+- `common/collections/sorted-by-descending` 에 `sortedBy { }.reversed()` 와 `sortedByDescending { }` 은 정렬 키가 같은 요소의 순서가 다르다는 설명과, `thenBy { }` 로 두 번째 정렬 기준을 지정하는 방법을 추가했다. 키가 같은 요소의 순서가 원본의 역순이어야 하는 경우는 허용한다.
+- `common/comments/history-comment` 가 테스트 함수·클래스에 붙은 주석이 그 테스트가 검출하는 회귀를 설명하면 이슈 링크 없이 허용한다. 이전 동작 서술이 섞인 주석은 삭제하지 않고 현재 보장하는 동작을 서술하는 문장으로 고친다. ([#10](https://github.com/caffeine0518/kotlin-harness/issues/10))
+- gate 가 `방어용` 수정을 룰 카테고리마다 커밋 하나로 묶는다. `실제 문제` 수정과 red 커밋은 지금처럼 분리한다. 검수는 멤버 종류를 바꾼 수정을 멤버 배치 룰에도 대조한다. ([#9](https://github.com/caffeine0518/kotlin-harness/issues/9))
+
 ## 0.24.0
 - severity 에 `info` 를 추가하고, 설정 `minSeverity`(기본값 `warning`)보다 낮은 룰은 판정하지 않는다. 기본 설정에서는 info 룰을 적용하지 않으므로, 이전처럼 모든 룰을 적용하려면 `"minSeverity": "info"` 를 지정한다.
 - 표기 관례 룰 55개를 `warning` 에서 `info` 로 변경했다. `common` 의 `comments`·`control-flow`·`file-layout`·`functions`·`lambdas`·`naming`·`scope-functions`·`strings` 전체와, 다른 카테고리의 일부 룰(`android` 8개, `collections` 3개, `exceptions` 4개, `immutability` 3개, `null-safety` 2개)이다.
