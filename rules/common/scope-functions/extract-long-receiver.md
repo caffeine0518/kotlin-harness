@@ -22,7 +22,7 @@ InstrumentationRegistry.getArguments().getString(ARG_BYPASS_TOKEN)?.let {
     log("bypass token length=${it.length}")
 }
 
-repository.findUser(id)?.profiles?.firstOrNull()?.takeIf { it.isPublic && it.nickname.isNotBlank() }
+val publicProfile = repository.findUser(id)?.profiles?.firstOrNull()?.takeIf { it.isPublic && it.nickname.isNotBlank() }
 
 Registry.getArguments().getString(ARG_KEY)?.let {
     System.setProperty(PROPERTY_NAME, it)
@@ -41,7 +41,7 @@ if (token != null) {
 }
 
 val profile = repository.findUser(id)?.profiles?.firstOrNull()
-profile?.takeIf { it.isPublic && it.nickname.isNotBlank() }
+val publicProfile = profile?.takeIf { it.isPublic && it.nickname.isNotBlank() }
 
 val key = Registry.getArguments().getString(ARG_KEY)
 if (key != null) System.setProperty(PROPERTY_NAME, key)
