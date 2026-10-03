@@ -22,9 +22,9 @@ source: https://kotlinlang.org/docs/coding-conventions.html#choose-good-names
 
 ```kotlin
 class Playlist {
-    private val songs = mutableListOf<Song>()
-    fun add(song: Song) { songs += song }
-    fun sorted() { songs.sortBy { it.title } }  // 이름은 sorted 인데 songs 자체를 정렬한다
+    private val _songs = mutableListOf<Song>()
+    val songs: List<Song> get() = _songs
+    fun sorted() { _songs.sortBy { it.title } }  // 이름은 sorted 인데 _songs 자체를 정렬한다
 }
 
 fun MutableList<Song>.sortByTitle(): List<Song> = sortedBy { it.title }  // 이름은 sort 인데 원본을 그대로 두고 정렬된 복사본을 반환한다
@@ -34,9 +34,9 @@ fun MutableList<Song>.sortByTitle(): List<Song> = sortedBy { it.title }  // 이�
 
 ```kotlin
 class Playlist {
-    private val songs = mutableListOf<Song>()
-    fun add(song: Song) { songs += song }
-    fun sort() { songs.sortBy { it.title } }
+    private val _songs = mutableListOf<Song>()
+    val songs: List<Song> get() = _songs
+    fun sort() { _songs.sortBy { it.title } }
 }
 
 fun MutableList<Song>.sortedByTitle(): List<Song> = sortedBy { it.title }
