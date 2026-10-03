@@ -4,11 +4,13 @@ applies_to: "**/*.kt"
 source: https://kotlinlang.org/docs/sealed-classes.html#use-sealed-classes-with-when-expression
 ---
 
-# sealed·enum 타입을 subject 로 하는 `when` 에 `else` 분기를 두지 않는다
+# sealed·enum 값으로 분기하는 `when` 에는 `else` 분기를 두지 않는다
 
 ## 이유
 
-subject 가 sealed 클래스·인터페이스나 enum 이면 컴파일러가 모든 하위 타입·상수를 다루었는지 검사하므로 `else` 가 필요 없다. `else` 를 두면 이 검사가 적용되지 않아, 이후 하위 타입이나 상수를 추가해도 컴파일 오류가 발생하지 않고 새 값이 `else` 분기로 처리된다.
+`when` 의 subject 가 sealed 클래스·인터페이스나 enum 이면, 컴파일러가 모든 하위 타입·상수를 분기로 처리했는지 검사한다. 그래서 `else` 가 없어도 컴파일된다.
+
+`else` 를 두면 이 검사가 의미가 없어진다. 나중에 하위 타입이나 상수를 추가해도 컴파일 오류가 발생하지 않고, 새 값은 `else` 분기로 처리된다. 새 값에 맞는 처리를 추가해야 하는 위치를 컴파일러가 알려 주지 못한다.
 
 ## 위반
 
