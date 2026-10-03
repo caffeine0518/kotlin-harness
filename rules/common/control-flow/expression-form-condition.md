@@ -37,4 +37,4 @@ return when (x) {
 
 - 분기마다 다른 변수에 대입하거나, 일부 분기만 반환하는 경우
 - 분기 안에 여러 문장이 있어 식으로 쓰면 오히려 읽기 어려운 경우
-- `try` 는 이 룰이 아니라 `common/exceptions/try-expression` 이 보고한다.
+- `try` 는 이 룰이 아니라 `common/control-flow/exceptions/try-expression` 이 보고한다.

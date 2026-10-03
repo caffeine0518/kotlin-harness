@@ -33,4 +33,4 @@ val label = when (user.role) {
 ## 허용
 
 - 예외에 `cause` 를 지정하는 경우 (`error()` 는 메시지만 받는다)
-- 조건 검사 뒤에 발생시키는 경우는 `common/exceptions/precondition-functions` 룰에서 다룬다
+- 조건 검사 뒤에 발생시키는 경우는 `common/control-flow/exceptions/precondition-functions` 룰에서 다룬다

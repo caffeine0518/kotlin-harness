@@ -172,9 +172,9 @@ source: https://...      # 근거 문서. common 룰은 공식 문서만 허용
 | common/collections | `combined-transformation`, `empty-collection-element`, `filter-then-terminal`, `remove-while-iterating`, `sequence-for-multi-step-chain`, `sorted-by-descending` |
 | common/comments | `banner-comment`, `comment-instead-of-name`, `commented-out-code`, `history-comment`, `param-return-tags`, `redundant-comment`, `redundant-kdoc` |
 | common/control-flow | `expression-form-condition`, `for-over-foreach`, `guard-condition-parentheses`, `higher-order-function-over-loop`, `if-versus-when`, `open-ended-range` |
+| common/control-flow/exceptions | `catch-order`, `error-function`, `exception-object-declaration`, `nothing-return-type`, `precondition-functions`, `try-expression`, `use-for-closeable` |
 | common/coroutines | `cancel-custom-scope`, `cooperative-cancellation`, `exception-handler-on-child`, `global-scope`, `rethrow-cancellation-exception`, `run-blocking-in-suspend`, `shared-mutable-state`, `try-catch-around-launch` |
 | common/coroutines/flow | `catch-before-collector`, `emit-in-other-context`, `missing-terminal-operator`, `on-completion-not-handler`, `rethrow-collector-exception` |
-| common/exceptions | `catch-order`, `error-function`, `exception-object-declaration`, `nothing-return-type`, `precondition-functions`, `try-expression`, `use-for-closeable` |
 | common/file-layout | `class-layout`, `extension-file`, `overload-layout` |
 | common/functions | `default-parameter-over-overload`, `extension-visibility`, `factory-function-name`, `infix-function`, `named-arguments`, `property-over-function` |
 | common/immutability | `data-class-mutable-collection`, `expose-read-only-view`, `prefer-val`, `read-only-collection-factory`, `read-only-collection-type` |
