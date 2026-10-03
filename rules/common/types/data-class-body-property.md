@@ -8,7 +8,11 @@ source: https://kotlinlang.org/docs/data-classes.html#properties-declared-in-the
 
 ## 이유
 
-컴파일러는 주 생성자에 선언한 프로퍼티만 `equals()`·`hashCode()`·`toString()`·`copy()`·`componentN()` 생성에 사용한다. 클래스 본문에 선언한 프로퍼티는 값이 달라도 두 객체가 같다고 판정되고, `copy()` 결과에서는 초기값으로 초기화된다.
+컴파일러가 생성하는 `equals()`·`hashCode()`·`toString()`·`copy()`·`componentN()` 은 주 생성자에 선언한 프로퍼티만 사용한다. 그래서 클래스 본문에 선언한 프로퍼티는 아래처럼 동작한다.
+
+- 값이 달라도 `equals()` 가 두 객체를 같다고 판정한다.
+- `toString()` 결과에 나타나지 않는다.
+- `copy()` 로 만든 객체에 값이 복사되지 않고, 선언한 초기값을 갖는다.
 
 ## 위반
 
