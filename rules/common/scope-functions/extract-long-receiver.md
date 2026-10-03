@@ -8,7 +8,9 @@ source: https://refactoring.com/catalog/extractVariable.html
 
 ## 이유
 
-스코프 함수의 리시버가 `a().b().c()` 같은 호출 체인이면, 람다 안의 `it`·`this` 가 무엇인지 알기 위해 체인의 마지막 호출과 인수까지 읽어야 한다. Martin Fowler 의 《Refactoring》은 복잡한 식을 설명하는 이름의 변수로 나누는 변수 추출(Extract Variable, Introduce Explaining Variable)을 제시한다. 결과를 `val token = ...` 으로 추출하면 바로 앞의 이름으로 `it` 이 무엇인지 알 수 있고, 지역 `val` 에는 스마트 캐스트가 적용되어 `?.let` 없이 `if (token != null)` 로 쓸 수도 있다.
+스코프 함수의 리시버가 `a().b().c()` 같은 호출 체인이면, 람다 안의 `it`·`this` 가 무엇인지 알려면 체인의 마지막 호출과 인수까지 읽어야 한다. 체인 결과를 `val token = ...` 으로 추출하면 이름만 보고 값이 무엇인지 알 수 있다. 또 지역 `val` 에는 스마트 캐스트가 적용되므로 `?.let` 대신 `if (token != null)` 로 분기할 수 있다.
+
+참고: Martin Fowler 의 《Refactoring》은 복잡한 식을 설명하는 이름의 변수로 추출하는 방법을 변수 추출(Extract Variable)로 소개한다.
 
 ## 위반
 
