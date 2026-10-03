@@ -8,7 +8,15 @@ source: https://kotlinlang.org/docs/enum-classes.html#find-enum-constants
 
 ## 이유
 
-`valueOf()` 는 이름이 일치하는 상수가 없으면 `IllegalArgumentException` 이, `entries.first { }` 는 `NoSuchElementException` 이, `entries[index]` 는 `IndexOutOfBoundsException` 이 발생한다. 서버 응답·저장값·Intent extra 처럼 값을 보장할 수 없는 입력에서는 새 상수가 추가된 서버나 이전 버전의 저장값에서 앱이 종료된다. 공식 문서는 `null` 을 반환하는 `entries.getOrNull()`·`firstOrNull()` 과 companion object 조회 함수를 안내한다.
+enum 상수를 찾는 함수 중 일부는 일치하는 상수가 없으면 예외를 발생시킨다.
+
+- `valueOf()`: 이름이 일치하는 상수가 없으면 `IllegalArgumentException`
+- `entries.first { }`: 조건에 맞는 상수가 없으면 `NoSuchElementException`
+- `entries[index]`: 인덱스가 범위를 벗어나면 `IndexOutOfBoundsException`
+
+서버 응답·저장값·Intent extra 는 값이 enum 에 있다고 보장할 수 없다. 서버가 새 상수를 추가하거나, 이전 버전에서 저장한 값의 상수가 삭제·변경되면 앱이 종료된다.
+
+공식 문서는 대신 `null` 을 반환하는 방법을 안내한다. `entries.getOrNull()`·`firstOrNull()` 을 쓰거나, companion object 에 조회 함수를 둔다.
 
 ## 위반
 
