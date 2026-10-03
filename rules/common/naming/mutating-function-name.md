@@ -23,10 +23,10 @@ source: https://kotlinlang.org/docs/coding-conventions.html#choose-good-names
 ```kotlin
 class Playlist {
     private val songs = mutableListOf<Song>()
-    fun sorted() { songs.sortBy { it.title } }  // 제자리 변경
+    fun sorted() { songs.sortBy { it.title } }  // 이름은 sorted 인데 songs 자체를 정렬한다
 }
 
-fun MutableList<Song>.sortByTitle(): List<Song> = sortedBy { it.title }  // 가변 리시버인데 복사본을 반환
+fun MutableList<Song>.sortByTitle(): List<Song> = sortedBy { it.title }  // 이름은 sort 인데 원본을 그대로 두고 정렬된 복사본을 반환한다
 ```
 
 ## 수정
