@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.28.0
+- `common/null-safety/not-null-assertion` 의 수정을 `null` 의 의미에 따라 나눴다. 정상적인 경우는 기본값·`if` 분기·조기 반환으로, 버그인 경우는 `checkNotNull`·`requireNotNull`·`getValue` 로 수정한다. 판정할 수 없으면 수정하지 않고 리포트에 사유와 수정 제안을 적는다.
+- `common/functions/extension-visibility` 가 한 파일에서만 쓰는 익스텐션만 판정한다. 한 모듈에서만 쓰는 익스텐션에 `internal` 을 요구하지 않는다.
+- `common/types/enum-lookup-or-null` 의 수정을 companion object 조회 함수(`fromName`·`fromPosition`·`fromCode`)로 바꿨다.
+- `common` 룰 9개의 이유·예시를 사람과 판정 에이전트가 함께 읽기 쉽게 다듬었다: `closed-state-as-sealed`, `data-class-body-property`, `extract-long-receiver`, `if-else-over-let-elvis`, `let-elvis-null-result`, `mutating-function-name`, `property-over-function`, `value-class-over-typealias`, `when-else-on-sealed`.
+
 ## 0.27.0
 - **설정 확인 필요.** 카테고리 2개를 Kotlin 문서 구성에 맞춰 이동했다. 룰 ID 가 바뀌므로, 옛 경로를 적은 `excludeCategories`·`excludeRules` 는 없는 이름이 되어 gate 가 중단된다. 새 경로로 바꾼다.
   - `common/flow` → `common/coroutines/flow`
