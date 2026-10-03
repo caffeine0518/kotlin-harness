@@ -16,7 +16,7 @@ argument-hint: "[file <path> | diff | branch [base] | pr [number] | project]"
 |---|---|
 | `platform` | 자동 판정. 루트와 모듈 한 단계의 `build.gradle`·`build.gradle.kts` 에 `com.android.application`·`com.android.library`·`android.application`·`android.library` 가 있으면 `android`, 없으면 platform 없음(common 룰만 적용) |
 | `excludeCategories` | 없음 |
-| `minSeverity` | `warning` |
+| `minSeverity` | `info` |
 | `excludeRules` | 없음 |
 | `projectRules` | 없음 |
 | `review.autoFix` | `true` |
