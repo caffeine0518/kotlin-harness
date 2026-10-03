@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.27.0
+- **설정 확인 필요.** 카테고리 2개를 Kotlin 문서 구성에 맞춰 이동했다. 룰 ID 가 바뀌므로, 옛 경로를 적은 `excludeCategories`·`excludeRules` 는 없는 이름이 되어 gate 가 중단된다. 새 경로로 바꾼다.
+  - `common/flow` → `common/coroutines/flow`
+  - `common/exceptions` → `common/control-flow/exceptions`
+  - `excludeCategories` 에 `coroutines`·`control-flow` 를 적었으면 이동한 하위 카테고리도 함께 제외된다.
+- `minSeverity` 기본값을 `warning` 에서 `info` 로 변경했다. 기본 설정에서 표기 관례 룰까지 모든 룰을 적용한다. 이전처럼 표기 관례 룰을 제외하려면 `"minSeverity": "warning"` 을 지정한다.
+- gate 가 `방어용` 수정을 룰 카테고리마다가 아니라 실행 한 번에 커밋 하나로 묶는다. `실제 문제` 수정과 red 커밋은 지금처럼 분리한다.
+
 ## 0.26.0
 - `common/exceptions/catch-order` 가 예외를 분기하는 `when` 의 `is` 분기 순서도 판정한다. `runCatching { }.onFailure { }`·예외 변환 함수에서 상위 타입의 분기가 하위 타입보다 앞에 있으면 보고한다. 같은 예외 계층을 여러 곳에서 분기하면 경계에서 sealed 타입으로 변환하는 방법을 수정에 선택지로 추가했다.
 - `common/coroutines/cancel-custom-scope` 의 수정을 suspend 함수, 소유자 스코프 주입, 직접 생성 후 취소의 3단계로 나눴다. 기존 예시는 주입받은 스코프를 `close()` 에서 취소해 소유자의 스코프 전체를 취소했으므로 예시를 분리했다.
