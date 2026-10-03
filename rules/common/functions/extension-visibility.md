@@ -4,7 +4,7 @@ applies_to: "**/*.kt"
 source: https://kotlinlang.org/docs/coding-conventions.html#extension-functions
 ---
 
-# 한 파일에서만 쓰는 익스텐션 함수는 `private` 으로, 한 모듈에서만 쓰는 익스텐션 함수는 `internal` 로 선언한다
+# 한 파일에서만 쓰는 익스텐션 함수는 `private` 으로 선언한다
 
 ## 이유
 
@@ -24,6 +24,8 @@ fun String.toDisplayName(): String = replaceFirstChar { it.uppercase() }  // 이
 ```kotlin
 private fun String.toDisplayName(): String = replaceFirstChar { it.uppercase() }
 ```
+
+다른 모듈이 의존하는 모듈에서는, 그 모듈 안에서만 쓰는 익스텐션을 `internal` 로 좁힐 수 있다. 앱 모듈처럼 다른 모듈이 의존하지 않는 모듈에서는 public 과 차이가 없으므로 이 룰은 `internal` 을 요구하지 않는다.
 
 ## 허용
 
