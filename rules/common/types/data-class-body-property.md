@@ -8,7 +8,7 @@ source: https://kotlinlang.org/docs/data-classes.html#properties-declared-in-the
 
 ## 이유
 
-data class 에서 컴파일러가 자동으로 생성하는 함수(`equals()`·`hashCode()`·`toString()`·`copy()`·`componentN()`)는 주 생성자에 선언한 프로퍼티만 사용한다. 그래서 클래스 본문에 선언한 프로퍼티는 아래처럼 동작한다.
+data class 에서 컴파일러가 자동으로 생성하는 함수(`equals()`·`hashCode()`·`toString()`·`copy()`·`componentN()`)는 주 생성자에 선언한 프로퍼티만 반영한다. 그래서 클래스 본문에 선언한 프로퍼티는 아래처럼 동작한다.
 
 - 값이 달라도 `equals()` 가 두 객체를 같다고 판정한다.
 - `toString()` 결과에 나타나지 않는다.
