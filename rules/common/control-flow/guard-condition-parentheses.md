@@ -26,6 +26,17 @@ when (status) {
 }
 ```
 
+조건이 길어 괄호로 감싸도 한 줄에서 읽기 어려우면, 조건을 이름 있는 프로퍼티·함수로 추출한다. 가드 조건이 불리언 식 하나가 되어 괄호가 필요 없다.
+
+```kotlin
+private val Info.isMissing: Boolean
+    get() = isEmpty() || id == null
+
+when (status) {
+    is Status.Ok if status.info.isMissing -> "no information"
+}
+```
+
 ## 허용
 
 - 가드 조건이 불리언 식 하나인 경우
