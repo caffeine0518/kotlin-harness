@@ -4,7 +4,7 @@ applies_to: "**/*.kt"
 source: https://kotlinlang.org/docs/sealed-classes.html#state-management-in-ui-applications
 ---
 
-# 정해진 개수의 상태는 `String`·`Int` 상수나 Boolean·널러블 필드의 조합 대신 sealed 클래스나 enum 으로 표현한다
+# 정해진 개수의 상태는 sealed 클래스나 enum 으로 표현한다
 
 ## 이유
 
@@ -14,7 +14,12 @@ Boolean·널러블 필드 여러 개의 조합으로 상태를 표현해도 같�
 
 ## 위반
 
-`String`·`Int` 상수로 상태를 표현한다.
+정해진 개수의 상태를 아래 방식으로 표현한다.
+
+- `String`·`Int` 상수
+- 같은 객체의 Boolean·널러블 필드 두 개 이상의 조합. 그 조합으로 서로 배타적인 상태(sealed 하위 타입·enum 상수)를 반환하거나 분기하는 코드가 있을 때 해당한다.
+
+`String`·`Int` 상수:
 
 ```kotlin
 const val STATE_LOADING = 0
@@ -34,7 +39,7 @@ fun render(model: ScreenModel) {
 }
 ```
 
-상태를 판별하는 조건이 같은 객체의 Boolean·널러블 필드 두 개 이상이고, 그 결과로 서로 배타적인 상태(sealed 하위 타입·enum 상수)를 반환하거나 분기한다.
+Boolean·널러블 필드의 조합:
 
 ```kotlin
 data class ConfigState(
