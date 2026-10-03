@@ -45,7 +45,27 @@ scope.launch {
 }
 ```
 
+반복 본문이 파일·소켓 읽기 같은 블로킹 I/O 를 호출하면, 그 호출을 `runInterruptible` 로 감싼 suspend 함수로 바꾼다. 호출할 때마다 취소를 확인하고, 취소되면 실행 중인 스레드를 인터럽트해 블로킹 호출도 중단한다. 반복문에는 확인 코드를 추가하지 않는다.
+
+```kotlin
+suspend fun hash(file: File): Hash = runInterruptible(Dispatchers.IO) { blockingHash(file) }
+
+scope.launch {
+    for (file in files) {
+        hash(file)
+    }
+}
+```
+
+결과를 하나씩 호출하는 쪽에 전달해야 하는 작업이면 `flow { }` 로 작성할 수 있다. `emit` 이 값마다 취소를 확인한다. 함수의 반환 타입이 바뀌어 호출하는 쪽도 수정해야 하므로, 기존 함수의 수정으로 적용하지 않고 설계를 바꿀 때 선택한다. `asFlow()` 는 취소를 확인하지 않으므로 `.cancellable()` 을 함께 쓴다.
+
+```kotlin
+fun hashes(files: List<File>): Flow<Hash> = flow {
+    for (file in files) emit(hash(file))
+}.flowOn(Dispatchers.Default)
+```
+
 ## 허용
 
-- 루프 본문에서 `delay`·`receive`·`emit` 등 kotlinx.coroutines 의 suspend 함수를 호출하는 경우
+- 루프 본문에서 취소를 확인하는 suspend 함수를 호출하는 경우. `delay`·`receive`·`emit`·`runInterruptible` 등 kotlinx.coroutines 의 suspend 함수와, 그 함수를 호출하는 suspend 함수가 해당한다.
 - 반복 횟수가 적어 짧게 끝나는 루프
