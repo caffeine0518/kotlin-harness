@@ -8,7 +8,7 @@ source: https://kotlinlang.org/docs/exception-handling.html#exception-propagatio
 
 ## 이유
 
-`launch` 는 코루틴을 시작한 뒤 바로 반환한다. 코루틴 본문은 나중에, 다른 호출 스택에서 실행되므로 `launch` 호출을 감싼 `try`·`catch` 는 본문의 예외를 잡지 못한다. 공식 문서에 따르면 `launch` 는 예외를 자동으로 전파하는 빌더이고, 루트 코루틴이면 잡히지 않은 예외(uncaught exception)로 처리한다. Android 에서는 앱이 크래시한다.
+`launch` 는 코루틴을 시작한 뒤 바로 반환한다. 코루틴 본문은 나중에, 다른 호출 스택에서 실행되므로 `launch` 호출을 감싼 `try`·`catch` 는 본문의 예외를 잡지 못한다. `launch` 는 예외를 자동으로 전파하는 빌더이고, 루트 코루틴이면 잡히지 않은 예외(uncaught exception)로 처리한다. Android 에서는 앱이 크래시한다.
 
 ## 위반
 

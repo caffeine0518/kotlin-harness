@@ -8,7 +8,7 @@ source: https://developer.android.com/kotlin/coroutines/coroutines-best-practice
 
 ## 이유
 
-Android 공식 문서에 따르면 메인 스레드 밖으로 실행을 옮기는 책임은 블로킹 작업을 하는 클래스가 진다. 이 책임은 어느 레이어의 클래스든 같다. 공식 예제의 use case 도 main-safe 한 Repository 를 호출하기만 하고 디스패처를 전환하지 않는다. main-safe 함수를 호출하는 쪽에서 IO·Default 디스패처로 다시 전환해도 얻는 것이 없고, 생성자·DI 모듈·테스트에 디스패처 파라미터만 늘어난다.
+메인 스레드 밖으로 실행을 옮기는 책임은 블로킹 작업을 하는 클래스가 진다. 이 책임은 어느 레이어의 클래스든 같다. UseCase 도 main-safe 한 Repository 를 호출하기만 하고 디스패처를 전환하지 않는다. main-safe 함수를 호출하는 쪽에서 IO·Default 디스패처로 다시 전환해도 얻는 것이 없고, 생성자·DI 모듈·테스트에 디스패처 파라미터만 늘어난다.
 
 전환하면 다음 문제도 생긴다.
 

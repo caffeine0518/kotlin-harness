@@ -8,7 +8,7 @@ source: https://developer.android.com/kotlin/coroutines/coroutines-best-practice
 
 ## 이유
 
-Android 공식 권장 사항이다. 디스패처를 생성자로 주입받으면 단위 테스트와 계측 테스트에서 `TestDispatcher` 로 교체할 수 있어 테스트가 결정적으로 실행된다. 클래스 안에서 `Dispatchers.IO`·`Dispatchers.Default` 를 직접 지정하면 테스트에서 교체할 방법이 없어, 코드가 여러 스레드에서 실행되고 `delay` 도 건너뛰지 못한다.
+디스패처를 생성자로 주입받으면 단위 테스트와 계측 테스트에서 `TestDispatcher` 로 교체할 수 있어 테스트가 결정적으로 실행된다. 클래스 안에서 `Dispatchers.IO`·`Dispatchers.Default` 를 직접 지정하면 테스트에서 교체할 방법이 없어, 코드가 여러 스레드에서 실행되고 `delay` 도 건너뛰지 못한다.
 
 ## 위반
 

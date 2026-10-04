@@ -8,7 +8,7 @@ source: https://kotlinlang.org/docs/collection-transformations.html#map
 
 ## 이유
 
-아래 함수는 변환과 후처리를 한 번에 수행해 중간 컬렉션을 만들지 않는다. 공식 문서는 변환 결과에서 `null` 을 제외할 때 `map()` 대신 `mapNotNull()` 을, 요소를 키로 하는 `Map` 을 만들 때 `associateBy()` 를 쓰라고 하고, `flatMap()` 은 `map()` 뒤에 `flatten()` 을 호출한 것과 같다고 설명한다.
+아래 함수는 변환과 후처리를 한 번에 수행해 중간 컬렉션을 만들지 않는다.
 
 | 위반 | 수정 |
 |---|---|

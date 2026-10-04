@@ -8,7 +8,7 @@ source: https://kotlinlang.org/docs/scope-functions.html#context-object-this-or-
 
 ## 이유
 
-공식 문서는 객체의 함수를 호출하거나 프로퍼티에 값을 대입하는 람다에는 컨텍스트 객체를 리시버(`this`)로 참조하는 `run`·`with`·`apply` 를, 객체를 함수 호출의 인자로 주로 쓰는 람다에는 `it` 으로 참조하는 `let`·`also` 를 권장한다. 반대로 쓰면 `it.` 이 줄마다 반복되거나, `this` 를 인자로 전달하느라 바깥 스코프의 `this` 가 가려진다.
+객체의 함수를 호출하거나 프로퍼티에 값을 대입하는 람다에 `it` 으로 참조하는 `let`·`also` 를 쓰면 `it.` 이 줄마다 반복된다. 객체를 함수 호출의 인자로 주로 쓰는 람다에 리시버(`this`)로 참조하는 `run`·`with`·`apply` 를 쓰면, `this` 를 인자로 전달하느라 바깥 스코프의 `this` 가 가려진다.
 
 ## 위반
 

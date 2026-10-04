@@ -8,7 +8,7 @@ source: https://kotlinlang.org/docs/collection-ordering.html#custom-orders
 
 ## 이유
 
-`sortedBy { }.reversed()` 는 정렬한 리스트를 만든 뒤 요소를 복사한 리스트를 한 번 더 만든다. 공식 문서는 내림차순 정렬 함수로 `sortedDescending()` 과 `sortedByDescending { }` 을 제공한다.
+`sortedBy { }.reversed()` 는 정렬한 리스트를 만든 뒤 요소를 복사한 리스트를 한 번 더 만든다.
 
 두 방식은 정렬 키가 같은 요소의 순서가 다르다. `sorted` 계열은 안정 정렬이라 키가 같은 요소의 원본 순서를 유지하는데, `reversed()` 는 정렬 결과를 통째로 뒤집어 그 순서까지 역순으로 만든다. 따라서 수정하면 키가 같은 요소의 순서가 바뀔 수 있다. 그 순서가 중요하면 `thenBy { }`·`thenByDescending { }` 으로 두 번째 정렬 기준을 지정한다.
 

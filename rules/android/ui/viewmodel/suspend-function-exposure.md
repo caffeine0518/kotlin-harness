@@ -8,7 +8,7 @@ source: https://developer.android.com/kotlin/coroutines/coroutines-best-practice
 
 ## 이유
 
-공식 문서는 ViewModel 이 비즈니스 로직을 수행하는 suspend 함수를 노출하지 말고 코루틴을 직접 생성하라고 한다. UI 가 ViewModel 의 suspend 함수를 호출하면 코루틴이 UI 의 스코프(`lifecycleScope`·`rememberCoroutineScope` 등)에서 실행되어, 화면 회전처럼 구성이 변경될 때 작업이 취소되고 결과가 UI 상태에 반영되지 않는다. `viewModelScope` 에서 시작한 코루틴은 ViewModel 이 해제될 때까지 유지되고, 결과는 UI 상태로 노출된다. 공식 문서는 UI 가 비즈니스 로직을 수행하는 코루틴을 직접 시작하지 않아야 한다고도 한다.
+UI 가 ViewModel 의 suspend 함수를 호출하면 코루틴이 UI 의 스코프(`lifecycleScope`·`rememberCoroutineScope` 등)에서 실행되어, 화면 회전처럼 구성이 변경될 때 작업이 취소되고 결과가 UI 상태에 반영되지 않는다. `viewModelScope` 에서 시작한 코루틴은 ViewModel 이 해제될 때까지 유지되고, 결과는 UI 상태로 노출된다.
 
 `ViewModel` 을 상속한 클래스에 적용한다.
 

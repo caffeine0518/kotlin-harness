@@ -8,7 +8,7 @@ source: https://kotlinlang.org/docs/coding-conventions.html#conditional-statemen
 
 ## 이유
 
-`try` 는 식이고, `try` 블록 또는 실행된 `catch` 블록의 마지막 식이 값이 된다. 공식 코딩 컨벤션은 `try`·`if`·`when` 의 식 형태를 선호하라고 한다. 식으로 쓰면 결과를 `var` 대신 `val` 로 받을 수 있다.
+`try` 는 식이고, `try` 블록 또는 실행된 `catch` 블록의 마지막 식이 값이 된다. 식으로 쓰면 결과를 `var` 대신 `val` 로 받을 수 있다.
 
 ## 위반
 

@@ -8,7 +8,7 @@ source: https://kotlinlang.org/docs/properties.html#backing-properties
 
 ## 이유
 
-`MutableList`·`MutableMap` 같은 가변 타입을 public 프로퍼티로 노출하면, 클래스 밖의 코드가 클래스의 메서드를 거치지 않고 요소를 추가·삭제할 수 있어 클래스가 상태 변경을 통제하지 못한다. 공식 문서는 실제 컬렉션을 `_` 로 시작하는 private 백킹 프로퍼티로 두고, public 프로퍼티는 읽기 전용 타입으로 선언하는 방식을 소개한다.
+`MutableList`·`MutableMap` 같은 가변 타입을 public 프로퍼티로 노출하면, 클래스 밖의 코드가 클래스의 메서드를 거치지 않고 요소를 추가·삭제할 수 있어 클래스가 상태 변경을 통제하지 못한다.
 
 ## 위반
 

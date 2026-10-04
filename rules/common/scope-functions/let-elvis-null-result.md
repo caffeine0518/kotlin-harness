@@ -8,7 +8,7 @@ source: https://kotlinlang.org/docs/idioms.html#map-nullable-value-if-not-null
 
 ## 이유
 
-`value?.let { ... } ?: fallback` 의 엘비스 오른쪽은 `value` 가 `null` 일 때만이 아니라, `let` 블록의 마지막 식이 `null` 일 때도 실행된다. 공식 문서도 이 관용구를 "value 또는 변환 결과가 `null` 이면 defaultValue 를 반환한다"고 설명한다.
+`value?.let { ... } ?: fallback` 의 엘비스 오른쪽은 `value` 가 `null` 일 때만이 아니라, `let` 블록의 마지막 식이 `null` 일 때도 실행된다.
 
 그래서 `let` 블록이 부수 효과를 실행한 뒤 널러블 값을 반환하면, `let` 블록과 엘비스 오른쪽이 둘 다 실행된다. `if`-`else` 로 쓰면 두 분기 중 하나만 실행된다.
 

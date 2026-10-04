@@ -8,7 +8,7 @@ source: https://developer.android.com/kotlin/coroutines/coroutines-best-practice
 
 ## 이유
 
-공식 문서는 데이터·비즈니스 레이어에서 코루틴을 만들 때 작업의 수명을 기준으로 스코프를 고르라고 한다.
+데이터·비즈니스 레이어에서 코루틴을 시작할 스코프는 작업의 수명에 따라 정해진다.
 
 - 사용자가 현재 화면에 있는 동안에만 필요한 작업은 호출하는 쪽의 생명주기를 따른다. `coroutineScope`·`supervisorScope` 로 시작하면, 호출하는 쪽(주로 ViewModel)이 취소될 때 작업도 함께 취소된다.
 - 화면과 관계없이 앱이 실행되는 동안 완료되어야 하는 작업은 호출하는 쪽보다 오래 실행된다. `Application` 처럼 생명주기가 화면보다 긴 클래스가 관리하는 외부 `CoroutineScope` 를 주입받아 시작하면, 호출하는 쪽이 취소되어도 작업은 계속 실행된다.

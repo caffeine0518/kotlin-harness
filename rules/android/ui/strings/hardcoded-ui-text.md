@@ -8,7 +8,7 @@ source: https://developer.android.com/guide/topics/resources/localization#manage
 
 ## 이유
 
-공식 문서는 문자열을 하드코딩하지 말고 기본 `strings.xml` 에 리소스로 선언하라고 한다. 리소스로 선언하면 컴파일된 코드를 바꾸지 않고 문구를 추출·번역·수정할 수 있다. Android Lint 의 `HardcodedText` 는 레이아웃 XML 만 검사하므로, 컴포저블과 코드에서 설정한 문구는 검출하지 않는다.
+문구를 기본 `strings.xml` 에 리소스로 선언하면 컴파일된 코드를 바꾸지 않고 문구를 추출·번역·수정할 수 있다. Android Lint 의 `HardcodedText` 는 레이아웃 XML 만 검사하므로, 컴포저블과 코드에서 설정한 문구는 검출하지 않는다.
 
 문구를 문자열 템플릿이나 `+` 로 조립하는 것도 같은 문제다. 조각마다 리터럴이 코드에 남고, 언어마다 어순이 달라 조각을 따로 번역할 수 없다. 자리 표시자를 포함한 리소스 하나로 선언하고 인수를 전달한다.
 

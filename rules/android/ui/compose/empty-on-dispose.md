@@ -8,7 +8,7 @@ source: https://developer.android.com/develop/ui/compose/side-effects#disposable
 
 ## 이유
 
-`DisposableEffect` 는 키가 바뀌거나 컴포지션에서 제외될 때 정리가 필요한 이펙트를 위한 API 다. 공식 문서는 `onDispose` 블록을 비워 두는 것이 좋은 방법이 아니며, 용도에 더 맞는 이펙트가 있는지 다시 확인하라고 한다.
+`DisposableEffect` 는 키가 바뀌거나 컴포지션에서 제외될 때 정리가 필요한 이펙트를 위한 API 다. `onDispose` 블록이 비어 있으면 정리할 작업이 없으므로 `DisposableEffect` 를 쓸 이유가 없다.
 
 ## 위반
 

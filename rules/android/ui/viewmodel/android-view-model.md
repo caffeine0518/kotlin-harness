@@ -8,7 +8,7 @@ source: https://developer.android.com/topic/architecture/recommendations#viewmod
 
 ## 이유
 
-아키텍처 권장 사항은 `AndroidViewModel` 대신 `ViewModel` 을 상속하고, ViewModel 에서 `Application` 클래스를 사용하지 말라고 한다(Recommended). `Application` 이 필요한 의존성은 UI 레이어나 데이터 레이어로 옮긴다. ViewModel 이 `Context` 에 의존하면 ViewModel 이 데이터 레이어의 일을 맡게 되고, 단위 테스트에서 `Application` 을 준비해야 한다. 권장 사항은 ViewModel 에 `Context` 가 필요하면 그 코드가 올바른 레이어에 있는지 다시 확인하라고 한다.
+ViewModel 이 `Context` 에 의존하면 ViewModel 이 데이터 레이어의 일을 맡게 되고, 단위 테스트에서 `Application` 을 준비해야 한다. `Application` 이 필요한 의존성은 UI 레이어나 데이터 레이어로 옮긴다.
 
 ## 위반
 

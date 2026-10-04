@@ -8,7 +8,7 @@ source: https://kotlinlang.org/docs/coroutines-flow.html
 
 ## 이유
 
-콜드 Flow 는 지연 평가된다. 공식 문서에 따르면 콜드 Flow 빌더의 코드 블록은 컬렉터가 수집하기 전까지 실행되지 않는다. 중간 연산자(`map`·`onEach`·`filter`·`catch` 등)는 새 Flow 를 반환할 뿐이므로, `collect`·`launchIn`·`first`·`toList` 같은 터미널 연산자가 없으면 `onEach` 에 작성한 저장·전송 코드는 실행되지 않는다. 컴파일러는 이 코드를 오류로 보고하지 않는다.
+콜드 Flow 는 지연 평가된다. 콜드 Flow 빌더의 코드 블록은 컬렉터가 수집하기 전까지 실행되지 않는다. 중간 연산자(`map`·`onEach`·`filter`·`catch` 등)는 새 Flow 를 반환할 뿐이므로, `collect`·`launchIn`·`first`·`toList` 같은 터미널 연산자가 없으면 `onEach` 에 작성한 저장·전송 코드는 실행되지 않는다. 컴파일러는 이 코드를 오류로 보고하지 않는다.
 
 ## 위반
 

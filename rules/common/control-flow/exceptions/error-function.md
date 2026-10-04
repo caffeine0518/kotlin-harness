@@ -8,7 +8,7 @@ source: https://kotlinlang.org/docs/exceptions.html#error-function
 
 ## 이유
 
-`error()` 는 메시지를 받아 `IllegalStateException` 을 발생시킨다. 공식 문서는 논리적으로 발생하면 안 되는 상태를 나타낼 때, 특히 `when` 식의 `else` 분기에서 `error()` 를 쓰라고 한다.
+`error()` 는 메시지를 받아 `IllegalStateException` 을 발생시킨다.
 
 ## 위반
 

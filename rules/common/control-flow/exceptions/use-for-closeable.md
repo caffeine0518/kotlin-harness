@@ -8,7 +8,7 @@ source: https://kotlinlang.org/docs/exceptions.html#the-finally-block
 
 ## 이유
 
-`use()` 는 블록이 정상 종료되든 예외로 종료되든 리소스를 닫는다. 공식 문서는 `AutoCloseable` 리소스를 `try`-`finally` 로 닫는 대신 `use()` 를 쓰는 것을 이디오매틱한 방식으로 소개한다. `finally` 없이 `try` 블록 끝에서 `close()` 를 호출하면 예외가 발생했을 때 리소스가 닫히지 않는다.
+`use()` 는 블록이 정상 종료되든 예외로 종료되든 리소스를 닫는다. `finally` 없이 `try` 블록 끝에서 `close()` 를 호출하면 예외가 발생했을 때 리소스가 닫히지 않는다.
 
 ## 위반
 

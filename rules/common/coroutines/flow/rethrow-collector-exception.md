@@ -8,7 +8,7 @@ source: https://kotlinlang.org/docs/coroutines-flow.html
 
 ## 이유
 
-`emit()` 은 `collect()` 에 전달한 람다를 호출한다. 따라서 `emit` 을 감싼 `try` 는 컬렉터에서 발생한 예외도 잡는다. 공식 문서는 빌더에서 컬렉터의 예외를 잡았으면 다시 전파하라고 한다. 다시 전파해야 예외 투명성(exception transparency)이 유지되고, `collect()` 를 호출한 쪽이 그 예외를 처리할 수 있다. 예외를 무시하면 컬렉터가 실패한 뒤에도 빌더가 다음 값을 계속 방출한다.
+`emit()` 은 `collect()` 에 전달한 람다를 호출한다. 따라서 `emit` 을 감싼 `try` 는 컬렉터에서 발생한 예외도 잡는다. 다시 전파해야 예외 투명성(exception transparency)이 유지되고, `collect()` 를 호출한 쪽이 그 예외를 처리할 수 있다. 예외를 무시하면 컬렉터가 실패한 뒤에도 빌더가 다음 값을 계속 방출한다.
 
 ## 위반
 

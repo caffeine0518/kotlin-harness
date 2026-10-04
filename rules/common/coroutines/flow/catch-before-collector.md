@@ -8,7 +8,7 @@ source: https://kotlinlang.org/docs/coroutines-flow.html
 
 ## 이유
 
-`catch` 연산자는 업스트림에서 발생한 예외만 처리한다. 공식 문서는 `collect()` 에 전달한 람다에서 발생한 예외를 `catch` 가 처리하지 않으므로, `collect()` 를 `try`·`catch` 로 감싸거나 값마다 실행하는 코드를 `catch` 앞의 `onEach()` 로 옮기라고 한다. `collect { }` 람다에서 예외가 발생하면 `catch` 를 지정했어도 수집한 코루틴으로 예외가 전파되고, `viewModelScope`·`lifecycleScope` 에서는 앱이 크래시할 수 있다.
+`catch` 연산자는 업스트림에서 발생한 예외만 처리한다. `collect { }` 람다에서 예외가 발생하면 `catch` 를 지정했어도 수집한 코루틴으로 예외가 전파되고, `viewModelScope`·`lifecycleScope` 에서는 앱이 크래시할 수 있다.
 
 ## 위반
 

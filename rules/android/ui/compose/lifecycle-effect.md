@@ -8,9 +8,9 @@ source: https://developer.android.com/topic/architecture/recommendations#lifecyc
 
 ## 이유
 
-공식 아키텍처 권장 사항은 UI 관련 작업을 실행하려고 `onResume` 등 `Activity` 의 생명주기 메서드를 오버라이드하지 말고, 컴포저블에서 `LifecycleStartEffect`·`LifecycleResumeEffect` 등 Lifecycle 이펙트를 쓰라고 강력히 권장한다. 작업이 그 작업을 사용하는 컴포저블과 함께 선언되어, 컴포저블이 컴포지션에서 제외될 때 정리 블록도 실행된다.
+UI 관련 작업을 `onResume` 등 `Activity` 의 생명주기 메서드 대신 컴포저블의 `LifecycleStartEffect`·`LifecycleResumeEffect` 등 Lifecycle 이펙트에서 실행하면, 작업이 그 작업을 사용하는 컴포저블과 함께 선언되어 컴포저블이 컴포지션에서 제외될 때 정리 블록도 실행된다.
 
-`LaunchedEffect` 는 컴포지션에 연결되어 있어, `HorizontalPager` 가 미리 컴포지션한 옆 페이지처럼 사용자에게 보이지 않을 때도 실행된다. 공식 문서는 화면 조회 기록처럼 사용자가 실제로 화면을 보는지에 따라 달라지는 작업은 `LaunchedEffect` 대신 `LifecycleEventEffect` 를 쓰라고 한다.
+`LaunchedEffect` 는 컴포지션에 연결되어 있어, `HorizontalPager` 가 미리 컴포지션한 옆 페이지처럼 사용자에게 보이지 않을 때도 실행된다. 화면 조회 기록처럼 사용자가 실제로 화면을 보는지에 따라 달라지는 작업을 `LaunchedEffect` 에서 실행하면, 사용자가 보지 않은 화면도 기록된다.
 
 ## 위반
 

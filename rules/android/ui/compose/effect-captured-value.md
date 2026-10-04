@@ -8,9 +8,9 @@ source: https://developer.android.com/develop/ui/compose/side-effects#restarting
 
 ## 이유
 
-`LaunchedEffect`·`DisposableEffect`·`produceState` 의 블록은 키가 바뀔 때만 다시 실행된다. 키로 지정하지 않은 파라미터·로컬 값을 블록에서 사용하면, 리컴포지션으로 값이 바뀌어도 블록은 처음 실행될 때 캡처한 값을 계속 사용한다. 공식 문서는 이펙트에서 사용하는 변수를 이펙트 컴포저블의 파라미터(키)로 추가하거나 `rememberUpdatedState` 로 감싸라고 한다.
+`LaunchedEffect`·`DisposableEffect`·`produceState` 의 블록은 키가 바뀔 때만 다시 실행된다. 키로 지정하지 않은 파라미터·로컬 값을 블록에서 사용하면, 리컴포지션으로 값이 바뀌어도 블록은 처음 실행될 때 캡처한 값을 계속 사용한다.
 
-키로 `Unit`·`true` 같은 상수를 지정하면 블록이 호출 지점의 수명 동안 한 번만 실행된다. 공식 문서는 이 방식이 정말 필요한지 다시 확인하라고 한다. 상수 키 이펙트에서 바뀔 수 있는 값을 사용하는 경우도 이 룰에 해당한다.
+키로 `Unit`·`true` 같은 상수를 지정하면 블록이 호출 지점의 수명 동안 한 번만 실행된다. 상수 키 이펙트에서 바뀔 수 있는 값을 사용하는 경우도 이 룰에 해당한다.
 
 ## 위반
 

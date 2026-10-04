@@ -8,7 +8,7 @@ source: https://kotlinlang.org/api/kotlinx.coroutines/kotlinx-coroutines-core/ko
 
 ## 이유
 
-공식 문서는 직접 생성한 `CoroutineScope` 를 사용할 때 핵심이 수명 종료 시점에 취소하는 것이라고 한다. 취소하지 않으면 코루틴을 시작한 객체가 더 이상 필요 없어도 코루틴이 계속 실행되어 리소스 누수가 된다. 함수 안에서 매번 `CoroutineScope(...)` 를 생성하면 취소할 방법 자체가 없다.
+취소하지 않으면 코루틴을 시작한 객체가 더 이상 필요 없어도 코루틴이 계속 실행되어 리소스 누수가 된다. 함수 안에서 매번 `CoroutineScope(...)` 를 생성하면 취소할 방법 자체가 없다.
 
 ## 위반
 

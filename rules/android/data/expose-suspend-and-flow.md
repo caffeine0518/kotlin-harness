@@ -8,7 +8,7 @@ source: https://developer.android.com/kotlin/coroutines/coroutines-best-practice
 
 ## 이유
 
-공식 문서는 데이터 레이어 클래스가 일회성 호출은 suspend 함수로, 시간에 따른 데이터 변경은 `Flow` 로 노출하라고 한다. 그래야 호출하는 쪽(주로 ViewModel)이 작업의 실행과 생명주기를 제어하고, 필요할 때 취소할 수 있다.
+데이터 레이어 클래스가 일회성 호출을 suspend 함수로, 시간에 따른 데이터 변경을 `Flow` 로 노출하면 호출하는 쪽(주로 ViewModel)이 작업의 실행과 생명주기를 제어하고, 필요할 때 취소할 수 있다.
 
 ## 위반
 

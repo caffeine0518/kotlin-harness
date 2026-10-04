@@ -8,7 +8,7 @@ source: https://kotlinlang.org/docs/scope-functions.html#return-value
 
 ## 이유
 
-`apply`·`also` 는 컨텍스트 객체(context object)를 반환하고 람다의 마지막 식은 무시한다. `let`·`run`·`with` 는 람다 결과를 반환한다. 반환값을 잘못 고르면 계산한 값이 무시되거나, 객체 대신 `Unit` 이나 다른 값이 대입된다. 공식 문서는 이후 코드에서 어떤 반환값이 필요한지에 따라 스코프 함수를 고르라고 한다.
+`apply`·`also` 는 컨텍스트 객체(context object)를 반환하고 람다의 마지막 식은 무시한다. `let`·`run`·`with` 는 람다 결과를 반환한다. 반환값을 잘못 고르면 계산한 값이 무시되거나, 객체 대신 `Unit` 이나 다른 값이 대입된다.
 
 ## 위반
 

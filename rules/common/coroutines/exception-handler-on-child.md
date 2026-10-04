@@ -8,7 +8,7 @@ source: https://kotlinlang.org/docs/exception-handling.html#coroutineexceptionha
 
 ## 이유
 
-`CoroutineExceptionHandler` 는 잡히지 않은 예외에만 호출된다. 공식 문서에 따르면 자식 코루틴(다른 `Job` 의 컨텍스트에서 생성한 코루틴)은 예외 처리를 부모에게 위임하므로, 자식의 컨텍스트에 지정한 핸들러는 호출되지 않는다. `async` 는 모든 예외를 잡아 `Deferred` 에 보관하므로 `async` 에 지정한 핸들러도 효과가 없다. 핸들러로 예외를 처리했다고 판단한 코드에서 앱이 크래시한다.
+`CoroutineExceptionHandler` 는 잡히지 않은 예외에만 호출된다. 자식 코루틴(다른 `Job` 의 컨텍스트에서 생성한 코루틴)은 예외 처리를 부모에게 위임하므로, 자식의 컨텍스트에 지정한 핸들러는 호출되지 않는다. `async` 는 모든 예외를 잡아 `Deferred` 에 보관하므로 `async` 에 지정한 핸들러도 효과가 없다. 핸들러로 예외를 처리했다고 판단한 코드에서 앱이 크래시한다.
 
 ## 위반
 

@@ -8,7 +8,7 @@ source: https://kotlinlang.org/docs/null-safety.html#not-null-assertion-operator
 
 ## 이유
 
-값이 `null` 이면 `!!` 에서 NPE 가 발생한다. 공식 문서는 `!!` 를 NPE 의 원인 중 하나로 들고, 값이 `null` 이 아님을 확신하지만 컴파일러가 보장하지 못하는 경우에만 쓰라고 한다.
+값이 `null` 이면 `!!` 에서 NPE 가 발생한다.
 
 ## 위반
 

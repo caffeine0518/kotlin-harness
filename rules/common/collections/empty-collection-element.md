@@ -8,7 +8,7 @@ source: https://kotlinlang.org/docs/collection-elements.html#retrieve-by-conditi
 
 ## 이유
 
-`first()`·`last()` 는 컬렉션이 비어 있으면, `first { }`·`last { }` 는 조건을 만족하는 요소가 없으면 `NoSuchElementException` 이 발생한다. `elementAt()` 은 범위를 벗어난 위치에서, `firstNotNullOf { }` 는 논널 결과가 없을 때 예외가 발생한다. 공식 문서는 예외 대신 `null` 을 반환하는 `firstOrNull()`·`lastOrNull()`·`elementAtOrNull()`·`firstNotNullOfOrNull()` 을 쓰라고 한다.
+`first()`·`last()` 는 컬렉션이 비어 있으면, `first { }`·`last { }` 는 조건을 만족하는 요소가 없으면 `NoSuchElementException` 이 발생한다. `elementAt()` 은 범위를 벗어난 위치에서, `firstNotNullOf { }` 는 논널 결과가 없을 때 예외가 발생한다. `firstOrNull()`·`lastOrNull()`·`elementAtOrNull()`·`firstNotNullOfOrNull()` 은 같은 경우에 예외 대신 `null` 을 반환한다.
 
 ## 위반
 

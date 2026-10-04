@@ -8,7 +8,7 @@ source: https://developer.android.com/topic/architecture/recommendations#lifecyc
 
 ## 이유
 
-공식 아키텍처 권장 사항(Strongly recommended)은 `onResume` 같은 액티비티 생명주기 메서드를 오버라이드해 UI 작업을 실행하지 말고, 생명주기 이벤트에 따라 실행하는 비동기 작업에는 `repeatOnLifecycle` 을 쓰라고 한다. `onStart` 에서 `Job` 을 시작하고 `onStop` 에서 취소하는 코드는 `repeatOnLifecycle(Lifecycle.State.STARTED)` 가 제공하는 동작을 직접 구현한 것이다. 취소를 빠뜨리거나 `Job` 을 여러 번 시작하는 실수가 생기기 쉽다.
+`onStart` 에서 `Job` 을 시작하고 `onStop` 에서 취소하는 코드는 `repeatOnLifecycle(Lifecycle.State.STARTED)` 가 제공하는 동작을 직접 구현한 것이다. 취소를 빠뜨리거나 `Job` 을 여러 번 시작하는 실수가 생기기 쉽다.
 
 ## 위반
 

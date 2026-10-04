@@ -8,7 +8,7 @@ source: https://developer.android.com/kotlin/style-guide#exception-self-explanat
 
 ## 이유
 
-Android Kotlin 스타일 가이드는 `getFoo` 같은 단순하고 자명한 함수와 `foo` 같은 프로퍼티에는, "foo 를 반환한다" 외에 적을 내용이 없으면 KDoc 을 생략해도 된다고 한다. Google 코드 리뷰 가이드도 주석은 코드가 무엇을 하는지가 아니라 왜 있는지 설명해야 한다고 한다. 이름·파라미터·반환 타입을 문장으로 옮긴 KDoc 은 정보를 더하지 않고, 시그니처가 바뀔 때 함께 수정되지 않는다.
+이름·파라미터·반환 타입을 문장으로 옮긴 KDoc 은 정보를 더하지 않고, 시그니처가 바뀔 때 함께 수정되지 않는다.
 
 ## 위반
 

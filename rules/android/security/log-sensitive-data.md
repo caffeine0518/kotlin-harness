@@ -8,7 +8,7 @@ source: https://developer.android.com/privacy-and-security/risks/log-info-disclo
 
 ## 이유
 
-`Log.*` 는 logcat 에 출력하고, logcat 은 `READ_LOGS` 권한이 있는 앱이 읽을 수 있는 공유 리소스다. 공식 문서는 사전 설치 앱이 이 권한을 가진 기기도 있어 로그에 출력한 자격 증명·개인정보가 다른 앱에 노출될 수 있다고 한다. 민감한 데이터를 로그에 출력하지 말고, 가능하면 컴파일 타임 상수만 출력하라고 한다. 이 검사는 AGP 기본 Lint 에 포함되지 않는다(`LogInfoDisclosure` 는 별도 라이브러리 `com.android.security.lint` 의 검사다).
+`Log.*` 는 logcat 에 출력하고, logcat 은 `READ_LOGS` 권한이 있는 앱이 읽을 수 있는 공유 리소스다. 사전 설치 앱이 이 권한을 가진 기기도 있어 로그에 출력한 자격 증명·개인정보가 다른 앱에 노출될 수 있다. 이 검사는 AGP 기본 Lint 에 포함되지 않는다(`LogInfoDisclosure` 는 별도 라이브러리 `com.android.security.lint` 의 검사다).
 
 ## 위반
 

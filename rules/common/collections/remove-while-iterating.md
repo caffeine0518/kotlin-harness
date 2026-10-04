@@ -8,7 +8,7 @@ source: https://kotlinlang.org/docs/iterators.html#mutable-iterators
 
 ## 이유
 
-순회 중인 컬렉션의 `add()`·`remove()` 를 직접 호출하면 JVM 의 `ArrayList`·`HashMap` 등에서 다음 순회 단계에 `ConcurrentModificationException` 이 발생한다. 공식 문서는 순회 중 삭제에 `MutableIterator` 의 `remove()` 를, 조건에 맞는 요소를 한 번에 삭제할 때 `removeAll { }`·`retainAll { }` 을 쓰라고 한다.
+순회 중인 컬렉션의 `add()`·`remove()` 를 직접 호출하면 JVM 의 `ArrayList`·`HashMap` 등에서 다음 순회 단계에 `ConcurrentModificationException` 이 발생한다.
 
 ## 위반
 

@@ -8,7 +8,7 @@ source: https://developer.android.com/topic/architecture/ui-layer/state-producti
 
 ## 이유
 
-UI 상태 생성 가이드는 ViewModel 의 `init` 블록이나 생성자에서 비동기 작업을 시작하지 말라고 한다. 객체를 생성하는 도중 시작한 코루틴은 초기화가 끝나지 않은 객체를 읽거나 쓸 수 있다. 이를 객체 누출(leaking the object)이라고 하며, 원인을 찾기 어려운 오류로 이어진다. ViewModel 이 Compose State 를 가지고 있으면 `init` 에서 시작한 코루틴이 그 State 를 갱신할 때 `IllegalStateException` 이 발생할 수 있다.
+객체를 생성하는 도중 시작한 코루틴은 초기화가 끝나지 않은 객체를 읽거나 쓸 수 있다. 이를 객체 누출(leaking the object)이라고 하며, 원인을 찾기 어려운 오류로 이어진다. ViewModel 이 Compose State 를 가지고 있으면 `init` 에서 시작한 코루틴이 그 State 를 갱신할 때 `IllegalStateException` 이 발생할 수 있다.
 
 이 문제는 코루틴을 시작하는 코드가 `init` 블록 안에 직접 있든, `init` 에서 호출한 함수 안에 있든 같다. 함수로 추출해도 생성 도중 실행된다는 점은 달라지지 않는다.
 

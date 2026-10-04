@@ -8,7 +8,7 @@ source: https://kotlinlang.org/docs/coding-conventions.html#immutability
 
 ## 이유
 
-공식 코딩 컨벤션은 팩토리 함수로 컬렉션을 생성할 때 가능하면 읽기 전용 타입을 반환하는 함수를 쓰라고 한다. `arrayListOf()`·`mutableListOf()`·`hashMapOf()`·`ArrayList()` 는 가변 타입을 반환하므로, 선언 이후 요소를 추가·삭제하지 않으면 가변 타입일 이유가 없다.
+`arrayListOf()`·`mutableListOf()`·`hashMapOf()`·`ArrayList()` 는 가변 타입을 반환하므로, 선언 이후 요소를 추가·삭제하지 않으면 가변 타입일 이유가 없다.
 
 ## 위반
 

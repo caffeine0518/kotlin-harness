@@ -8,7 +8,7 @@ source: https://kotlinlang.org/docs/coroutines-flow.html
 
 ## 이유
 
-`flow { }` 빌더는 빌더가 실행되는 코루틴 컨텍스트에서만 값을 방출해야 한다. 공식 문서는 빌더 안에서 `withContext()` 로 컨텍스트를 바꾸거나, 다른 코루틴을 시작해 그 블록에서 `emit()` 을 호출할 수 없다고 한다. 이 규칙을 어기면 수집할 때 `IllegalStateException`(`Flow invariant is violated`)이 발생한다. 업스트림을 다른 디스패처에서 실행하려면 `flowOn()` 을 쓴다.
+`flow { }` 빌더는 빌더가 실행되는 코루틴 컨텍스트에서만 값을 방출해야 한다. 빌더 안에서 `withContext()` 로 컨텍스트를 바꾸거나, 다른 코루틴을 시작해 그 블록에서 `emit()` 을 호출하면 수집할 때 `IllegalStateException`(`Flow invariant is violated`)이 발생한다. 업스트림을 다른 디스패처에서 실행하려면 `flowOn()` 을 쓴다.
 
 ## 위반
 

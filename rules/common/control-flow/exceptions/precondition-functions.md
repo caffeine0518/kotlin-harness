@@ -8,7 +8,7 @@ source: https://kotlinlang.org/docs/exceptions.html#throw-exceptions-with-precon
 
 ## 이유
 
-`require()` 는 조건이 거짓이면 `IllegalArgumentException` 이, `check()` 는 `IllegalStateException` 이 발생한다. 공식 문서는 입력 인수 검증에 `require()`·`requireNotNull()` 을, 객체·변수의 상태 검증에 `check()`·`checkNotNull()` 을 쓰라고 한다. 검증을 통과한 뒤에는 대상 변수에 스마트 캐스트가 적용된다.
+`require()` 는 조건이 거짓이면 `IllegalArgumentException` 이, `check()` 는 `IllegalStateException` 이 발생한다. `require()`·`requireNotNull()` 은 입력 인수를, `check()`·`checkNotNull()` 은 객체·변수의 상태를 검증하는 함수다. 검증을 통과한 뒤에는 대상 변수에 스마트 캐스트가 적용된다.
 
 ## 위반
 

@@ -8,7 +8,7 @@ source: https://developer.android.com/develop/ui/compose/performance/bestpractic
 
 ## 이유
 
-스크롤 위치나 애니메이션 값은 매 프레임 바뀐다. 이 값을 컴포지션에서 읽어 `Modifier.offset(x, y)`·`Modifier.background(color)` 등에 전달하면 값이 바뀔 때마다 리컴포지션이 발생한다. `offset { }`·`graphicsLayer { }`·`drawBehind { }` 같은 람다 버전 모디파이어 안에서 읽으면 레이아웃·그리기 단계에서만 읽으므로 컴포지션 단계를 건너뛴다. 공식 문서는 상태 읽기를 가능한 한 늦추라고 한다.
+스크롤 위치나 애니메이션 값은 매 프레임 바뀐다. 이 값을 컴포지션에서 읽어 `Modifier.offset(x, y)`·`Modifier.background(color)` 등에 전달하면 값이 바뀔 때마다 리컴포지션이 발생한다. `offset { }`·`graphicsLayer { }`·`drawBehind { }` 같은 람다 버전 모디파이어 안에서 읽으면 레이아웃·그리기 단계에서만 읽으므로 컴포지션 단계를 건너뛴다.
 
 ## 위반
 

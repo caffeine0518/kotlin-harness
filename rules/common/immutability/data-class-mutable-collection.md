@@ -8,7 +8,7 @@ source: https://kotlinlang.org/docs/data-classes.html#copying
 
 ## 이유
 
-data class 의 `copy()` 는 얕은 복사라서 프로퍼티가 참조하는 객체는 원본과 복사본이 공유한다. 프로퍼티가 `MutableList` 같은 가변 컬렉션이면, 복사본에 요소를 추가해도 원본이 함께 바뀐다. 공식 문서는 이 동작을 `MutableList<String>` 프로퍼티 예제로 설명한다.
+data class 의 `copy()` 는 얕은 복사라서 프로퍼티가 참조하는 객체는 원본과 복사본이 공유한다. 프로퍼티가 `MutableList` 같은 가변 컬렉션이면, 복사본에 요소를 추가해도 원본이 함께 바뀐다.
 
 ## 위반
 

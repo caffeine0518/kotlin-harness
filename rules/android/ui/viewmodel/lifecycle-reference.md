@@ -8,7 +8,7 @@ source: https://developer.android.com/topic/libraries/architecture/viewmodel#bes
 
 ## 이유
 
-ViewModel 은 자신을 생성한 `ViewModelStoreOwner`(Activity·Fragment·내비게이션 대상)보다 오래 유지될 수 있다. 화면 회전처럼 구성이 변경되면 Activity 는 다시 생성되지만 ViewModel 은 그대로 남는다. 공식 문서는 메모리 누수를 막기 위해 ViewModel 이 `Context`·`Resources` 같은 생명주기 관련 API 의 참조를 보관하지 않아야 한다고 하고, 아키텍처 권장 사항도 `Activity`·`Context`·`Resources` 를 ViewModel 의 의존성으로 전달하지 말라고 한다(Strongly recommended). 이미 파괴된 Activity 와 그 View 계층 전체가 ViewModel 이 해제될 때까지 메모리에 남는다.
+ViewModel 은 자신을 생성한 `ViewModelStoreOwner`(Activity·Fragment·내비게이션 대상)보다 오래 유지될 수 있다. 화면 회전처럼 구성이 변경되면 Activity 는 다시 생성되지만 ViewModel 은 그대로 남는다. ViewModel 이 `Activity`·`Context`·`Resources` 같은 생명주기 관련 API 의 참조를 보관하면 메모리 누수가 된다. 이미 파괴된 Activity 와 그 View 계층 전체가 ViewModel 이 해제될 때까지 메모리에 남는다.
 
 `ViewModel` 을 상속한 클래스(`AndroidViewModel` 포함)에 적용한다. 클래스 이름이 `*ViewModel` 이 아니어도 상속 관계로 판정한다.
 

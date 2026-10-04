@@ -8,7 +8,7 @@ source: https://developer.android.com/kotlin/coroutines/coroutines-best-practice
 
 ## 이유
 
-공식 문서는 ViewModel 이 가변 타입을 노출하지 말고 불변 타입을 노출하라고 한다. 상태 변경이 ViewModel 한 곳에서만 일어나야 문제가 생겼을 때 추적하기 쉽다. `MutableStateFlow` 를 public 으로 노출하면 UI 가 ViewModel 의 함수를 거치지 않고 `value` 를 바꿀 수 있어, UI 는 상태를 소비하고 ViewModel 은 상태를 생성한다는 단방향 데이터 흐름(UDF)이 적용되지 않는다.
+상태 변경이 ViewModel 한 곳에서만 일어나야 문제가 생겼을 때 추적하기 쉽다. `MutableStateFlow` 를 public 으로 노출하면 UI 가 ViewModel 의 함수를 거치지 않고 `value` 를 바꿀 수 있어, UI 는 상태를 소비하고 ViewModel 은 상태를 생성한다는 단방향 데이터 흐름(UDF)이 적용되지 않는다.
 
 `ViewModel` 을 상속한 클래스에 적용한다.
 

@@ -8,7 +8,7 @@ source: https://kotlinlang.org/docs/scope-functions.html#function-selection
 
 ## 이유
 
-스코프 함수(scope function)를 중첩하면 안쪽 람다의 `this`·`it` 이 어느 컨텍스트 객체(context object)를 가리키는지 코드만으로 구분되지 않는다. `this` 를 생략한 멤버 접근은 가장 안쪽 리시버에 우선 해석되므로, 바깥 객체의 멤버를 쓰려던 코드가 안쪽 객체의 멤버를 호출해도 컴파일 오류가 발생하지 않는다. 공식 문서는 스코프 함수를 중첩하지 말고, 체이닝할 때는 현재 컨텍스트 객체와 `this`·`it` 의 값을 혼동하지 않도록 주의하라고 한다.
+스코프 함수(scope function)를 중첩하면 안쪽 람다의 `this`·`it` 이 어느 컨텍스트 객체(context object)를 가리키는지 코드만으로 구분되지 않는다. `this` 를 생략한 멤버 접근은 가장 안쪽 리시버에 우선 해석되므로, 바깥 객체의 멤버를 쓰려던 코드가 안쪽 객체의 멤버를 호출해도 컴파일 오류가 발생하지 않는다.
 
 ## 위반
 

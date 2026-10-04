@@ -8,7 +8,7 @@ source: https://kotlinlang.org/docs/coroutines-cancellation.html#cancel-coroutin
 
 ## 이유
 
-코루틴은 취소를 `CancellationException` 으로 전달한다. 공식 문서는 이 예외를 잡으면 취소 전파가 끊어질 수 있으므로, 잡아야 한다면 다시 전파하라고 한다. 다시 전파하지 않으면 취소된 코루틴이 이후 코드를 계속 실행하고, 부모 스코프가 취소를 기다리는 동안 작업이 끝나지 않을 수 있다.
+코루틴은 취소를 `CancellationException` 으로 전달한다. 이 예외를 잡으면 취소 전파가 끊어질 수 있다. 다시 전파하지 않으면 취소된 코루틴이 이후 코드를 계속 실행하고, 부모 스코프가 취소를 기다리는 동안 작업이 끝나지 않을 수 있다.
 
 `CancellationException` 은 `IllegalStateException` 의 하위 타입이다. 따라서 suspend 함수 호출을 감싼 `catch (e: Exception)`·`catch (e: Throwable)`·`runCatching` 도 이 예외를 잡는다.
 

@@ -8,7 +8,7 @@ source: https://developer.android.com/kotlin/coroutines/coroutines-best-practice
 
 ## 이유
 
-코루틴에서 처리되지 않은 예외가 발생하면 앱이 크래시할 수 있다. Android 공식 문서는 예외가 발생할 가능성이 있으면 `viewModelScope`·`lifecycleScope` 로 생성한 코루틴의 본문에서 예외를 잡으라고 한다. 네트워크·디스크 I/O 는 사용자 환경에 따라 실패하므로, 처리하지 않으면 로그인 실패 같은 일반적인 오류가 앱 크래시로 이어진다.
+코루틴에서 처리되지 않은 예외가 발생하면 앱이 크래시할 수 있다. 네트워크·디스크 I/O 는 사용자 환경에 따라 실패하므로, 처리하지 않으면 로그인 실패 같은 일반적인 오류가 앱 크래시로 이어진다.
 
 ## 위반
 

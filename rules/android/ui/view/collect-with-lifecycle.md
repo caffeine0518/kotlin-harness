@@ -8,7 +8,7 @@ source: https://developer.android.com/kotlin/flow/stateflow-and-sharedflow#state
 
 ## 이유
 
-`lifecycleScope` 는 `Lifecycle` 이 `DESTROYED` 가 될 때만 코루틴을 취소한다. `lifecycleScope.launch { flow.collect { } }` 나 `flow.launchIn(lifecycleScope)` 로 수집하면 화면이 보이지 않는 동안(`STOPPED`)에도 수집을 계속해 이벤트를 처리한다. 공식 문서는 UI 를 갱신하는 Flow 를 `launch`·`launchIn` 으로 직접 수집하지 말라고 하며, 이 동작이 앱 크래시로 이어질 수 있다고 한다. `LiveData.observe()` 와 달리 `StateFlow` 를 포함한 Flow 는 `STOPPED` 에서 수집을 자동으로 중단하지 않는다.
+`lifecycleScope` 는 `Lifecycle` 이 `DESTROYED` 가 될 때만 코루틴을 취소한다. `lifecycleScope.launch { flow.collect { } }` 나 `flow.launchIn(lifecycleScope)` 로 수집하면 화면이 보이지 않는 동안(`STOPPED`)에도 수집을 계속해 이벤트를 처리한다. `STOPPED` 상태에서 이벤트를 처리해 UI 를 갱신하면 앱 크래시로 이어질 수 있다. `LiveData.observe()` 와 달리 `StateFlow` 를 포함한 Flow 는 `STOPPED` 에서 수집을 자동으로 중단하지 않는다.
 
 ## 위반
 

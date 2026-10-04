@@ -8,7 +8,7 @@ source: https://developer.android.com/topic/architecture/recommendations#ui-laye
 
 ## 이유
 
-`collectAsState()` 는 컴포저블이 컴포지션에 있는 동안 계속 수집한다. 앱이 백그라운드로 이동해도 수집이 중단되지 않아, 업스트림 `Flow` 가 위치 업데이트·데이터베이스 조회 같은 작업을 계속 실행한다. `collectAsStateWithLifecycle()` 은 기본적으로 생명주기가 `STARTED` 일 때 수집을 시작하고 `STOPPED` 일 때 중단한다. 공식 아키텍처 권장 사항은 UI 상태를 `collectAsStateWithLifecycle` 로 수집하라고 강력히 권장한다.
+`collectAsState()` 는 컴포저블이 컴포지션에 있는 동안 계속 수집한다. 앱이 백그라운드로 이동해도 수집이 중단되지 않아, 업스트림 `Flow` 가 위치 업데이트·데이터베이스 조회 같은 작업을 계속 실행한다. `collectAsStateWithLifecycle()` 은 기본적으로 생명주기가 `STARTED` 일 때 수집을 시작하고 `STOPPED` 일 때 중단한다.
 
 ## 위반
 

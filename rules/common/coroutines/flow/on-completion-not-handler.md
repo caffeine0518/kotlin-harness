@@ -8,7 +8,7 @@ source: https://kotlinlang.org/api/kotlinx.coroutines/kotlinx-coroutines-core/ko
 
 ## 이유
 
-`onCompletion` 은 수집 전체를 `finally` 로 감싼 것과 같다. 공식 문서에 따르면 `onCompletion` 은 예외를 관찰할 뿐 처리하지 않으므로, `cause` 가 있어도 예외는 계속 전파된다. 추가 값은 Flow 가 정상 완료된 경우에만 방출할 수 있고, 실패나 취소 시 예외를 억제하고 값을 방출하려면 `catch` 를 쓰라고 한다. `onCompletion { cause -> if (cause != null) emit(...) }` 은 실패를 복구하지 못한다.
+`onCompletion` 은 수집 전체를 `finally` 로 감싼 것과 같다. `onCompletion` 은 예외를 관찰할 뿐 처리하지 않으므로, `cause` 가 있어도 예외는 계속 전파된다. `onCompletion` 에서 추가 값은 Flow 가 정상 완료된 경우에만 방출할 수 있다. `onCompletion { cause -> if (cause != null) emit(...) }` 은 실패를 복구하지 못한다.
 
 `onCompletion` 은 `catch` 와 달리 업스트림·다운스트림 예외와 취소 예외를 모두 관찰한다. 따라서 `cause != null` 을 업스트림 실패로 간주하면 컬렉터의 예외나 화면 이탈로 인한 취소에도 오류 처리 코드가 실행된다.
 

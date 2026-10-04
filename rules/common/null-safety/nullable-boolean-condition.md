@@ -8,7 +8,7 @@ source: https://kotlinlang.org/docs/coding-conventions.html#nullable-boolean-val
 
 ## 이유
 
-공식 코딩 컨벤션이 지정한 방식이다. `!!` 를 쓰면 `null` 일 때 NPE 가 발생하고, `?: false` 는 `null` 을 어떻게 처리하는지 한눈에 읽히지 않는다.
+`!!` 를 쓰면 `null` 일 때 NPE 가 발생하고, `?: false` 는 `null` 을 어떻게 처리하는지 한눈에 읽히지 않는다.
 
 ## 위반
 
