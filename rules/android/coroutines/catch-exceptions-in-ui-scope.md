@@ -12,7 +12,10 @@ source: https://developer.android.com/kotlin/coroutines/coroutines-best-practice
 
 ## 위반
 
-`viewModelScope.launch { }`·`lifecycleScope.launch { }` 본문에서 네트워크·파일·DB 작업처럼 실패할 수 있는 함수를 호출하는데, `try`/`catch`·`runCatching`·`CoroutineExceptionHandler` 중 어느 것도 없다.
+`viewModelScope.launch { }`·`lifecycleScope.launch { }` 본문에서 네트워크·파일·DB 작업처럼 실패할 수 있는 함수를 호출하는데, 다음 중 하나에 해당한다.
+
+- 본문에 `try`/`catch`·`runCatching` 이 없고, `launch` 에 `CoroutineExceptionHandler` 도 지정하지 않았다.
+- `launch` 호출을 감싼 `try`/`catch` 로 예외를 처리한다. `launch` 는 코루틴을 시작한 뒤 바로 반환하므로, 바깥 `catch` 는 본문의 예외를 잡지 못한다.
 
 ```kotlin
 class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel() {
@@ -22,12 +25,23 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
             _uiState.value = LoginUiState.LoggedIn
         }
     }
+
+    fun logout() {
+        try {
+            viewModelScope.launch {
+                loginRepository.logout()  // IOException 은 바깥 catch 로 전달되지 않는다
+                _uiState.value = LoginUiState.LoggedOut
+            }
+        } catch (exception: IOException) {
+            _uiState.value = LoginUiState.Error
+        }
+    }
 }
 ```
 
 ## 수정
 
-`Exception`·`Throwable` 대신 `IOException` 처럼 구체적인 예외 타입을 잡는다.
+`try`/`catch` 는 `launch` 호출 바깥이 아니라 코루틴 본문 안에 작성한다. 예외 타입은 `Exception`·`Throwable` 대신 `IOException` 처럼 구체적인 타입을 잡는다.
 
 ```kotlin
 class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel() {
@@ -36,6 +50,17 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
             try {
                 loginRepository.login(username, token)
                 _uiState.value = LoginUiState.LoggedIn
+            } catch (exception: IOException) {
+                _uiState.value = LoginUiState.Error
+            }
+        }
+    }
+
+    fun logout() {
+        viewModelScope.launch {
+            try {
+                loginRepository.logout()
+                _uiState.value = LoginUiState.LoggedOut
             } catch (exception: IOException) {
                 _uiState.value = LoginUiState.Error
             }
@@ -50,3 +75,4 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
 - `launch` 에 `CoroutineExceptionHandler` 를 지정한 경우, Flow 에 `.catch { }` 를 적용하고 `launchIn`·`collect` 하는 경우
 - 코루틴 본문이 상태 갱신·`delay`·`emit` 처럼 예외가 발생하지 않는 작업만 하는 경우
 - `catch (e: Exception)` 으로 잡았지만 `CancellationException` 을 다시 전파하지 않는 코드는 이 룰이 아니라 `common/coroutines/rethrow-cancellation-exception` 이 보고한다.
+- 이 룰이 보고한 코드는 `common/coroutines/try-catch-around-launch` 로 중복 보고하지 않는다.
