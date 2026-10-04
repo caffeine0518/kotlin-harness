@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.29.0
+- **설정 확인 필요.** `android/coroutines/inject-test-dispatchers` 를 `android/test/inject-test-dispatchers` 로 이동했다. 옛 ID 를 적은 `excludeRules` 는 없는 이름이 되어 gate 가 중단되므로 새 ID 로 바꾼다. `excludeCategories` 의 `coroutines` 는 이 룰을 더 이상 제외하지 않고, `test` 가 제외한다.
+- `android/coroutines/catch-exceptions-in-ui-scope` 가 `viewModelScope`·`lifecycleScope` 의 `launch` 호출을 감싼 `try`·`catch` 도 위반으로 보고한다. 같은 코드를 `common/coroutines/try-catch-around-launch` 로 중복 보고하지 않는다.
+- `android/coroutines/main-safe-suspend-function` 이 ViewModel 에서 IO 디스패처로 전환하는 코드를 위반으로 보고한다. 블로킹 API 호출은 리포지토리 같은 데이터 레이어 클래스의 main-safe suspend 함수로 옮긴다. Default 디스패처로 CPU 작업을 하는 경우는 허용한다.
+- `android/coroutines/unnecessary-dispatcher-switch` 가 `Dispatchers.*` 를 직접 지정한 불필요한 전환도 보고하고, `android/coroutines/inject-dispatchers` 는 이 코드를 보고하지 않는다. 두 룰이 같은 코드에 반대되는 수정(주입·삭제)을 제안하지 않는다.
+- `android/data/immutable-exposed-model` 이 리포지토리의 `private set` 없는 `var` 프로퍼티와 `MutableStateFlow`·`MutableSharedFlow` 프로퍼티도 판정한다.
+- `android/data/repository-naming` 이 데이터 소스를 조합하는 `Manager`·`Service`·`Helper` 클래스를 `data`·`repository` 패키지 밖에서도 판정한다.
+- `android/test/state-flow-value-assertion` 이 빈 컬렉터를 요구하는 `stateIn` 을 `SharingStarted.WhileSubscribed()` 처럼 컬렉터가 있어야 시작하는 경우로 한정한다.
+- `android` 룰 19개의 이유·예시를 다듬었다. 이유에서 출처 서술을 삭제하고, 위반 조건은 기준을 먼저 적은 뒤 예시를 나열한다. `use case` 표기를 `UseCase` 로 통일했다.
+- README 를 개편했다. Before/after 예시와 사용·동작 요약을 앞에 두고, 설정·프로젝트 룰은 접어 두었다.
+
 ## 0.28.0
 - `common/null-safety/not-null-assertion` 의 수정을 `null` 의 의미에 따라 나눴다. 정상적인 경우는 기본값·`if` 분기·조기 반환으로, 버그인 경우는 `checkNotNull`·`requireNotNull`·`getValue` 로 수정한다. 판정할 수 없으면 수정하지 않고 리포트에 사유와 수정 제안을 적는다.
 - `common/functions/extension-visibility` 가 한 파일에서만 쓰는 익스텐션만 판정한다. 한 모듈에서만 쓰는 익스텐션에 `internal` 을 요구하지 않는다.
