@@ -1,171 +1,184 @@
-# kotlin-harness
-
-룰 기반 코틀린 프로젝트 리뷰용 Claude Code 플러그인. 현재 지원 platform: `android`
-
 <p align="center"><img src="assets/knight.svg" width="160" alt="칼을 바닥에 세우고 손잡이에 두 손을 얹은 기사 스케치"></p>
 
-## 철학
+<h1 align="center">kotlin-harness</h1>
 
-**작성은 위임하고, 기준은 고정한다.** (Delegate the writing, fix the bar.)
+<p align="center"><em>작성은 위임하고, 기준은 고정한다.</em></p>
 
-코드를 작성하는 AI 는 계속 발전한다. 그래서 작성 방식은 제한하지 않고 AI 에 맡긴다.
-결과는 AI 의 판단이 아니라 모델과 무관한 기준으로 판정한다. 공식 문서에 근거한 룰, 재현 테스트, git 이력이 그 기준이다.
-같은 코드는 어떤 모델이 리뷰해도 같은 결과가 나와야 한다.
+<p align="center">
+  <img src="https://img.shields.io/badge/Claude%20Code-plugin-111111?style=flat-square" alt="Claude Code plugin">
+  <img src="https://img.shields.io/badge/kotlin-common-111111?style=flat-square" alt="kotlin common">
+  <img src="https://img.shields.io/badge/platform-android-111111?style=flat-square" alt="platform android">
+</p>
 
-- 작성 도중에는 개입하지 않고, 작성된 결과만 `gate` 에서 판정한다.
-- 룰마다 공식 문서 출처(`source`)와 허용 조건(`## 허용`)을 적어, 판정 기준이 모델의 판단에 의존하지 않게 한다.
-- 실제 문제라고 판정한 위반은 실패하는 테스트로 재현한 뒤 수정한다. 재현되지 않으면 문제가 아닌 것으로 다시 판정한다.
-- 수정 방법이 하나로 정해지지 않는 위반은 수정하지 않고 리포트에 남겨 사람이 판단한다.
-- 검수 에이전트는 수정 에이전트의 판단을 참고하지 않고, 리포트·코드·git 이력만으로 확인한다.
+<p align="center"><strong>공식 문서 근거 룰 · 재현 테스트 후 수정 · 독립 검수</strong></p>
+
+---
+
+코드를 작성하는 AI 는 계속 발전한다. 그래서 작성은 AI 에 맡기고, 결과는 룰로 판정한다. 모델은 바뀌어도 기준은 바뀌지 않는다.
+
+## Before / after
+
+```kotlin
+fun recentTags(posts: ArrayList<Post>): MutableList<String> {
+    val result = ArrayList<Post>()
+    for (post in posts) {
+        if (post.isPublished ?: false) result.add(post)
+    }
+    val sorted = result.sortedBy { it.createdAt }.reversed()
+    val tags = sorted.map { it.tags }.flatten()
+    return tags.toMutableList()
+}
+```
+
+```kotlin
+fun recentTags(posts: List<Post>): List<String> =
+    posts.filter { it.isPublished == true }
+        .sortedByDescending { it.createdAt }
+        .flatMap { it.tags }
+```
+
+<sub>적용 룰: [`read-only-collection-type`](rules/common/immutability/read-only-collection-type.md) · [`higher-order-function-over-loop`](rules/common/control-flow/higher-order-function-over-loop.md) · [`nullable-boolean-condition`](rules/common/null-safety/nullable-boolean-condition.md) · [`sorted-by-descending`](rules/common/collections/sorted-by-descending.md) · [`combined-transformation`](rules/common/collections/combined-transformation.md)</sub>
 
 ## 설치
 
-### Claude Code
-
 ```
 /plugin marketplace add caffeine0518/kotlin-harness
+```
+```
 /plugin install kotlin-harness@kotlin-harness
 ```
 
-private 리포이므로 리포 접근 권한이 있고, git 에 GitHub 인증이 되어 있어야 한다.
-
-### 업데이트
-
-```
-/kotlin-harness:update
-```
-
-최신 버전으로 업데이트하고 변경 내역([CHANGELOG.md](CHANGELOG.md))을 보여 준다. 현재 세션에 적용하려면 `/reload-plugins` 를 실행한다. 프롬프트 캐시가 무효화된다는 경고와 함께 적용되지 않으면 `/reload-plugins --force` 를 실행한다.
-
-자동으로 받으려면 `/plugin` → Marketplaces → kotlin-harness → **Enable auto-update** 를 선택한다. 서드파티 marketplace 는 기본값이 꺼져 있다. private 리포라 백그라운드 업데이트에는 git 에 저장된 인증 정보가 필요하다. HTTPS 는 `gh auth login` 후 `gh auth setup-git`, SSH 는 `ssh-agent` 에 키를 등록한다.
-
-### 릴리스 (플러그인 관리자)
-
-`.claude-plugin/plugin.json` 의 `version` 을 올리고 `CHANGELOG.md` 에 섹션을 추가한 뒤 푸시한다. `version` 이 바뀌지 않으면 사용자에게 업데이트가 전달되지 않는다.
-
-### 플러그인 개발
-
-설치하지 않고 로컬 경로를 직접 불러온다. 플러그인을 수정한 뒤 세션을 다시 시작하면 반영된다.
-
-```
-claude --plugin-dir <이 리포 경로>
-```
+private 리포이므로 리포 접근 권한과 git 의 GitHub 인증이 필요하다.
 
 ## 사용
 
-설치 후 코틀린 프로젝트에서 바로 실행한다. 설정 파일은 필요 없다.
+코틀린 프로젝트에서 바로 실행한다. 설정 파일은 필요 없다.
+
+| 범위 | 명령 |
+|---|---|
+| 브랜치 | `/kotlin-harness:gate branch [base]` |
+| 커밋되지 않은 변경 | `/kotlin-harness:gate diff` |
+| PR | `/kotlin-harness:gate pr [번호]` |
+| 전체 프로젝트 | `/kotlin-harness:gate project` |
+| 파일 하나 | `/kotlin-harness:gate file <경로>` |
+| 오탐·누락 신고 | `/kotlin-harness:issue <문제 설명>` |
+| 업데이트 | `/kotlin-harness:update` |
+
+platform 은 Android Gradle 플러그인 유무로 자동 판정한다. 리포트는 `.claude/kotlin-harness/reports/` 에 작성되고 git 에서 제외된다.
+
+## 동작
 
 ```
-/kotlin-harness:gate branch
+1. 판정   → 에이전트 3개가 룰 그룹별로 위반 후보를 병렬 탐색
+2. 수정   → 수정 방법이 하나로 정해지는 위반만 수정
+            실제 문제면 실패하는 테스트로 재현 → 수정 → 통과 확인
+            재현되지 않으면 문제가 아닌 것으로 다시 판정
+3. 검수   → 별도 에이전트가 리포트·코드·git 이력만으로 확인
+4. 재검수 → 검수가 찾은 문제를 반영하고 다시 검수 (최대 2회)
 ```
 
-- platform 은 `build.gradle`·`build.gradle.kts` 의 Android Gradle 플러그인으로 자동 판정한다.
-- 리포트 디렉터리(`.claude/kotlin-harness/`)에 `.gitignore` 를 자동으로 만들어, 리포트가 git 에 나타나지 않는다.
+- 판단이 필요한 위반(기본값을 쓸지 예외를 발생시킬지 등)은 수정하지 않고 리포트에 남긴다.
+- 커밋 메시지는 룰 ID 없이 평문으로 적는다. 작업 중인 파일은 수정만 하고 커밋하지 않는다. 푸시하지 않는다.
 
-## 프로젝트 설정 (선택)
+<details>
+<summary><strong>코드를 작성할 때 룰을 컨텍스트에 올리지 않는 이유</strong></summary>
+
+- 룰이 100개가 넘는다. 파일을 수정할 때마다 모두 올리면 작업과 관계없는 룰이 컨텍스트를 차지한다.
+- 작성 방식은 계속 발전하는 AI 에 맡긴다. 룰은 작성 과정이 아니라 작성된 결과에만 적용한다.
+- 작성 중에 확인하면 판정이 그 모델의 판단에 의존한다. `gate` 에서 판정해야 재현 테스트와 독립 검수를 거친다.
+
+</details>
+
+<details>
+<summary><strong>검수 항목</strong></summary>
+
+| 항목 | 확인 내용 |
+|---|---|
+| 판정 | 오탐이 아닌지, 허용 판정이 맞는지, gate 가 바꾼 줄에 누락된 위반이 없는지 |
+| 처리 결과 | `수정함` 커밋이 실제로 그 코드를 수정했는지, `수정하지 않음` 의 이유가 타당한지 |
+| 변경 범위 | 위반과 관계없는 변경, 작업 중인 파일·리포트 파일의 커밋, 푸시가 없는지 |
+| 커밋 메시지 | 룰 ID 없이 평문으로 적었는지 |
+| 리포트 형식 | 요약·집계·목록의 건수가 일치하는지 |
+
+재검수는 직전 회차에서 바뀐 줄과 반영한 항목만 확인한다. 같은 문제가 반복되거나 2회 뒤에도 남은 문제는 사유와 함께 결과에 표시한다.
+
+</details>
+
+## 설정 (선택)
 
 기본값을 바꿀 때만 `.claude/kotlin-harness.json` 을 만든다.
 
 ```json
 {
-  "platform": "android",
   "excludeCategories": ["scope-functions"],
-  "minSeverity": "warning",
   "excludeRules": ["common/naming/meaningless-name"],
-  "projectRules": [".claude/rules/kotlin", ".claude/rules/ui"]
+  "minSeverity": "warning",
+  "projectRules": [".claude/rules/kotlin"]
 }
 ```
 
+<details>
+<summary><strong>전체 키</strong></summary>
+
 | 키 | 설명 |
 |---|---|
-| `platform` | 기본값은 자동 판정(`android` 또는 platform 없음). platform 이 없으면 common 룰만 적용한다 |
-| `excludeCategories` | 적용하지 않을 카테고리 경로 목록 (선택). `ui` 는 `ui/` 아래 전체, `ui/view` 는 `ui/view/` 만 제외한다. `rules/common/` 과 `rules/<platform>/` 에 같은 경로가 있으면 둘 다 제외한다. 없는 이름을 적으면 오류가 발생한다. 새로 추가된 카테고리는 자동으로 적용된다 |
-| `minSeverity` | 기본값 `info`. 이 레벨 이상의 룰만 적용한다. `error` 는 버그·누수·보안 룰만, `warning` 은 설계 룰까지, `info` 는 표기 관례 룰까지 모두 적용한다. 프로젝트 룰에도 적용한다 |
-| `excludeRules` | 적용하지 않을 플러그인 룰 ID 목록 (선택). 카테고리 전체가 아니라 룰 하나만 제외할 때 쓴다. 없는 룰 ID 를 적으면 오류가 발생한다 |
-| `projectRules` | 함께 적용할 프로젝트 룰의 디렉터리·파일 경로 목록 (선택, 프로젝트 루트 기준). 디렉터리면 하위의 `.md` 전체를 읽는다. 기본값이 없으므로 `.claude/rules` 도 지정해야 적용된다. 자세한 내용은 [프로젝트 룰](#프로젝트-룰) 참고 |
-| `review.autoFix` | 기본값 `true`. `/kotlin-harness:gate` 가 위반을 수정하고 커밋한다. `false` 이면 수정하지 않는다. 두 경우 모두 리포트와 검수는 실행한다 |
-| `review.redCommit` | 기본값 `true`. 실제 문제를 수정할 때 실패하는 테스트를 먼저 커밋하고 수정을 따로 커밋한다. 실패하는 커밋에서는 CI 가 실패하므로, 원하지 않으면 `false` 로 지정해 테스트와 수정을 커밋 하나로 묶는다 |
+| `platform` | 기본값은 자동 판정. platform 이 없으면 common 룰만 적용한다 |
+| `excludeCategories` | 제외할 카테고리 경로. `ui` 는 `ui/` 전체, `ui/view` 는 `ui/view/` 만 제외한다. common 과 platform 에 같은 경로가 있으면 둘 다 제외한다. 없는 이름이면 오류가 발생한다 |
+| `excludeRules` | 제외할 룰 ID. 없는 ID 면 오류가 발생한다 |
+| `minSeverity` | 기본값 `info`. `error` 는 버그·누수·보안, `warning` 은 설계까지, `info` 는 표기 관례까지 적용한다. 프로젝트 룰에도 적용한다 |
+| `projectRules` | 함께 적용할 프로젝트 룰의 디렉터리·파일 경로 (프로젝트 루트 기준). 기본값이 없으므로 `.claude/rules` 도 지정해야 적용된다 |
+| `review.autoFix` | 기본값 `true`. `false` 면 수정하지 않고 리포트와 검수만 실행한다 |
+| `review.redCommit` | 기본값 `true`. 실패하는 테스트를 먼저 커밋하고 수정을 따로 커밋한다. 그 커밋에서 CI 가 실패하므로, 원하지 않으면 `false` 로 지정해 커밋 하나로 묶는다 |
 
-## 프로젝트 룰
+</details>
 
-플러그인 룰로 일반화하지 않은 팀 규칙은 `projectRules` 로 지정해 함께 적용한다. 리포트·영향 판정·수정·검수를 플러그인 룰과 같은 방식으로 처리한다.
+<details>
+<summary><strong>프로젝트 룰</strong></summary>
 
-- 형식은 자유다. `## ` 헤딩 하나를 룰 하나로 보고, 헤딩이 없으면 파일 전체가 룰 하나다. 룰 ID 는 `project/<경로>#<헤딩 번호 또는 헤딩>` 이다 (예: `project/kotlin/naming/naming#4`).
-- 적용 대상은 frontmatter `paths`(Claude Code 규칙 파일 형식)·`applies_to`, 또는 본문에 적힌 적용 범위로 판정한다. 둘 다 없으면 모든 `.kt`·`.kts` 파일에 적용한다.
+플러그인 룰로 일반화하지 않은 팀 규칙을 `projectRules` 로 지정하면 플러그인 룰과 같은 방식으로 리포트·수정·검수한다.
+
+- 형식은 자유다. `## ` 헤딩 하나가 룰 하나이고, 헤딩이 없으면 파일 전체가 룰 하나다. 룰 ID 는 `project/<경로>#<헤딩 번호 또는 헤딩>` 이다.
+- 적용 대상은 frontmatter `paths`·`applies_to` 또는 본문의 적용 범위로 판정한다. 없으면 모든 `.kt`·`.kts` 에 적용한다.
 - severity 는 frontmatter `severity` 가 없으면 `warning` 이다.
-- 플러그인 룰과 반대되면 프로젝트 룰을 따른다. 같은 코드를 같은 이유로 보고하면 한 항목으로 합친다.
-- 충돌 기록·안내 문서처럼 규칙이 아닌 파일은 룰로 보지 않지만, 경로를 지정할 때 제외하는 것이 확실하다.
-- 프로젝트 룰의 결과는 `/kotlin-harness:issue` 로 등록하지 않는다. 룰 내용이 플러그인 리포에 공개되기 때문이다.
+- 플러그인 룰과 반대되면 프로젝트 룰이 우선한다. 같은 코드를 같은 이유로 보고하면 한 항목으로 합친다.
+- 규칙이 아닌 파일(충돌 기록·안내 문서)은 룰로 보지 않지만, 경로에서 제외하는 것이 확실하다.
+- 룰 내용이 공개되지 않도록 프로젝트 룰의 결과는 `/kotlin-harness:issue` 로 등록하지 않는다.
 
-## 리뷰 시점
+</details>
 
-| 시점 | 방법 |
-|---|---|
-| 커밋되지 않은 변경 | `/kotlin-harness:gate diff` |
-| 브랜치 | `/kotlin-harness:gate branch [base]` |
-| PR | `/kotlin-harness:gate pr [번호]` |
-| 전체 프로젝트 | `/kotlin-harness:gate project` |
-| 파일 하나 | `/kotlin-harness:gate file <경로>` |
+<details>
+<summary><strong>업데이트 · 개발 · 릴리스</strong></summary>
 
-## 위반 수정과 리포트
+- `/kotlin-harness:update` 후 `/reload-plugins` 로 현재 세션에 적용한다. 프롬프트 캐시 경고와 함께 적용되지 않으면 `/reload-plugins --force`.
+- 자동 업데이트: `/plugin` → Marketplaces → kotlin-harness → **Enable auto-update**. 서드파티 marketplace 는 기본값이 비활성화 상태다. 백그라운드 업데이트에는 git 에 저장된 인증 정보가 필요하다 (HTTPS: `gh auth login` 후 `gh auth setup-git`, SSH: `ssh-agent` 에 키 등록).
+- 로컬 개발: `claude --plugin-dir <이 리포 경로>`. 수정 후 세션을 다시 시작하면 반영된다.
+- 릴리스: `.claude-plugin/plugin.json` 의 `version` 을 올리고 [CHANGELOG.md](CHANGELOG.md) 에 섹션을 추가한 뒤 푸시한다. `version` 이 바뀌지 않으면 업데이트가 전달되지 않는다.
 
-`/kotlin-harness:gate` 는 기본적으로 위반을 수정하고 커밋한다.
+</details>
 
-- 수정 방법이 하나로 정해지는 위반만 수정한다.
-- 현재 코드에서 실제로 문제가 발생하는 위반은, 버그를 재현하는 단위 테스트를 작성해 실패를 확인한 뒤 수정하고 통과를 확인한다. 테스트가 통과하면(재현되지 않으면) 실제 문제가 아닌 것으로 다시 판정한다. 모듈에 단위 테스트 설정이 없으면 테스트 없이 수정하고, 테스트 의존성은 추가하지 않는다. 기본값을 쓸지 예외를 발생시킬지처럼 판단이 필요한 위반은 리포트에만 남긴다.
-- 동작이 바뀌지 않는 `방어용` 수정은 실행 한 번에 커밋 하나로, `실제 문제` 수정은 같은 이유로 수정한 변경끼리 커밋 하나로 묶는다. 커밋 메시지는 룰을 모르는 사람도 알 수 있게 평문으로 적는다. 룰 ID 는 커밋 메시지에 적지 않는다.
-- 리뷰를 시작할 때 커밋되지 않은 변경이 있던 파일은 수정만 하고 커밋하지 않는다. 작업 중인 변경이 함께 커밋되지 않게 하기 위해서다. 따라서 `diff` 범위에서는 대부분 커밋되지 않는다. 커밋하지 않은 수정은 결과 출력에 파일별로 따로 표시한다.
-- 푸시하지 않는다.
+## 룰
 
-gate 는 아래 순서로 실행된다.
-
-1. **판정:** 룰을 카테고리 단위로 룰 수가 비슷한 그룹 3개로 나눠, 에이전트 3개가 병렬로 위반 후보를 찾는다. 룰이 30개 미만이면 나누지 않는다.
-2. **수정:** 에이전트 하나가 후보를 검증하고, 영향 판정·테스트·수정·커밋·리포트 작성을 한다.
-3. **검수:** 별도 에이전트가 수정 에이전트의 판단을 참고하지 않고, 리포트·코드·git 이력만으로 아래를 확인한다.
-4. **반영과 재검수:** 검수가 문제를 찾으면 새 에이전트가 반영하고, 반영한 내용을 다시 검수한다. 최대 2회 반복한다. 같은 문제가 반복되거나 2회 뒤에도 남은 문제는 사유와 함께 결과에 표시한다.
-
-| 검수 항목 | 확인 내용 |
-|---|---|
-| 판정 | 리포트의 위반이 오탐이 아닌지, 허용 판정이 맞는지, gate 가 바꾼 줄에 리포트에 없는 위반이 없는지 |
-| 항목별 처리 결과 | `수정함` 항목의 커밋이 실제로 그 코드를 수정했는지, `수정하지 않음` 의 이유가 타당한지 |
-| 변경 범위 | 위반과 관계없는 변경, 작업 중인 파일이나 리포트 파일의 커밋, 푸시가 없는지 |
-| 커밋 메시지 | 룰 ID 없이 평문으로 적었는지 |
-| 리포트 형식 | 요약·집계·목록의 건수가 일치하는지 |
-
-재검수는 직전 회차에서 바뀐 줄과 반영한 항목만 확인한다. 사유를 적고 수정하지 않은 항목은 사유가 사실과 다를 때만 다시 제기한다.
-
-리뷰 결과는 `.claude/kotlin-harness/reports/<일시>-<범위>.md` 에 작성한다. 리포트에는 룰별 집계, 위반마다 위치·코드·근거 문서·수정 제안·처리 결과(커밋 해시 또는 수정하지 않은 이유), `## 허용` 에 해당해 제외한 코드가 포함된다.
-
-## 이슈 등록
-
-오탐, 누락, 잘못된 수정, 스킬 동작 오류가 있으면 아래 명령으로 이 리포에 이슈를 등록한다.
-
-```
-/kotlin-harness:issue <문제 설명>
-```
-
-최근 리포트와 대화 내용으로 초안을 작성해 보여 주고, 확인하면 `gh issue create` 로 등록한다. 재현 코드는 프로젝트 코드를 그대로 옮기지 않고, 이름과 값을 일반적인 것으로 바꾼 최소 코드로 작성한다. `gh` 를 쓸 수 없으면 초안과 이슈 작성 주소를 출력한다.
-
-## 룰 추가
-
-`rules/common/` (모든 platform) 또는 `rules/<platform>/` 에 카테고리 디렉터리를 만들고 룰마다 마크다운 파일 하나를 추가한다. `rules/` 기준 상대 경로가 룰 ID 다 (예: `rules/common/null-safety/safe-cast.md` → `common/null-safety/safe-cast`).
+`rules/common/` (모든 platform) 또는 `rules/<platform>/` 아래에 룰마다 마크다운 파일 하나. `rules/` 기준 상대 경로가 룰 ID 다.
 
 ```markdown
 ---
-severity: error          # error: 버그·누수·보안 | warning: 구조·API·생명주기·성능 | info: 동작·구조와 무관한 표기 관례
-applies_to: "**/*.kt"    # 적용 대상 glob
-source: https://...      # 근거 문서. common 룰은 공식 문서만 허용
+severity: error          # error: 버그·누수·보안 | warning: 구조·API·생명주기·성능 | info: 표기 관례
+applies_to: "**/*.kt"
+source: https://...      # common 룰은 공식 문서만 허용
 ---
 
 # 규칙 한 줄
 
 ## 이유
-## 위반     # don't
-## 수정     # do
+## 위반
+## 수정
 ## 허용     # 위반으로 보지 않는 경우 (선택)
 ```
 
-린터(ktlint·detekt)가 검사하는 네이밍·포맷팅 항목은 룰로 추가하지 않는다.
+린터(ktlint·detekt)가 검사하는 네이밍·포맷팅은 룰로 추가하지 않는다. 새 platform 은 `rules/<platform>/` 을 만들고 설정의 `platform` 에 그 이름을 지정한다.
+
+<details>
+<summary><strong>룰 목록</strong></summary>
 
 | 카테고리 | 룰 |
 |---|---|
@@ -195,4 +208,4 @@ source: https://...      # 근거 문서. common 룰은 공식 문서만 허용
 | android/ui/view | `collect-with-lifecycle`, `fragment-binding-cleanup`, `fragment-view-reference`, `launch-when-deprecated`, `lifecycle-callback-collection` |
 | android/ui/viewmodel | `android-view-model`, `async-work-in-init`, `event-as-ui-state`, `expose-mutable-state`, `lifecycle-reference`, `single-ui-state`, `suspend-function-exposure` |
 
-새 platform(ktor·kmp 등)은 `rules/<platform>/` 디렉터리를 만들고 설정의 `platform` 값을 그 이름으로 지정한다.
+</details>
