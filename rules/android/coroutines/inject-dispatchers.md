@@ -56,4 +56,4 @@ class LogWriter(
 - 테스트 코드 (테스트의 디스패처는 `android/coroutines/inject-test-dispatchers` 가 보고한다)
 - `Dispatchers.Main`·`Dispatchers.Main.immediate`. 테스트에서 `Dispatchers.setMain` 으로 교체할 수 있다.
 - 디스패처를 지정하지 않은 `viewModelScope.launch { }`·`lifecycleScope.launch { }`
-- 주입받은 디스패처로 불필요하게 전환하는 경우. main-safe 함수만 호출하면서 IO·Default 디스패처로 전환하는 코드는 `android/coroutines/unnecessary-dispatcher-switch` 가 보고한다.
+- main-safe 함수만 호출하면서 IO·Default 디스패처로 전환하는 코드. 디스패처를 주입받을 것이 아니라 전환을 삭제해야 하므로, `Dispatchers.*` 를 직접 지정했더라도 이 룰이 아니라 `android/coroutines/unnecessary-dispatcher-switch` 가 보고한다.
