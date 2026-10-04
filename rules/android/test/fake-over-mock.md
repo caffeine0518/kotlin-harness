@@ -8,11 +8,15 @@ source: https://developer.android.com/training/testing/fundamentals/test-doubles
 
 ## 이유
 
-Android 아키텍처 권장사항은 테스트 더블로 mock 보다 Fake 를 쓰라고 강력히 권장한다. 공식 문서에 따르면 Fake 는 mocking 프레임워크가 필요 없고 가벼워서 권장된다. stub 보다도 단순해서 Fake 를 권장하고, spy 는 복잡도를 높이므로 보통 쓰지 않는다. mock 은 정해 둔 호출 방식과 다르면 테스트를 실패시키므로, 동작이 같아도 테스트 대상의 구현이 바뀌면 테스트를 수정해야 한다.
+Fake 는 실제 구현처럼 동작하는 가벼운 구현이라 mocking 프레임워크가 필요 없다. 다른 테스트 더블에는 다음 문제가 있다.
+
+- mock: 정해 둔 호출 방식과 다르면 테스트가 실패한다. 동작이 같아도 테스트 대상의 구현이 바뀌면 테스트를 수정해야 한다.
+- stub: 테스트마다 반환값을 정해야 해서 Fake 보다 복잡하다.
+- spy: 실제 객체와 정해 둔 동작이 섞여 테스트가 복잡해진다.
 
 ## 위반
 
-테스트 소스 세트에 타입 `T` 를 구현한 `Fake` 로 시작하는 클래스·객체가 있는데, 테스트가 `T` 의 테스트 더블을 아래 방법으로 만든다.
+Fake 구현이 있는 타입의 테스트 더블을 mocking 라이브러리로 만든다. Fake 구현은 테스트 소스 세트에서 그 타입을 구현하고, 이름이 `Fake` 로 시작하는 클래스·객체다. 예:
 
 - `mockk<T>()`·`mock<T>()`·`Mockito.mock(T::class.java)`
 - `@MockK`·`@Mock` 프로퍼티
@@ -33,6 +37,8 @@ fun loadsFirstUser() {
 
 ## 수정
 
+mocking 라이브러리로 만든 테스트 더블을 Fake 구현으로 바꾼다.
+
 ```kotlin
 @Test
 fun loadsFirstUser() {
@@ -44,5 +50,5 @@ fun loadsFirstUser() {
 
 ## 허용
 
-- 호출 횟수·순서처럼 상호작용 자체를 검증하고, Fake 가 그 정보를 제공하지 않는 경우
+- 상호작용 자체를 검증하는데 Fake 가 그 정보를 제공하지 않는 경우. 예: 호출 횟수·순서
 - Fake 구현이 없는 타입
