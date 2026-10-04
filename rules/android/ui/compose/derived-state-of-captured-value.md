@@ -10,7 +10,7 @@ source: https://developer.android.com/develop/ui/compose/side-effects
 
 `derivedStateOf` 는 계산 블록에서 읽은 Compose `State` 객체가 바뀔 때만 다시 계산한다. 일반 파라미터나 data class 같은 `State` 가 아닌 값은 변경을 감지하지 못한다. 키 없는 `remember { }` 로 감싸면 `derivedStateOf` 객체가 처음 컴포지션에서 한 번만 생성되고, 계산 블록은 그때 캡처한 파라미터 값을 계속 사용한다. 호출하는 쪽이 다른 값을 전달해도 결과가 갱신되지 않는다.
 
-공식 문서는 `derivedStateOf` 가 하나 이상의 `State` 객체를 다른 `State` 로 변환하는 API 라고 설명한다. `State` 가 아닌 값을 읽으면 안 된다는 문장은 없고, 이 룰은 그 동작 방식과 `remember` 의 키 동작에서 도출했다.
+`derivedStateOf` 는 하나 이상의 `State` 객체를 다른 `State` 로 변환하는 API 다. `State` 가 아닌 값을 읽지 말라는 명시적인 규칙은 없고, 이 룰은 그 동작 방식과 `remember` 의 키 동작에서 도출했다.
 
 ## 위반
 

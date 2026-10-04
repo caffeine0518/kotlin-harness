@@ -8,7 +8,7 @@ source: https://kotlinlang.org/docs/exceptions.html#error-function
 
 ## 이유
 
-`error()` 는 메시지를 받아 `IllegalStateException` 을 발생시킨다.
+`error()` 는 메시지를 받아 `IllegalStateException` 을 발생시킨다. `throw IllegalStateException(...)` 과 같은 예외를 더 짧게 발생시키고, 함수 이름으로 도달하면 안 되는 상태라는 의도를 드러낸다.
 
 ## 위반
 

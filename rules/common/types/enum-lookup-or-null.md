@@ -16,8 +16,6 @@ enum 상수를 찾는 함수 중 일부는 일치하는 상수가 없으면 예�
 
 서버 응답·저장값·Intent extra 는 값이 enum 에 있다고 보장할 수 없다. 서버가 새 상수를 추가하거나, 이전 버전에서 저장한 값의 상수가 삭제·변경되면 앱이 종료된다.
 
-공식 문서는 대신 `null` 을 반환하는 방법을 안내한다. `entries.getOrNull()`·`firstOrNull()` 을 쓰거나, companion object 에 조회 함수를 둔다.
-
 ## 위반
 
 ```kotlin

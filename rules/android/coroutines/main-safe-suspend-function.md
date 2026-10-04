@@ -10,9 +10,9 @@ source: https://developer.android.com/kotlin/coroutines/coroutines-best-practice
 
 `suspend` 키워드만 붙여서는 실행 스레드가 바뀌지 않는다. 메인 스레드에서 호출된 suspend 함수가 블로킹 API 를 호출하면 UI 갱신이 멈추고, ANR(Application Not Responding) 이 발생할 수 있다.
 
-Android 공식 문서는 suspend 함수가 메인 스레드에서 호출해도 안전해야(main-safe) 한다고 한다. 메인 스레드 밖으로 실행을 옮기는 책임은 블로킹 작업을 하는 클래스가 진다. 그래야 호출하는 쪽이 디스패처를 지정하지 않고 메인 스레드에서 호출할 수 있다.
+suspend 함수는 메인 스레드에서 호출해도 안전해야(main-safe) 한다. 메인 스레드 밖으로 실행을 옮기는 책임은 블로킹 작업을 하는 클래스가 진다. 그래야 호출하는 쪽이 디스패처를 지정하지 않고 메인 스레드에서 호출할 수 있다.
 
-공식 문서가 ViewModel 의 IO 디스패처 사용을 직접 금지하지는 않는다. 다만 아키텍처 가이드는 데이터 처리를 데이터 레이어에 두므로, 블로킹 작업은 리포지토리 같은 데이터 레이어 클래스가 main-safe 하게 감싸고 ViewModel 은 그 suspend 함수를 호출하기만 하면 된다. 그래서 이 룰은 ViewModel 이 IO 디스패처로 전환하는 코드를 허용에 해당하지 않으면 위반으로 판정한다.
+ViewModel 이 IO 디스패처로 전환해도 메인 스레드는 블로킹되지 않는다. 다만 데이터 처리는 데이터 레이어에 두므로, 블로킹 작업은 리포지토리 같은 데이터 레이어 클래스가 main-safe 하게 감싸고 ViewModel 은 그 suspend 함수를 호출하기만 하면 된다. 그래서 이 룰은 ViewModel 이 IO 디스패처로 전환하는 코드를 허용에 해당하지 않으면 위반으로 판정한다.
 
 ## 위반
 

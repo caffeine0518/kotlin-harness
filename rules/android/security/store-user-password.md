@@ -8,7 +8,7 @@ source: https://developer.android.com/privacy-and-security/security-tips#credent
 
 ## 이유
 
-토큰은 만료·폐기할 수 있지만 기기에 저장한 비밀번호는 사용자가 바꾸기 전까지 유효하다.
+기기에 저장한 비밀번호가 노출되면, 사용자가 비밀번호를 바꾸기 전까지 계속 쓸 수 있다. 수명이 짧은 서비스 전용 인가 토큰은 만료·폐기할 수 있다.
 
 ## 위반
 

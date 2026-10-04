@@ -8,7 +8,7 @@ source: https://developer.android.com/privacy-and-security/security-tips#key-gen
 
 ## 이유
 
-소스 코드에 포함된 API 키는 앱을 디컴파일하면 추출할 수 있다. 공식 문서는 API 키를 소스 코드 리포지토리에 커밋하지 말고 secrets-gradle-plugin 같은 Gradle 플러그인으로 다루라고 한다. 암호화 키도 같다. [하드코딩된 암호화 비밀](https://developer.android.com/privacy-and-security/risks/hardcoded-cryptographic-secrets) 문서는 문자열이나 바이트 배열로 코드에 작성한 키는 리버스 엔지니어링 도구로 쉽게 추출되고, 그 경우 보안 모델이 유효하지 않다고 한다. 키는 Android Keystore(앱 전용) 또는 KeyChain(시스템 전체)에 저장하라고 한다.
+소스 코드에 포함된 API 키는 앱을 디컴파일하면 추출할 수 있다. 문자열이나 바이트 배열로 코드에 작성한 암호화 키도 리버스 엔지니어링 도구로 쉽게 추출되고, 그 경우 보안 모델이 유효하지 않다.
 
 ## 위반
 
