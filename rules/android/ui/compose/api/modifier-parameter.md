@@ -4,7 +4,7 @@ applies_to: "**/*.kt"
 source: https://android.googlesource.com/platform/frameworks/support/+/androidx-main/compose/docs/compose-api-guidelines.md#elements-accept-and-respect-a-modifier-parameter
 ---
 
-# UI 를 그리는 컴포저블은 기본값이 `Modifier` 인 `modifier` 파라미터를 첫 번째 선택 파라미터로 받는다
+# UI 를 그리는 컴포저블은 기본값이 `Modifier` 인 `modifier` 파라미터를 필수 파라미터 바로 뒤, 첫 번째 선택 파라미터로 받는다
 
 ## 이유
 
@@ -19,7 +19,7 @@ source: https://android.googlesource.com/platform/frameworks/support/+/androidx-
 - `Modifier` 타입 파라미터가 없다.
 - 파라미터 이름이 `modifier` 가 아니다.
 - 기본값이 없거나 `Modifier` 가 아니다.
-- 필수 파라미터 앞에 있거나, 다른 선택 파라미터 뒤에 있다.
+- 필수 파라미터 앞에 있거나, 다른 선택 파라미터 뒤에 있다. 마지막 파라미터인 `@Composable` 콘텐츠 람다는 필수 파라미터여도 `modifier` 뒤에 둔다.
 
 ```kotlin
 @Composable
