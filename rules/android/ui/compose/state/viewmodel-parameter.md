@@ -8,16 +8,17 @@ source: https://developer.android.com/develop/ui/compose/state-hoisting#screen-u
 
 ## 이유
 
-ViewModel 은 화면 수준 컴포저블이나 Navigation 의 destination 에서만 사용하고, 재사용하는 UI 에서는 사용하지 않는다. ViewModel 을 받은 하위 컴포저블은 그 ViewModel 이 없으면 미리보기·테스트·재사용을 할 수 없고, ViewModel 의 모든 상태와 함수에 의존하게 된다.
+ViewModel 을 받은 하위 컴포저블은 그 ViewModel 없이는 미리보기·테스트·재사용을 할 수 없다. 필요한 상태가 일부여도 ViewModel 의 모든 상태와 함수에 의존하게 된다.
 
 ## 위반
+
+화면 수준 컴포저블이 하위 컴포저블에 ViewModel 을 전달한다.
 
 ```kotlin
 @Composable
 fun HomeScreen(viewModel: HomeViewModel = hiltViewModel()) {
     Column {
         HomeHeader(viewModel)
-        HomeFeed(viewModel = viewModel)
     }
 }
 
@@ -49,4 +50,4 @@ fun HomeHeader(user: User, onProfileClick: () -> Unit) {
 
 ## 허용
 
-- 화면 수준 컴포저블이 ViewModel 을 파라미터로 받는 경우. `viewModel()`·`hiltViewModel()` 을 기본값으로 지정했거나, `NavHost` 의 destination·`setContent` 에서 호출하는 컴포저블
+- 화면 수준 컴포저블이 ViewModel 을 파라미터로 받는 경우. 화면 수준 컴포저블의 예: `viewModel()`·`hiltViewModel()` 을 기본값으로 지정한 컴포저블, `NavHost` 의 destination·`setContent` 에서 호출하는 컴포저블

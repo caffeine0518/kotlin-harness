@@ -8,9 +8,13 @@ source: https://developer.android.com/topic/architecture/recommendations#ui-laye
 
 ## 이유
 
-`collectAsState()` 는 컴포저블이 컴포지션에 있는 동안 계속 수집한다. 앱이 백그라운드로 이동해도 수집이 중단되지 않아, 업스트림 `Flow` 가 위치 업데이트·데이터베이스 조회 같은 작업을 계속 실행한다. `collectAsStateWithLifecycle()` 은 기본적으로 생명주기가 `STARTED` 일 때 수집을 시작하고 `STOPPED` 일 때 중단한다.
+`collectAsState()` 는 컴포저블이 컴포지션에 있는 동안 계속 수집한다. 앱이 백그라운드로 이동해도 수집이 중단되지 않아, 업스트림 `Flow` 가 위치 업데이트·데이터베이스 조회 같은 작업을 계속 실행한다.
+
+`collectAsStateWithLifecycle()` 은 기본적으로 생명주기가 `STARTED` 일 때 수집을 시작하고 `STOPPED` 일 때 중단한다.
 
 ## 위반
+
+컴포저블에서 UI 상태 `Flow` 를 `collectAsState()` 로 수집한다.
 
 ```kotlin
 @Composable
@@ -34,4 +38,4 @@ fun ConversationScreen(viewModel: ConversationViewModel = viewModel()) {
 
 ## 허용
 
-- `lifecycle-runtime-compose` 를 사용할 수 없는 모듈(예: Android 생명주기 의존성이 없는 Compose Multiplatform 공통 코드)
+- `lifecycle-runtime-compose` 를 사용할 수 없는 모듈. 예: Android 생명주기 의존성이 없는 Compose Multiplatform 공통 코드
