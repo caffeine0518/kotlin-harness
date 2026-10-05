@@ -4,7 +4,7 @@ applies_to: "**/*.kt"
 source: https://developer.android.com/develop/ui/compose/side-effects
 ---
 
-# 컴포저블 본문에서 코루틴을 시작하지 않고 `LaunchedEffect` 나 이벤트 콜백에서 시작한다
+# 컴포저블에서 코루틴은 이펙트 블록이나 이벤트 콜백 안에서만 시작한다
 
 ## 이유
 
@@ -14,7 +14,7 @@ source: https://developer.android.com/develop/ui/compose/side-effects
 
 ## 위반
 
-`@Composable` 함수 본문(람다 파라미터·이펙트 블록 밖)에서 `launch`·`async` 를 호출한다.
+컴포저블 본문에서 이펙트 블록이나 이벤트 콜백으로 감싸지 않고 `launch`·`async` 를 호출한다.
 
 ```kotlin
 @Composable
