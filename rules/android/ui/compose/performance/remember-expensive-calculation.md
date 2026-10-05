@@ -8,9 +8,13 @@ source: https://developer.android.com/develop/ui/compose/performance/bestpractic
 
 ## 이유
 
-컴포저블 본문의 코드는 리컴포지션마다 다시 실행된다. 애니메이션 중에는 매 프레임 실행될 수도 있다. 컴포저블 본문이나 `LazyColumn` 의 콘텐츠 람다에서 목록을 정렬·필터링하면 입력이 바뀌지 않아도 리컴포지션마다 전체 목록을 다시 계산한다.
+컴포저블 본문의 코드는 리컴포지션마다 다시 실행된다. 애니메이션 중에는 매 프레임 실행될 수도 있다.
+
+컴포저블 본문이나 `LazyColumn` 의 콘텐츠 람다에서 목록을 정렬·필터링하면 입력이 바뀌지 않아도 리컴포지션마다 전체 목록을 다시 계산한다.
 
 ## 위반
+
+컴포저블 본문이나 Lazy 레이아웃의 콘텐츠 람다에서, 목록 전체를 순회하는 계산을 `remember` 없이 실행한다. 예: 정렬·필터링·그룹화
 
 ```kotlin
 @Composable
@@ -45,6 +49,6 @@ fun ContactList(contacts: List<Contact>, comparator: Comparator<Contact>) {
 
 ## 허용
 
-- `remember { }`·`derivedStateOf { }` 블록 안, `onClick` 등 이벤트 람다 안, `LaunchedEffect` 블록 안의 계산
-- `size`·`isEmpty()`·`first()`·`getOrNull()` 처럼 목록 전체를 순회하지 않는 연산
-- 요소 수가 코드에 고정된 작은 목록(예: `listOf(...)` 리터럴, enum 의 `entries`)에 대한 연산
+- 리컴포지션마다 실행되지 않는 블록 안의 계산. 예: `remember { }`·`derivedStateOf { }` 블록, `onClick` 같은 이벤트 람다, `LaunchedEffect` 블록
+- 목록 전체를 순회하지 않는 연산. 예: `size`·`isEmpty()`·`first()`·`getOrNull()`
+- 요소 수가 코드에 고정된 작은 목록에 대한 연산. 예: `listOf(...)` 리터럴, enum 의 `entries`

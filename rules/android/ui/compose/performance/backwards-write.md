@@ -8,25 +8,29 @@ source: https://developer.android.com/develop/ui/compose/performance/bestpractic
 
 ## 이유
 
-컴포저블 본문에서 이미 읽은 `State` 에 값을 쓰는 것을 역방향 쓰기(backwards write)라고 한다. 값이 바뀌면 그 상태를 읽은 컴포저블이 다시 리컴포지션되고, 리컴포지션에서 다시 값을 쓰므로 프레임마다 리컴포지션이 반복된다.
+컴포저블 본문에서 이미 읽은 `State` 에 값을 쓰는 것을 역방향 쓰기(backwards write)라고 한다.
+
+값이 바뀌면 그 상태를 읽은 컴포저블이 다시 리컴포지션되고, 리컴포지션에서 다시 값을 쓰므로 프레임마다 리컴포지션이 반복된다.
 
 ## 위반
 
+컴포저블 본문에서 읽은 `State` 에 같은 본문에서 값을 쓴다.
+
 ```kotlin
 @Composable
-fun BadComposable() {
+fun Counter() {
     var count by remember { mutableIntStateOf(0) }
 
     Button(onClick = { count++ }) { Text("Recompose") }
     Text("$count")
-    count++
+    count++  // 읽은 상태에 다시 쓴다
 }
 
 @Composable
 fun Cart(items: List<Item>) {
     var total by remember { mutableIntStateOf(0) }
     Text("합계: $total")
-    total = items.sumOf { it.price }
+    total = items.sumOf { it.price }  // 읽은 상태에 다시 쓴다
 }
 ```
 
@@ -36,10 +40,10 @@ fun Cart(items: List<Item>) {
 
 ```kotlin
 @Composable
-fun GoodComposable() {
+fun Counter() {
     var count by remember { mutableIntStateOf(0) }
 
-    Button(onClick = { count++ }) { Text("Increment") }
+    Button(onClick = { count++ }) { Text("Recompose") }
     Text("$count")
 }
 
@@ -52,5 +56,5 @@ fun Cart(items: List<Item>) {
 
 ## 허용
 
-- `onClick` 등 이벤트 람다, `LaunchedEffect`·`DisposableEffect` 블록, 콜백 안에서의 쓰기
-- `State` 가 아닌 일반 변수(`var`)에 대한 쓰기
+- 컴포지션 밖에서 실행되는 블록 안의 쓰기. 예: `onClick` 같은 이벤트 람다, `LaunchedEffect`·`DisposableEffect` 블록, 콜백
+- `State` 가 아닌 일반 `var` 에 쓰는 경우

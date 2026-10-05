@@ -8,9 +8,16 @@ source: https://developer.android.com/develop/ui/compose/lists#item-keys
 
 ## 이유
 
-`key` 를 지정하지 않으면 각 항목의 상태가 목록에서의 위치를 기준으로 저장된다. 데이터가 바뀌어 항목의 위치가 바뀌면 그 항목에서 `remember`·`rememberSaveable` 로 저장한 상태(입력값, 펼침 여부, 중첩 `LazyRow` 의 스크롤 위치)가 다른 항목에 연결되고, Compose 는 이동한 항목을 모두 리컴포지션한다. 안정적이고 고유한 키를 지정하면 위치가 바뀌어도 상태가 항목과 함께 이동한다.
+`key` 를 지정하지 않으면 각 항목의 상태가 목록에서의 위치를 기준으로 저장된다. 데이터가 바뀌어 항목의 위치가 바뀌면 다음 문제가 생긴다.
+
+- 항목에서 `remember`·`rememberSaveable` 로 저장한 상태가 다른 항목에 연결된다. 예: 입력값, 펼침 여부, 중첩 `LazyRow` 의 스크롤 위치
+- Compose 가 이동한 항목을 모두 리컴포지션한다.
+
+안정적이고 고유한 키를 지정하면 위치가 바뀌어도 상태가 항목과 함께 이동한다.
 
 ## 위반
+
+항목이 추가·삭제·이동될 수 있는 목록에 `key` 를 지정하지 않거나, 위치를 `key` 로 지정한다.
 
 ```kotlin
 @Composable
@@ -27,7 +34,7 @@ LazyColumn {
 
 ## 수정
 
-항목을 식별하는 값을 키로 지정한다. 키의 타입은 `Bundle` 에 저장할 수 있는 타입(기본 타입, enum, `Parcelable` 등)이어야 한다.
+항목을 식별하는 값을 키로 지정한다. 키의 타입은 `Bundle` 에 저장할 수 있는 타입이어야 한다. 예: 기본 타입, enum, `Parcelable`
 
 ```kotlin
 @Composable
@@ -40,6 +47,6 @@ fun NotesList(notes: List<Note>) {
 
 ## 허용
 
-- 코드에 고정된 목록(`listOf(...)` 리터럴, enum 의 `entries`, 상수 범위)처럼 실행 중에 항목이 추가·삭제·이동되지 않는 목록
-- `items(count: Int)` 로 개수만 지정하고 항목에 상태가 없는 목록 (예: 로딩 플레이스홀더)
+- 실행 중에 항목이 추가·삭제·이동되지 않는 목록. 예: `listOf(...)` 리터럴, enum 의 `entries`, 상수 범위
+- `items(count: Int)` 로 개수만 지정하고 항목에 상태가 없는 목록. 예: 로딩 플레이스홀더
 - `LazyPagingItems` 에 `itemKey { }` 로 키를 지정한 경우
