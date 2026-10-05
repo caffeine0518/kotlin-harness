@@ -10,9 +10,11 @@ source: https://developer.android.com/develop/ui/compose/side-effects#restarting
 
 `LaunchedEffect`·`DisposableEffect`·`produceState` 의 블록은 키가 바뀔 때만 다시 실행된다. 키로 지정하지 않은 파라미터·로컬 값을 블록에서 사용하면, 리컴포지션으로 값이 바뀌어도 블록은 처음 실행될 때 캡처한 값을 계속 사용한다.
 
-키로 `Unit`·`true` 같은 상수를 지정하면 블록이 호출 지점의 수명 동안 한 번만 실행된다. 상수 키 이펙트에서 바뀔 수 있는 값을 사용하는 경우도 이 룰에 해당한다.
+키로 `Unit`·`true` 같은 상수를 지정하면 블록이 호출 지점의 수명 동안 한 번만 실행된다.
 
 ## 위반
+
+이펙트 블록에서 키로 지정하지 않은 파라미터·로컬 값을 사용한다. 상수 키를 지정한 이펙트에서 바뀔 수 있는 값을 사용하는 경우도 해당한다.
 
 ```kotlin
 @Composable
@@ -58,7 +60,7 @@ fun SearchResult(query: String, sort: SortOrder, repository: SearchRepository) {
 아래 값은 컴포저블의 수명 동안 바뀌지 않거나, 읽을 때마다 최신 값을 반환하므로 키로 지정하지 않아도 된다.
 
 - `rememberUpdatedState` 가 반환한 `State`, `remember { mutableStateOf(...) }` 로 만든 `State` 와 그 `by` 위임 프로퍼티. 블록 안에서 읽는 시점의 값을 반환한다.
-- 키 없는 `remember { }` 로 만든 객체, `rememberCoroutineScope()`, `rememberLazyListState()` 등 `remember*` 로 만든 상태 객체
+- `remember` 로 만든 객체. 예: 키 없는 `remember { }` 로 만든 객체, `rememberCoroutineScope()`, `rememberLazyListState()`
 - `viewModel()`·`hiltViewModel()` 로 얻은 ViewModel 인스턴스
-- `const val`, `object` 의 프로퍼티, 최상위 `val` 등 상수
+- 상수. 예: `const val`, `object` 의 프로퍼티, 최상위 `val`
 - `LaunchedEffect` 블록 안에서 선언한 로컬 값, 블록 람다의 파라미터

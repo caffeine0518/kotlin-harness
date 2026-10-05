@@ -8,11 +8,16 @@ source: https://developer.android.com/topic/architecture/recommendations#lifecyc
 
 ## 이유
 
-UI 관련 작업을 `onResume` 등 `Activity` 의 생명주기 메서드 대신 컴포저블의 `LifecycleStartEffect`·`LifecycleResumeEffect` 등 Lifecycle 이펙트에서 실행하면, 작업이 그 작업을 사용하는 컴포저블과 함께 선언되어 컴포저블이 컴포지션에서 제외될 때 정리 블록도 실행된다.
+UI 작업을 `onResume` 같은 `Activity` 의 생명주기 메서드에서 실행하면, 그 작업을 사용하는 컴포저블과 떨어진 곳에 선언된다. Lifecycle 이펙트(`LifecycleStartEffect`·`LifecycleResumeEffect` 등)로 실행하면 작업이 컴포저블과 함께 선언되고, 컴포저블이 컴포지션에서 제외될 때 정리 블록도 실행된다.
 
 `LaunchedEffect` 는 컴포지션에 연결되어 있어, `HorizontalPager` 가 미리 컴포지션한 옆 페이지처럼 사용자에게 보이지 않을 때도 실행된다. 화면 조회 기록처럼 사용자가 실제로 화면을 보는지에 따라 달라지는 작업을 `LaunchedEffect` 에서 실행하면, 사용자가 보지 않은 화면도 기록된다.
 
 ## 위반
+
+다음 중 하나에 해당한다.
+
+- `setContent` 를 호출하는 `Activity` 가 UI 작업을 실행하려고 생명주기 메서드를 오버라이드한다.
+- 사용자가 화면을 보는지에 따라 달라지는 작업을 `LaunchedEffect` 에서 실행한다.
 
 ```kotlin
 class MainActivity : ComponentActivity() {
@@ -64,5 +69,5 @@ fun ProductScreen(productId: String) {
 ## 허용
 
 - `setContent` 를 호출하지 않는 View 기반 `Activity`
-- 오버라이드한 메서드에서 `super` 호출 외에 UI 와 관계없는 작업(예: 앱 전체 상태 저장)만 실행하는 경우
-- 사용자에게 보이는지와 관계없이 실행해야 하는 `LaunchedEffect` 작업 (예: 데이터 로드, 스크롤 위치 이동)
+- 오버라이드한 메서드에서 `super` 호출 외에 UI 와 관계없는 작업만 실행하는 경우. 예: 앱 전체 상태 저장
+- 사용자에게 보이는지와 관계없이 실행해야 하는 `LaunchedEffect` 작업. 예: 데이터 로드, 스크롤 위치 이동

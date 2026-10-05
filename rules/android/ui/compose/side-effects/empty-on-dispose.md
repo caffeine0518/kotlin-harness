@@ -12,6 +12,8 @@ source: https://developer.android.com/develop/ui/compose/side-effects#disposable
 
 ## 위반
 
+`onDispose` 블록이 비어 있는 `DisposableEffect` 를 쓴다.
+
 ```kotlin
 DisposableEffect(user) {
     analytics.setUserProperty("userType", user.userType)
@@ -26,7 +28,10 @@ DisposableEffect(Unit) {
 
 ## 수정
 
-리컴포지션이 완료될 때마다 Compose 상태를 Compose 가 아닌 코드에 전달하면 `SideEffect`, suspend 함수를 실행하면 `LaunchedEffect` 를 쓴다.
+작업에 맞는 이펙트로 바꾼다.
+
+- 리컴포지션이 완료될 때마다 Compose 상태를 Compose 가 아닌 코드에 전달하는 작업: `SideEffect`
+- suspend 함수를 실행하는 작업: `LaunchedEffect`
 
 ```kotlin
 SideEffect {
