@@ -1,4 +1,4 @@
----
+줘---
 severity: warning
 applies_to: "**/*.kt"
 source: https://android.googlesource.com/platform/frameworks/support/+/androidx-main/compose/docs/compose-api-guidelines.md#emit-xor-return-a-value
@@ -8,7 +8,10 @@ source: https://android.googlesource.com/platform/frameworks/support/+/androidx-
 
 ## 이유
 
-Compose API 가이드라인에 따르면 `@Composable` 함수는 UI 를 그리거나 값을 반환하는 것 중 하나만 한다. UI 를 그리는 컴포저블(element)은 값을 반환하면 안 되고(MUST NOT), 동작은 모두 파라미터로 제공해야 한다. 컴포저블이 UI 를 그리면서 입력값·선택 상태를 반환하면 호출하는 쪽이 상태를 소유하지 못해 상태를 호이스팅할 수 없고, 그 값은 리컴포지션할 때만 갱신된다.
+컴포저블이 UI 를 그리면서 입력값·선택 상태를 반환하면 다음 문제가 생긴다.
+
+- 호출하는 쪽이 상태를 소유하지 못해, 상태를 호이스팅할 수 없다.
+- 반환값은 리컴포지션할 때만 갱신된다.
 
 ## 위반
 
@@ -36,4 +39,4 @@ fun SearchBar(query: String, onQueryChange: (String) -> Unit, modifier: Modifier
 
 ## 허용
 
-- UI 를 그리지 않고 값만 반환하는 컴포저블(`rememberXxxState()`, `stringResource()` 같은 함수)
+- UI 를 그리지 않고 값만 반환하는 컴포저블. 예: `rememberXxxState()`·`stringResource()`

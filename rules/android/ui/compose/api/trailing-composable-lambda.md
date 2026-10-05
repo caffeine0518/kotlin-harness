@@ -8,7 +8,9 @@ source: https://android.googlesource.com/platform/frameworks/support/+/androidx-
 
 ## 이유
 
-Compose 컴포넌트 API 가이드라인은 파라미터 순서를 필수 파라미터, `modifier`, 선택 파라미터, 트레일링 `@Composable` 람다(주요 콘텐츠) 순으로 정한다. `onClick` 처럼 `@Composable` 이 아닌 람다를 마지막에 두면 호출하는 쪽이 트레일링 람다로 작성할 수 있는데, 사용자는 컴포넌트의 트레일링 람다를 `@Composable` 콘텐츠로 예상하므로 오해를 부른다고 한다. `Chip("태그") { onTagClick() }` 은 클릭 처리인지 콘텐츠인지 호출 코드만으로 구분되지 않는다.
+컴포저블의 파라미터는 필수 파라미터, `modifier`, 선택 파라미터, 트레일링 `@Composable` 람다(주요 콘텐츠) 순으로 둔다. 그래서 사용자는 컴포넌트의 트레일링 람다를 `@Composable` 콘텐츠로 예상한다.
+
+`onClick` 처럼 `@Composable` 이 아닌 람다를 마지막에 두면 호출하는 쪽이 트레일링 람다로 작성할 수 있다. `Chip("태그") { onTagClick() }` 은 클릭 처리인지 콘텐츠인지 호출 코드만으로 구분되지 않는다.
 
 ## 위반
 

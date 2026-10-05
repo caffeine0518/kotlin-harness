@@ -8,13 +8,15 @@ source: https://android.googlesource.com/platform/frameworks/support/+/androidx-
 
 ## 이유
 
-Compose 가이드라인에 따르면 `modifier` 는 컴포저블의 가장 바깥 레이아웃에 체인의 첫 번째 모디파이어로 한 번 적용한다. 추가 모디파이어는 받은 `modifier` 의 뒤에만 연결할 수 있고, 앞에 연결하면 안 된다(MUST NOT). `modifier` 는 컴포저블 전체의 외부 동작을 지정하는 값이다.
-
-- 자식에 적용하면 호출하는 쪽이 지정한 크기·배경·클릭 영역이 컴포저블 전체가 아니라 일부에만 적용된다.
-- 두 곳에 적용하면 `padding`·`clickable` 이 중복 적용된다.
-- 앞에 모디파이어를 연결하면(`Modifier.padding(8.dp).then(modifier)`) 호출하는 쪽의 `size`·`background` 가 내부 여백 안쪽에 적용된다.
+`modifier` 는 컴포저블 전체의 외부 동작을 지정하는 값이다. 호출하는 쪽은 지정한 모디파이어가 컴포저블 전체에 한 번, 내부 모디파이어보다 먼저 적용된다고 예상한다.
 
 ## 위반
+
+전달받은 `modifier` 를 다음 중 하나처럼 적용한다.
+
+- 가장 바깥 레이아웃이 아닌 자식에 적용한다. 호출하는 쪽이 지정한 크기·배경·클릭 영역이 컴포저블의 일부에만 적용된다.
+- 두 곳 이상에 적용한다. `padding`·`clickable` 이 중복 적용된다.
+- 앞에 다른 모디파이어를 연결한다. 예: `Modifier.padding(8.dp).then(modifier)`. 호출하는 쪽의 `size`·`background` 가 내부 여백 안쪽에 적용된다.
 
 ```kotlin
 @Composable
@@ -38,6 +40,8 @@ fun Tag(label: String, modifier: Modifier = Modifier) {
 ```
 
 ## 수정
+
+가장 바깥 레이아웃에 한 번 적용하고, 추가 모디파이어는 받은 `modifier` 뒤에 연결한다.
 
 ```kotlin
 @Composable

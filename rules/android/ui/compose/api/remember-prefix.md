@@ -8,9 +8,14 @@ source: https://android.googlesource.com/platform/frameworks/support/+/androidx-
 
 ## 이유
 
-Compose API 가이드라인은 내부에서 `remember { }` 하고 가변 객체를 반환하는 `@Composable` 팩토리 함수의 이름을 `remember` 로 시작해야 한다고 한다(MUST). 이름만 보고 반환된 객체가 리컴포지션 사이에 유지된다는 것을 알 수 있어야 한다. `createScrollState()` 처럼 이름을 지으면 호출하는 쪽은 매번 새 객체가 생성된다고 생각해 다시 `remember` 로 감싸거나, 반대로 `remember` 가 없는 일반 팩토리를 컴포저블 안에서 그대로 호출해 리컴포지션마다 상태를 잃는다.
+`remember` 로 시작하는 이름을 보면, 반환된 객체가 리컴포지션 사이에 유지된다는 것을 알 수 있다. `createScrollState()` 처럼 이름을 지으면 호출하는 쪽이 동작을 잘못 예상한다.
+
+- 매번 새 객체가 생성된다고 생각해 다시 `remember` 로 감싼다.
+- 반대로 `remember` 가 없는 일반 팩토리를 같은 방식으로 이름 지으면, 컴포저블 안에서 그대로 호출해 리컴포지션마다 상태를 잃는다.
 
 ## 위반
+
+내부에서 `remember` 한 가변 객체를 반환하는 컴포저블의 이름이 `remember` 로 시작하지 않는다.
 
 ```kotlin
 @Composable
