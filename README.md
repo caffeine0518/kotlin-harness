@@ -203,7 +203,10 @@ source: https://...      # common 룰은 공식 문서만 허용
 | android/domain | `use-case-mutable-state`, `use-case-naming`, `use-case-scope`, `use-case-single-function` |
 | android/security | `deep-link-parameter-validation`, `hardcoded-secret`, `log-sensitive-data`, `sensitive-data-in-implicit-intent`, `sql-injection`, `store-user-password` |
 | android/test | `background-scope-collection`, `fake-over-mock`, `inject-test-dispatchers`, `reset-main-dispatcher`, `space-in-instrumented-test-name`, `state-flow-value-assertion` |
-| android/ui/compose | `backwards-write`, `collect-as-state-with-lifecycle`, `composable-naming`, `defer-state-read`, `derived-state-of-captured-value`, `effect-captured-value`, `emit-or-return`, `empty-on-dispose`, `launch-in-composition`, `lazy-item-key`, `lifecycle-effect`, `modifier-applied-once`, `modifier-parameter`, `remember-expensive-calculation`, `remember-prefix`, `single-modifier-parameter`, `trailing-composable-lambda`, `unnecessary-derived-state-of`, `viewmodel-parameter` |
+| android/ui/compose/api | `composable-naming`, `emit-or-return`, `modifier-applied-once`, `modifier-parameter`, `remember-prefix`, `single-modifier-parameter`, `trailing-composable-lambda` |
+| android/ui/compose/performance | `backwards-write`, `defer-state-read`, `lazy-item-key`, `remember-expensive-calculation` |
+| android/ui/compose/side-effects | `derived-state-of-captured-value`, `effect-captured-value`, `empty-on-dispose`, `launch-in-composition`, `lifecycle-effect`, `unnecessary-derived-state-of` |
+| android/ui/compose/state | `collect-as-state-with-lifecycle`, `viewmodel-parameter` |
 | android/ui/strings | `hardcoded-ui-text`, `plurals` |
 | android/ui/view | `collect-with-lifecycle`, `fragment-binding-cleanup`, `fragment-view-reference`, `launch-when-deprecated`, `lifecycle-callback-collection` |
 | android/ui/viewmodel | `android-view-model`, `async-work-in-init`, `event-as-ui-state`, `expose-mutable-state`, `lifecycle-reference`, `single-ui-state`, `suspend-function-exposure` |

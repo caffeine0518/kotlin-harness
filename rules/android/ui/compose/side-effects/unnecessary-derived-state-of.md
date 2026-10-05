@@ -30,4 +30,4 @@ val total = price * quantity
 ## 허용
 
 - 결과가 입력보다 드물게 바뀌는 계산. 비교·임계값 판정(`listState.firstVisibleItemIndex > 0`), `isNotEmpty()`, 조건에 맞는 요소가 있는지 확인하는 `any { }` 등
-- 계산 비용이 커서 `remember(key) { derivedStateOf { } }` 로 입력 `State` 의 변경만 추적하려는 경우 (예: `State` 로 보관한 목록의 정렬). 계산 비용 문제는 `android/ui/compose/remember-expensive-calculation` 이 판정한다.
+- 계산 비용이 커서 `remember(key) { derivedStateOf { } }` 로 입력 `State` 의 변경만 추적하려는 경우 (예: `State` 로 보관한 목록의 정렬). 계산 비용 문제는 `android/ui/compose/performance/remember-expensive-calculation` 이 판정한다.

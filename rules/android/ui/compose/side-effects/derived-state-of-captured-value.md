@@ -50,4 +50,4 @@ fun TaskList(tasks: SnapshotStateList<Task>, keyword: String) {
 - 계산 블록에서 읽는 값이 모두 `State` 객체이거나, `remember` 로 만든 상태 객체(`rememberLazyListState()` 등)의 프로퍼티인 경우
 - `rememberUpdatedState` 가 반환한 `State` 를 읽는 경우
 - 읽는 값을 모두 `remember` 의 키로 지정한 경우
-- `derivedStateOf` 가 불필요한 계산은 `android/ui/compose/unnecessary-derived-state-of` 가 보고한다.
+- `derivedStateOf` 가 불필요한 계산은 `android/ui/compose/side-effects/unnecessary-derived-state-of` 가 보고한다.

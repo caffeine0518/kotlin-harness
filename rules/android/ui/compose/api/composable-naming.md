@@ -42,4 +42,4 @@ fun defaultFooStyle(): Style { /* ... */ }
 
 - 테스트 코드의 `@Test` 메서드
 - `LaunchedEffect`·`DisposableEffect` 처럼 이펙트를 실행하는 `Unit` 반환 컴포저블. 공식 API 도 명사형 이름(`LaunchedEffect`)을 쓴다.
-- 내부에서 `remember` 한 가변 객체를 반환하는 함수의 `remember` 접두사는 `android/ui/compose/remember-prefix` 가 보고한다.
+- 내부에서 `remember` 한 가변 객체를 반환하는 함수의 `remember` 접두사는 `android/ui/compose/api/remember-prefix` 가 보고한다.
