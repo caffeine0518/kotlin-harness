@@ -10,27 +10,42 @@ source: https://developer.android.com/develop/ui/compose/side-effects#incorrect-
 
 `derivedStateOf` 는 입력 상태가 결과보다 자주 바뀔 때, 결과가 실제로 바뀐 경우에만 리컴포지션하도록 하는 API 다. 스크롤 위치가 바뀔 때마다가 아니라 임계값을 넘을 때만 버튼 표시 여부가 바뀌는 경우가 대표적이다.
 
-입력이 바뀔 때마다 결과도 바뀌는 계산(문자열 조합, 단순 산술)에 쓰면 리컴포지션 횟수는 줄지 않고 파생 상태 객체의 오버헤드만 추가된다.
+입력이 바뀔 때마다 결과도 바뀌는 계산(단순 산술, 길이 계산)에 쓰면 리컴포지션 횟수는 줄지 않고 파생 상태 객체의 오버헤드만 추가된다.
 
 ## 위반
 
-입력이 바뀔 때마다 결과도 바뀌는 계산을 `derivedStateOf` 로 감싼다. 예: 문자열 조합, 단순 산술
+입력이 바뀔 때마다 결과도 바뀌는 계산을 `derivedStateOf` 로 감싼다. 예: 단순 산술, 길이 계산
 
 ```kotlin
-var firstName by remember { mutableStateOf("") }
-var lastName by remember { mutableStateOf("") }
+@Composable
+fun MemoField() {
+    var memo by remember { mutableStateOf("") }
+    val remaining by remember { derivedStateOf { MaxMemoLength - memo.length } }  // memo 가 바뀔 때마다 결과도 바뀐다
 
-val fullName by remember { derivedStateOf { "$firstName $lastName" } }
-val total by remember { derivedStateOf { price * quantity } }
+    OutlinedTextField(
+        value = memo,
+        onValueChange = { memo = it },
+        supportingText = { Text(stringResource(R.string.memo_remaining, remaining)) },
+    )
+}
 ```
 
 ## 수정
 
-`remember { derivedStateOf { } }` 없이 바로 계산한다.
+`remember { derivedStateOf { } }` 없이 바로 계산한다. 단순 산술은 리컴포지션마다 다시 계산해도 비용이 작으므로 `remember` 도 쓰지 않는다.
 
 ```kotlin
-val fullName = "$firstName $lastName"
-val total = price * quantity
+@Composable
+fun MemoField() {
+    var memo by remember { mutableStateOf("") }
+    val remaining = MaxMemoLength - memo.length
+
+    OutlinedTextField(
+        value = memo,
+        onValueChange = { memo = it },
+        supportingText = { Text(stringResource(R.string.memo_remaining, remaining)) },
+    )
+}
 ```
 
 ## 허용
