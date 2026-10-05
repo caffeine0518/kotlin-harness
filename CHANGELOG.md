@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.30.0
+- **설정 확인 필요.** `android/ui/compose` 룰 19개를 하위 카테고리 4개로 이동했다. 룰 ID 가 바뀌므로, 옛 ID 를 적은 `excludeRules` 는 없는 이름이 되어 gate 가 중단된다. 새 ID 로 바꾼다. `excludeCategories` 의 `ui/compose` 는 지금처럼 하위 카테고리 전체를 제외한다.
+  - `android/ui/compose/api`: `composable-naming`, `emit-or-return`, `modifier-applied-once`, `modifier-parameter`, `remember-prefix`, `single-modifier-parameter`, `trailing-composable-lambda`
+  - `android/ui/compose/side-effects`: `derived-state-of-captured-value`, `effect-captured-value`, `empty-on-dispose`, `launch-in-composition`, `lifecycle-effect`, `unnecessary-derived-state-of`
+  - `android/ui/compose/performance`: `backwards-write`, `defer-state-read`, `lazy-item-key`, `remember-expensive-calculation`
+  - `android/ui/compose/state`: `collect-as-state-with-lifecycle`, `viewmodel-parameter`
+- `android/ui/compose/api/modifier-parameter` 가 마지막 파라미터인 `@Composable` 콘텐츠 람다를 `modifier` 뒤에 두는 코드를 위반으로 보고하지 않는다. `trailing-composable-lambda`·`single-modifier-parameter` 의 수정 예시와 충돌하던 판정을 바로잡았다.
+- 룰 74개의 이유에서 "공식 문서는 ~라고 한다" 같은 출처 서술을 삭제했다. 근거는 frontmatter `source` 로 확인한다.
+- `android/ui/compose` 룰 19개의 이유·예시를 다듬었다. 예시만 있던 위반 섹션에 위반 조건 문장을 추가하고, `lifecycle-effect` 에 `Activity` 콜백이 화면 단위 생명주기를 모르는 이유를, `unnecessary-derived-state-of` 에 `remember` 도 필요 없는 이유를 추가했다.
+
 ## 0.29.0
 - **설정 확인 필요.** `android/coroutines/inject-test-dispatchers` 를 `android/test/inject-test-dispatchers` 로 이동했다. 옛 ID 를 적은 `excludeRules` 는 없는 이름이 되어 gate 가 중단되므로 새 ID 로 바꾼다. `excludeCategories` 의 `coroutines` 는 이 룰을 더 이상 제외하지 않고, `test` 가 제외한다.
 - `android/coroutines/catch-exceptions-in-ui-scope` 가 `viewModelScope`·`lifecycleScope` 의 `launch` 호출을 감싼 `try`·`catch` 도 위반으로 보고한다. 같은 코드를 `common/coroutines/try-catch-around-launch` 로 중복 보고하지 않는다.
