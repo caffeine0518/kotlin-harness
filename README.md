@@ -196,7 +196,7 @@ source: https://...      # common 룰은 공식 문서만 허용
 | common/null-safety | `filter-not-null`, `not-null-assertion`, `nullable-boolean-condition`, `platform-type-explicit`, `safe-cast` |
 | common/scope-functions | `context-object-reference`, `extract-long-receiver`, `if-else-over-let-elvis`, `let-elvis-null-result`, `nested-lambda-implicit-it`, `nested-scope-functions`, `scope-function-return-value` |
 | common/strings | `multiline-string`, `string-template-over-concatenation` |
-| common/types | `closed-state-as-sealed`, `data-class-body-property`, `enum-lookup-or-null`, `value-class-over-typealias`, `when-else-on-sealed` |
+| common/types | `closed-state-as-sealed`, `data-class-body-property`, `enum-lookup-or-null`, `field-by-field-equality`, `value-class-over-typealias`, `when-else-on-sealed` |
 | android/coroutines | `catch-exceptions-in-ui-scope`, `inject-dispatchers`, `main-safe-suspend-function`, `unnecessary-dispatcher-switch` |
 | android/data | `caller-bound-work-in-coroutine-scope`, `expose-suspend-and-flow`, `immutable-exposed-model`, `no-data-source-in-ui`, `repository-naming`, `separate-data-source-models` |
 | android/di | `constructor-injection` |
