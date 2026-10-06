@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.31.0
+- gate 의 검수·재검수 단계를 삭제했다. 룰이 늘면서 검수 에이전트 하나가 모든 룰을 변경된 줄에 대조하는 단계가 실행 시간의 대부분을 차지했다. 오탐은 수정 에이전트가 후보를 검증할 때 제외하고, 실제 문제는 red→green 테스트로 재현한다. 결과 출력에서 `검수:` 줄이 없어진다.
+- `common/types/field-by-field-equality` 룰을 추가했다. 서로 다른 타입의 같은 이름 프로퍼티를 3개 이상 `&&` 로 이어 비교하는 함수를 판정하고, 비교 기준을 data class 로 선언해 `==` 로 비교하도록 수정한다.
+
 ## 0.30.0
 - **설정 확인 필요.** `android/ui/compose` 룰 19개를 하위 카테고리 4개로 이동했다. 룰 ID 가 바뀌므로, 옛 ID 를 적은 `excludeRules` 는 없는 이름이 되어 gate 가 중단된다. 새 ID 로 바꾼다. `excludeCategories` 의 `ui/compose` 는 지금처럼 하위 카테고리 전체를 제외한다.
   - `android/ui/compose/api`: `composable-naming`, `emit-or-return`, `modifier-applied-once`, `modifier-parameter`, `remember-prefix`, `single-modifier-parameter`, `trailing-composable-lambda`
