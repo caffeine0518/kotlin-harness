@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.34.0
+- gate 가 이번 변경의 맥락을 받는다. 세션 대화의 배경(고치려는 결함, 되돌린 접근, 정해진 동작·기획)을 요약하고, 범위 뒤에 적은 이슈·URL·파일·MCP 리소스 힌트를 읽는다 (예: `/kotlin-harness:gate branch #123 docs/spec.md`). 맥락은 영향·허용·구조 룰 대안을 판정하는 근거로만 쓰고, 새 위반을 찾는 데는 쓰지 않는다.
+- 접근 방식을 다루는 `structure` 카테고리를 추가했다. 수정 에이전트는 구조 룰 위반을 먼저 판정하고, 그 코드 범위에는 다른 룰의 수정을 먼저 적용하지 않는다.
+  - `android/ui/compose/structure/imperative-ui-after-state-transition`: `LaunchedEffect` 에서 상태 전이를 기다린 뒤 스크롤·포커스를 조작하는 코드를 판정하고, 상태 모델로 해결하는 대안으로 수정한다.
+  - 설정 `review.structureAutoFix` (기본값 `true`). `false` 면 구조 룰 위반과 그 코드 범위의 위반을 수정하지 않고 리포트에 대안만 적는다.
+- `android/ui/compose/performance/remember-expensive-calculation` 이 기존 식을 `remember` 로 감싸기만 한다. 키로만 쓰는 지역 변수를 추가하거나 식을 다시 쓰지 않는다.
+- README 에서 자동 업데이트 안내를 삭제했다.
+
 ## 0.33.0
 - `/kotlin-harness:update` 를 삭제했다. 업데이트는 `claude plugin marketplace update kotlin-harness` 후 `claude plugin update kotlin-harness@kotlin-harness` 로 실행한다.
 
