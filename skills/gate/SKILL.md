@@ -21,6 +21,7 @@ argument-hint: "[file <path> | diff | branch [base] | pr [number] | project]"
 | `projectRules` | 없음 |
 | `review.autoFix` | `true` |
 | `review.redCommit` | `true` |
+| `review.structureAutoFix` | `true` |
 
 - git 리포에 `.kt`·`.kts` 파일이 하나도 없으면 코틀린 프로젝트가 아니라고 알리고 중단한다.
 - `platform` 을 지정했는데 `${CLAUDE_PLUGIN_ROOT}/rules/<platform>/` 이 없으면 지원하지 않는 platform 이라고 알리고 중단한다.
@@ -49,7 +50,7 @@ argument-hint: "[file <path> | diff | branch [base] | pr [number] | project]"
 
 ## 4. 수정
 
-general-purpose 에이전트 하나를 실행한다. 프롬프트에 `${CLAUDE_PLUGIN_ROOT}/skills/gate/reviewer.md` 를 읽고 따르라고 적고, 범위와 인자, 플러그인 경로 `${CLAUDE_PLUGIN_ROOT}`, 1단계의 설정(`redCommit` 포함), 2단계의 값, 3단계에서 합친 후보 목록과 판정하지 못한 룰을 전달한다. 수정·커밋·리포트 작성은 이 에이전트 하나만 한다. 여러 에이전트가 같은 파일을 동시에 수정하지 않게 하기 위해서다.
+general-purpose 에이전트 하나를 실행한다. 프롬프트에 `${CLAUDE_PLUGIN_ROOT}/skills/gate/reviewer.md` 를 읽고 따르라고 적고, 범위와 인자, 플러그인 경로 `${CLAUDE_PLUGIN_ROOT}`, 1단계의 설정(`redCommit`·`structureAutoFix` 포함), 2단계의 값, 3단계에서 합친 후보 목록과 판정하지 못한 룰을 전달한다. 수정·커밋·리포트 작성은 이 에이전트 하나만 한다. 여러 에이전트가 같은 파일을 동시에 수정하지 않게 하기 위해서다.
 
 ## 5. 결과 출력
 

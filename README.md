@@ -111,6 +111,7 @@ platform 은 Android Gradle 플러그인 유무로 자동 판정한다. 리포�
 | `projectRules` | 함께 적용할 프로젝트 룰의 디렉터리·파일 경로 (프로젝트 루트 기준). 기본값이 없으므로 `.claude/rules` 도 지정해야 적용된다 |
 | `review.autoFix` | 기본값 `true`. `false` 면 수정하지 않고 리포트만 작성한다 |
 | `review.redCommit` | 기본값 `true`. 실패하는 테스트를 먼저 커밋하고 수정을 따로 커밋한다. 그 커밋에서 CI 가 실패하므로, 원하지 않으면 `false` 로 지정해 커밋 하나로 묶는다 |
+| `review.structureAutoFix` | 기본값 `true`. `structure` 카테고리 룰 위반을 상태 모델 등 접근 방식을 바꾸는 대안으로 수정한다. `false` 면 리포트에 대안만 적고, 그 코드 범위의 다른 룰 위반도 수정하지 않는다 |
 
 </details>
 
@@ -188,6 +189,7 @@ source: https://...      # common 룰은 공식 문서만 허용
 | android/ui/compose/performance | `backwards-write`, `defer-state-read`, `lazy-item-key`, `remember-expensive-calculation` |
 | android/ui/compose/side-effects | `derived-state-of-captured-value`, `effect-captured-value`, `empty-on-dispose`, `launch-in-composition`, `lifecycle-effect`, `unnecessary-derived-state-of` |
 | android/ui/compose/state | `collect-as-state-with-lifecycle`, `viewmodel-parameter` |
+| android/ui/compose/structure | `imperative-ui-after-state-transition` |
 | android/ui/strings | `hardcoded-ui-text`, `plurals` |
 | android/ui/view | `collect-with-lifecycle`, `fragment-binding-cleanup`, `fragment-view-reference`, `launch-when-deprecated`, `lifecycle-callback-collection` |
 | android/ui/viewmodel | `android-view-model`, `async-work-in-init`, `event-as-ui-state`, `expose-mutable-state`, `lifecycle-reference`, `single-ui-state`, `suspend-function-exposure` |
