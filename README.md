@@ -62,7 +62,6 @@ private 리포이므로 리포 접근 권한과 git 의 GitHub 인증이 필요�
 | 전체 프로젝트 | `/kotlin-harness:gate project` |
 | 파일 하나 | `/kotlin-harness:gate file <경로>` |
 | 오탐·누락 신고 | `/kotlin-harness:issue <문제 설명>` |
-| 업데이트 | `/kotlin-harness:update` |
 
 platform 은 Android Gradle 플러그인 유무로 자동 판정한다. 리포트는 `.claude/kotlin-harness/reports/` 에 작성되고 git 에서 제외된다.
 
@@ -132,7 +131,7 @@ platform 은 Android Gradle 플러그인 유무로 자동 판정한다. 리포�
 <details>
 <summary><strong>업데이트 · 개발 · 릴리스</strong></summary>
 
-- `/kotlin-harness:update` 후 `/reload-plugins` 로 현재 세션에 적용한다. 프롬프트 캐시 경고와 함께 적용되지 않으면 `/reload-plugins --force`.
+- 수동 업데이트: `claude plugin marketplace update kotlin-harness` 후 `claude plugin update kotlin-harness@kotlin-harness` 를 실행한다. `/reload-plugins` 로 현재 세션에 적용한다. 프롬프트 캐시 경고와 함께 적용되지 않으면 `/reload-plugins --force`.
 - 자동 업데이트: `/plugin` → Marketplaces → kotlin-harness → **Enable auto-update**. 서드파티 marketplace 는 기본값이 비활성화 상태다. 백그라운드 업데이트에는 git 에 저장된 인증 정보가 필요하다 (HTTPS: `gh auth login` 후 `gh auth setup-git`, SSH: `ssh-agent` 에 키 등록).
 - 로컬 개발: `claude --plugin-dir <이 리포 경로>`. 수정 후 세션을 다시 시작하면 반영된다.
 - 릴리스: `.claude-plugin/plugin.json` 의 `version` 을 올리고 [CHANGELOG.md](CHANGELOG.md) 에 섹션을 추가한 뒤 푸시한다. `version` 이 바뀌지 않으면 업데이트가 전달되지 않는다.
