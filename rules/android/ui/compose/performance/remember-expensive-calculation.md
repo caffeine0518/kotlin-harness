@@ -45,6 +45,18 @@ fun ContactList(contacts: List<Contact>, comparator: Comparator<Contact>) {
 }
 ```
 
+기존 식은 고쳐 쓰지 않고 `remember { }` 블록으로 감싸기만 한다. 키에는 계산에 사용하는 값을 식 그대로 지정한다. 키로만 쓰는 지역 변수를 추가하지 않는다.
+
+```kotlin
+// 수정 전
+val key = status.filter.let { filter -> filter.sort to filter.items.filter { it.isSelected }.map { it.id } }
+
+// 수정 후
+val key = remember(status.filter) {
+    status.filter.let { filter -> filter.sort to filter.items.filter { it.isSelected }.map { it.id } }
+}
+```
+
 가능하면 계산을 ViewModel 등 컴포지션 밖으로 이동해, UI 가 계산 결과만 받게 한다.
 
 ## 허용
