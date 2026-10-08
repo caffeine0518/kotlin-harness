@@ -61,7 +61,10 @@ private 리포이므로 리포 접근 권한과 git 의 GitHub 인증이 필요�
 | PR | `/kotlin-harness:gate pr [번호]` |
 | 전체 프로젝트 | `/kotlin-harness:gate project` |
 | 파일 하나 | `/kotlin-harness:gate file <경로>` |
+| 맥락 힌트와 함께 | `/kotlin-harness:gate branch #123 docs/spec.md` |
 | 오탐·누락 신고 | `/kotlin-harness:issue <문제 설명>` |
+
+범위 뒤에는 이슈·URL·파일 등 이번 변경의 맥락 힌트를 적을 수 있다. 세션 대화의 배경은 힌트 없이도 요약해 전달한다. 맥락은 영향·허용·구조 룰 대안을 판정하는 근거로만 쓰고, 새 위반을 찾는 데는 쓰지 않는다.
 
 platform 은 Android Gradle 플러그인 유무로 자동 판정한다. 리포트는 `.claude/kotlin-harness/reports/` 에 작성되고 git 에서 제외된다.
 
