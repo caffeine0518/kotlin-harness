@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.33.0
+- `/kotlin-harness:update` 를 삭제했다. 업데이트는 `claude plugin marketplace update kotlin-harness` 후 `claude plugin update kotlin-harness@kotlin-harness` 로 실행한다.
+
 ## 0.32.1
 - gate 의 판정·수정 에이전트 지침을 윤문했다. 동작은 바뀌지 않는다.
   - `reviewer.md`: 섹션마다 요약을 먼저 적고 세부 항목을 나열하도록 재구성하고, 긴 문장을 나눴다. 리포트 요약에 적을 설정 값을 템플릿에 넣었다.
