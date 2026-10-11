@@ -81,11 +81,11 @@ platform 은 Android Gradle 플러그인 유무로 자동 판정한다. 리포�
 - 커밋 메시지는 룰 ID 없이 평문으로 적는다. 작업 중인 파일은 수정만 하고 커밋하지 않는다. 푸시하지 않는다.
 
 <details>
-<summary><strong>코드를 작성할 때 룰을 컨텍스트에 올리지 않는 이유</strong></summary>
+<summary><strong>코드를 작성할 때는 지정한 룰만 확인하는 이유</strong></summary>
 
 - 룰이 100개가 넘는다. 파일을 수정할 때마다 모두 올리면 작업과 관계없는 룰이 컨텍스트를 차지한다.
-- 작성 방식은 계속 발전하는 AI 에 맡긴다. 룰은 작성 과정이 아니라 작성된 결과에만 적용한다.
-- 작성 중에 확인하면 판정이 그 모델의 판단에 의존한다. `gate` 에서 판정해야 재현 테스트를 거친다.
+- 그래서 작성 중 확인은 기본으로 비활성화되어 있다. 자주 위반하는 룰만 설정의 `onWrite` 에 지정하면, `.kt`·`.kts` 를 수정할 때마다 그 룰만 확인한다.
+- 작성 중 확인은 보조 수단이다. 판정이 그 모델의 판단에 의존하고 재현 테스트를 거치지 않으므로, 최종 판정은 `gate` 에서 한다.
 
 </details>
 
@@ -97,6 +97,7 @@ platform 은 Android Gradle 플러그인 유무로 자동 판정한다. 리포�
 {
   "excludeCategories": ["scope-functions"],
   "excludeRules": ["common/naming/meaningless-name"],
+  "onWrite": ["common/null-safety/not-null-assertion", "android/ui/compose/state"],
   "minSeverity": "warning",
   "projectRules": [".claude/rules/kotlin"]
 }
@@ -110,6 +111,7 @@ platform 은 Android Gradle 플러그인 유무로 자동 판정한다. 리포�
 | `platform` | 기본값은 자동 판정. platform 이 없으면 common 룰만 적용한다 |
 | `excludeCategories` | 제외할 카테고리 경로. `ui` 는 `ui/` 전체, `ui/view` 는 `ui/view/` 만 제외한다. common 과 platform 에 같은 경로가 있으면 둘 다 제외한다. 없는 이름이면 오류가 발생한다 |
 | `excludeRules` | 제외할 룰 ID. 없는 ID 면 오류가 발생한다 |
+| `onWrite` | 기본값 없음. Claude 가 `.kt`·`.kts` 를 수정할 때마다 확인할 룰 ID 또는 카테고리 경로. 지정한 룰만 확인하고 수정한다. gate 의 판정에는 영향이 없다 |
 | `minSeverity` | 기본값 `info`. `error` 는 버그·누수·보안, `warning` 은 설계까지, `info` 는 표기 관례까지 적용한다. 프로젝트 룰에도 적용한다 |
 | `projectRules` | 함께 적용할 프로젝트 룰의 디렉터리·파일 경로 (프로젝트 루트 기준). 기본값이 없으므로 `.claude/rules` 도 지정해야 적용된다 |
 | `review.autoFix` | 기본값 `true`. `false` 면 수정하지 않고 리포트만 작성한다 |
