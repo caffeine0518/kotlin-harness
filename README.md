@@ -2,7 +2,7 @@
 
 <h1 align="center">kotlin-harness</h1>
 
-<p align="center"><em>작성은 위임하고, 기준은 고정한다.</em></p>
+<p align="center"><em>Delegate the writing, fix the bar.</em></p>
 
 <p align="center">
   <img src="https://img.shields.io/badge/Claude%20Code-plugin-111111?style=flat-square" alt="Claude Code plugin">
@@ -10,13 +10,10 @@
   <img src="https://img.shields.io/badge/platform-android-111111?style=flat-square" alt="platform android">
 </p>
 
-<p align="center"><strong>공식 문서 근거 룰 · 재현 테스트 후 수정</strong></p>
-
-<p align="center"><sub>A Claude Code plugin that reviews Kotlin and Android code against 140 rules backed by official documentation.<br>It fixes a violation only after reproducing it with a failing test. Docs and rules are written in Korean.</sub></p>
+<p align="center"><sub>코드 작성은 계속 발전하는 AI 에 맡기고, 품질은 룰로 고정한다.</sub></p>
 
 ---
 
-코드를 작성하는 AI 는 계속 발전한다. 그래서 작성은 AI 에 맡기고, 결과는 룰로 판정한다. 모델은 바뀌어도 기준은 바뀌지 않는다.
 
 ## Before / after
 
@@ -64,30 +61,7 @@ fun recentTags(posts: List<Post>): List<String> =
 | 맥락 힌트와 함께 | `/kotlin-harness:gate branch #123 docs/spec.md` |
 | 오탐·누락 신고 | `/kotlin-harness:issue <문제 설명>` |
 
-범위 뒤에는 이슈·URL·파일 등 이번 변경의 맥락 힌트를 적을 수 있다. 세션 대화의 배경은 힌트 없이도 요약해 전달한다. 맥락은 영향·허용·구조 룰 대안을 판정하는 근거로만 쓰고, 새 위반을 찾는 데는 쓰지 않는다.
 
-platform 은 Android Gradle 플러그인 유무로 자동 판정한다. 리포트는 `.claude/kotlin-harness/reports/` 에 작성되고 git 에서 제외된다.
-
-## 동작
-
-```
-1. 판정   → 에이전트 3개가 룰 그룹별로 위반 후보를 병렬 탐색
-2. 수정   → 수정 방법이 하나로 정해지는 위반만 수정
-            실제 문제면 실패하는 테스트로 재현 → 수정 → 통과 확인
-            재현되지 않으면 문제가 아닌 것으로 다시 판정
-```
-
-- 판단이 필요한 위반(기본값을 쓸지 예외를 발생시킬지 등)은 수정하지 않고 리포트에 남긴다.
-- 커밋 메시지는 룰 ID 없이 평문으로 적는다. 작업 중인 파일은 수정만 하고 커밋하지 않는다. 푸시하지 않는다.
-
-<details>
-<summary><strong>코드를 작성할 때는 지정한 룰만 확인하는 이유</strong></summary>
-
-- 룰이 100개가 넘는다. 파일을 수정할 때마다 모두 올리면 작업과 관계없는 룰이 컨텍스트를 차지한다.
-- 그래서 작성 중 확인은 기본으로 비활성화되어 있다. 자주 위반하는 룰만 설정의 `onWrite` 에 지정하면, `.kt`·`.kts` 를 수정할 때마다 그 룰만 확인한다.
-- 작성 중 확인은 보조 수단이다. 판정이 그 모델의 판단에 의존하고 재현 테스트를 거치지 않으므로, 최종 판정은 `gate` 에서 한다.
-
-</details>
 
 ## 설정 (선택)
 
@@ -163,40 +137,3 @@ source: https://...      # common 룰은 공식 문서만 허용
 ```
 
 린터(ktlint·detekt)가 검사하는 네이밍·포맷팅은 룰로 추가하지 않는다. 새 platform 은 `rules/<platform>/` 을 만들고 설정의 `platform` 에 그 이름을 지정한다.
-
-<details>
-<summary><strong>룰 목록</strong></summary>
-
-| 카테고리 | 룰 |
-|---|---|
-| common/collections | `combined-transformation`, `empty-collection-element`, `filter-then-terminal`, `remove-while-iterating`, `sequence-for-multi-step-chain`, `sorted-by-descending` |
-| common/comments | `banner-comment`, `comment-instead-of-name`, `commented-out-code`, `history-comment`, `param-return-tags`, `precondition-comment`, `redundant-comment`, `redundant-kdoc` |
-| common/control-flow | `expression-form-condition`, `for-over-foreach`, `guard-condition-parentheses`, `higher-order-function-over-loop`, `if-versus-when`, `open-ended-range` |
-| common/control-flow/exceptions | `catch-order`, `error-function`, `exception-object-declaration`, `nothing-return-type`, `precondition-functions`, `try-expression`, `use-for-closeable` |
-| common/coroutines | `cancel-custom-scope`, `cooperative-cancellation`, `exception-handler-on-child`, `global-scope`, `rethrow-cancellation-exception`, `run-blocking-in-suspend`, `shared-mutable-state`, `try-catch-around-launch` |
-| common/coroutines/flow | `catch-before-collector`, `emit-in-other-context`, `missing-terminal-operator`, `on-completion-not-handler`, `rethrow-collector-exception` |
-| common/file-layout | `class-layout`, `extension-file`, `overload-layout` |
-| common/functions | `default-parameter-over-overload`, `extension-visibility`, `factory-function-name`, `infix-function`, `named-arguments`, `property-over-function` |
-| common/immutability | `data-class-mutable-collection`, `expose-read-only-view`, `prefer-val`, `read-only-collection-factory`, `read-only-collection-type` |
-| common/lambdas | `labeled-return`, `lambda-outside-parentheses` |
-| common/naming | `acronym-case`, `backing-property-name`, `meaningless-name`, `mutating-function-name` |
-| common/null-safety | `filter-not-null`, `not-null-assertion`, `nullable-boolean-condition`, `platform-type-explicit`, `safe-cast` |
-| common/scope-functions | `context-object-reference`, `extract-long-receiver`, `if-else-over-let-elvis`, `let-elvis-null-result`, `nested-lambda-implicit-it`, `nested-scope-functions`, `scope-function-return-value` |
-| common/strings | `multiline-string`, `string-template-over-concatenation` |
-| common/types | `closed-state-as-sealed`, `data-class-body-property`, `enum-lookup-or-null`, `field-by-field-equality`, `value-class-over-typealias`, `when-else-on-sealed` |
-| android/coroutines | `catch-exceptions-in-ui-scope`, `inject-dispatchers`, `main-safe-suspend-function`, `unnecessary-dispatcher-switch` |
-| android/data | `caller-bound-work-in-coroutine-scope`, `expose-suspend-and-flow`, `immutable-exposed-model`, `no-data-source-in-ui`, `repository-naming`, `separate-data-source-models` |
-| android/di | `constructor-injection` |
-| android/domain | `use-case-mutable-state`, `use-case-naming`, `use-case-scope`, `use-case-single-function` |
-| android/security | `deep-link-parameter-validation`, `hardcoded-secret`, `log-sensitive-data`, `sensitive-data-in-implicit-intent`, `sql-injection`, `store-user-password` |
-| android/test | `background-scope-collection`, `fake-over-mock`, `inject-test-dispatchers`, `reset-main-dispatcher`, `space-in-instrumented-test-name`, `state-flow-value-assertion` |
-| android/ui/compose/api | `composable-naming`, `emit-or-return`, `modifier-applied-once`, `modifier-parameter`, `remember-prefix`, `single-modifier-parameter`, `trailing-composable-lambda` |
-| android/ui/compose/performance | `backwards-write`, `defer-state-read`, `lazy-item-key`, `remember-expensive-calculation` |
-| android/ui/compose/side-effects | `derived-state-of-captured-value`, `effect-captured-value`, `empty-on-dispose`, `launch-in-composition`, `lifecycle-effect`, `unnecessary-derived-state-of` |
-| android/ui/compose/state | `collect-as-state-with-lifecycle`, `viewmodel-parameter` |
-| android/ui/compose/structure | `imperative-ui-after-state-transition` |
-| android/ui/strings | `hardcoded-ui-text`, `plurals` |
-| android/ui/view | `collect-with-lifecycle`, `fragment-binding-cleanup`, `fragment-view-reference`, `launch-when-deprecated`, `lifecycle-callback-collection` |
-| android/ui/viewmodel | `android-view-model`, `async-work-in-init`, `event-as-ui-state`, `expose-mutable-state`, `lifecycle-reference`, `single-ui-state`, `suspend-function-exposure` |
-
-</details>
