@@ -12,6 +12,8 @@
 
 <p align="center"><strong>공식 문서 근거 룰 · 재현 테스트 후 수정</strong></p>
 
+<p align="center"><sub>A Claude Code plugin that reviews Kotlin and Android code against 140 rules backed by official documentation.<br>It fixes a violation only after reproducing it with a failing test. Docs and rules are written in Korean.</sub></p>
+
 ---
 
 코드를 작성하는 AI 는 계속 발전한다. 그래서 작성은 AI 에 맡기고, 결과는 룰로 판정한다. 모델은 바뀌어도 기준은 바뀌지 않는다.
