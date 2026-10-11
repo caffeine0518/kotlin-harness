@@ -106,16 +106,19 @@ data class Contact(val phone: PhoneDigits, val id: ContactId)
 
 ```json
 {
+  "platform": "android",
   "excludeCategories": ["scope-functions"],
   "excludeRules": ["common/naming/meaningless-name"],
   "onWrite": ["common/null-safety/not-null-assertion", "android/ui/compose/state"],
   "minSeverity": "warning",
-  "projectRules": [".claude/rules/kotlin"]
+  "projectRules": [".claude/rules/kotlin"],
+  "review": {
+    "autoFix": true,
+    "redCommit": true,
+    "structureAutoFix": true
+  }
 }
 ```
-
-<details>
-<summary><strong>전체 키</strong></summary>
 
 | 키 | 설명 |
 |---|---|
@@ -128,8 +131,6 @@ data class Contact(val phone: PhoneDigits, val id: ContactId)
 | `review.autoFix` | 기본값 `true`. `false` 면 수정하지 않고 리포트만 작성한다 |
 | `review.redCommit` | 기본값 `true`. 실패하는 테스트를 먼저 커밋하고 수정을 따로 커밋한다. 그 커밋에서 CI 가 실패하므로, 원하지 않으면 `false` 로 지정해 커밋 하나로 묶는다 |
 | `review.structureAutoFix` | 기본값 `true`. `structure` 카테고리 룰 위반을 상태 모델 등 접근 방식을 바꾸는 대안으로 수정한다. `false` 면 리포트에 대안만 적고, 그 코드 범위의 다른 룰 위반도 수정하지 않는다 |
-
-</details>
 
 <details>
 <summary><strong>프로젝트 룰</strong></summary>
