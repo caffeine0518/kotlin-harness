@@ -38,6 +38,43 @@ fun recentTags(posts: List<Post>): List<String> =
 
 <sub>적용 룰: [`read-only-collection-type`](rules/common/immutability/read-only-collection-type.md) · [`higher-order-function-over-loop`](rules/common/control-flow/higher-order-function-over-loop.md) · [`nullable-boolean-condition`](rules/common/null-safety/nullable-boolean-condition.md) · [`sorted-by-descending`](rules/common/collections/sorted-by-descending.md) · [`combined-transformation`](rules/common/collections/combined-transformation.md)</sub>
 
+```kotlin
+data class Contact(
+    /**
+     * 사용자가 입력한 전화번호.
+     * 하이픈·공백을 포함해도 되지만, 비교·저장할 때는 숫자만 남겨야 한다.
+     */
+    val phone: String,
+    /**
+     * 연락처 식별자.
+     * 내부 연락처는 사용자 id 를 그대로 쓰고,
+     * 외부 연락처는 "ext-" 뒤에 숫자만 남긴 전화번호를 붙인 값을 쓴다.
+     */
+    val id: String,
+)
+```
+
+```kotlin
+@JvmInline
+value class PhoneDigits private constructor(val value: String) {
+    companion object {
+        fun of(phone: String) = PhoneDigits(phone.filter(Char::isDigit))
+    }
+}
+
+@JvmInline
+value class ContactId private constructor(val value: String) {
+    companion object {
+        fun internal(user: User) = ContactId(user.id)
+        fun external(phone: PhoneDigits) = ContactId("ext-${phone.value}")
+    }
+}
+
+data class Contact(val phone: PhoneDigits, val id: ContactId)
+```
+
+<sub>적용 룰: [`comment-instead-of-name`](rules/common/comments/comment-instead-of-name.md)</sub>
+
 ## 설치
 
 ```
