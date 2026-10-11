@@ -5,5 +5,6 @@
   "author": {
     "name": "joe"
   },
-  "repository": "https://github.com/caffeine0518/kotlin-harness"
+  "repository": "https://github.com/caffeine0518/kotlin-harness",
+  "license": "Apache-2.0"
 }
