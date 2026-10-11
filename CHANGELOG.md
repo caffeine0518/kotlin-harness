@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.35.0
+- gate 의 판정 에이전트 수를 대상 크기와 적용할 룰 수로 정한다. 항상 3개로 나눠, 작은 diff 에서는 에이전트마다 대상 수집과 룰 읽기를 반복하는 비용만 늘었고 `project` 범위에서는 에이전트 하나가 대조할 양이 너무 많았다.
+  - 룰 30개 미만이거나 대상 200줄 미만이면 에이전트 1개, 그 밖에는 룰 40개 단위로 그룹을 나눈다.
+  - `project` 범위는 대상 파일도 5000줄 단위로 나누고, 에이전트는 8개 이하로 둔다.
+- gate 가 대상 파일에 마커가 없는 카테고리를 판정에서 제외한다. `android/ui/compose`(`@Composable`·`androidx.compose`), `android/ui/view`(`Fragment`·`Activity`·`lifecycleScope`·`launchWhen`), `android/ui/viewmodel`(`ViewModel`), `common/coroutines`·`android/coroutines`(`kotlinx.coroutines`·`suspend`)다. 제외한 카테고리는 리포트의 `마커가 없어 제외한 카테고리` 에 적는다.
+
 ## 0.34.0
 - gate 가 이번 변경의 맥락을 받는다. 세션 대화의 배경(고치려는 결함, 되돌린 접근, 정해진 동작·기획)을 요약하고, 범위 뒤에 적은 이슈·URL·파일·MCP 리소스 힌트를 읽는다 (예: `/kotlin-harness:gate branch #123 docs/spec.md`). 맥락은 영향·허용·구조 룰 대안을 판정하는 근거로만 쓰고, 새 위반을 찾는 데는 쓰지 않는다.
 - 접근 방식을 다루는 `structure` 카테고리를 추가했다. 수정 에이전트는 구조 룰 위반을 먼저 판정하고, 그 코드 범위에는 다른 룰의 수정을 먼저 적용하지 않는다.
