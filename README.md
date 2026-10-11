@@ -170,7 +170,7 @@ source: https://...      # common 룰은 공식 문서만 허용
 | 카테고리 | 룰 |
 |---|---|
 | common/collections | `combined-transformation`, `empty-collection-element`, `filter-then-terminal`, `remove-while-iterating`, `sequence-for-multi-step-chain`, `sorted-by-descending` |
-| common/comments | `banner-comment`, `comment-instead-of-name`, `commented-out-code`, `history-comment`, `param-return-tags`, `redundant-comment`, `redundant-kdoc` |
+| common/comments | `banner-comment`, `comment-instead-of-name`, `commented-out-code`, `history-comment`, `param-return-tags`, `precondition-comment`, `redundant-comment`, `redundant-kdoc` |
 | common/control-flow | `expression-form-condition`, `for-over-foreach`, `guard-condition-parentheses`, `higher-order-function-over-loop`, `if-versus-when`, `open-ended-range` |
 | common/control-flow/exceptions | `catch-order`, `error-function`, `exception-object-declaration`, `nothing-return-type`, `precondition-functions`, `try-expression`, `use-for-closeable` |
 | common/coroutines | `cancel-custom-scope`, `cooperative-cancellation`, `exception-handler-on-child`, `global-scope`, `rethrow-cancellation-exception`, `run-blocking-in-suspend`, `shared-mutable-state`, `try-catch-around-launch` |

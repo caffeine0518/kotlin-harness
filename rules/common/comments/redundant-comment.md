@@ -52,3 +52,4 @@ _uiState.value = UiState.Loading
 - 값의 근거: 타임아웃·재시도 횟수·크기 같은 상수를 그 값으로 정한 이유
 - 관용적이지 않은 코드의 설명, 복사한 코드의 원본 링크
 - 이름으로 옮길 수 있는 설명은 이 룰이 아니라 `common/comments/comment-instead-of-name` 이 보고한다.
+- 코드로 강제할 수 있는 전제 조건을 요구하는 주석은 `common/comments/precondition-comment` 가 보고한다.
