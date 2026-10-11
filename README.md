@@ -48,8 +48,6 @@ fun recentTags(posts: List<Post>): List<String> =
 /plugin install kotlin-harness@kotlin-harness
 ```
 
-private 리포이므로 리포 접근 권한과 git 의 GitHub 인증이 필요하다.
-
 ## 사용
 
 코틀린 프로젝트에서 바로 실행한다. 설정 파일은 필요 없다.
