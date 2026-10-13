@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.37.0
+- `/kotlin-harness:update` 를 복원했다. marketplace update 가 실패하면 git 인증 설정 안내 없이 오류 메시지만 출력한다.
+
 ## 0.36.0
 - 설정 `onWrite` 를 추가했다. 룰 ID 나 카테고리 경로를 지정하면, Claude 가 `.kt`·`.kts` 를 수정할 때마다 그 룰만 확인하고 수정한다. 기본값이 없어 지정하지 않으면 동작하지 않고, gate 의 판정에는 영향이 없다.
 - `common/comments/precondition-comment` 를 추가했다. 값·상태가 지켜야 할 조건을 요구하는 주석을 `require()`·`check()` 로 옮기도록 리포트에 제안한다.
