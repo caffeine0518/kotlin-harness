@@ -97,6 +97,7 @@ data class Contact(val phone: PhoneDigits, val id: ContactId)
 | 파일 하나 | `/kotlin-harness:gate file <경로>` |
 | 맥락 힌트와 함께 | `/kotlin-harness:gate branch #123 docs/spec.md` |
 | 오탐·누락 신고 | `/kotlin-harness:issue <문제 설명>` |
+| 업데이트 | `/kotlin-harness:update` |
 
 
 
@@ -149,7 +150,7 @@ data class Contact(val phone: PhoneDigits, val id: ContactId)
 <details>
 <summary><strong>업데이트 · 개발 · 릴리스</strong></summary>
 
-- 수동 업데이트: `claude plugin marketplace update kotlin-harness` 후 `claude plugin update kotlin-harness@kotlin-harness` 를 실행한다. `/reload-plugins` 로 현재 세션에 적용한다. 프롬프트 캐시 경고와 함께 적용되지 않으면 `/reload-plugins --force`.
+- `/kotlin-harness:update` 후 `/reload-plugins` 로 현재 세션에 적용한다. 프롬프트 캐시 경고와 함께 적용되지 않으면 `/reload-plugins --force`.
 - 로컬 개발: `claude --plugin-dir <이 리포 경로>`. 수정 후 세션을 다시 시작하면 반영된다.
 - 릴리스: `.claude-plugin/plugin.json` 의 `version` 을 올리고 [CHANGELOG.md](CHANGELOG.md) 에 섹션을 추가한 뒤 푸시한다. `version` 이 바뀌지 않으면 업데이트가 전달되지 않는다.
 
